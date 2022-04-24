@@ -2,4 +2,27 @@
     <string name="app_name">TripPlanner</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <string name="yer_kisa_tanim">Yer Kısa tanım</string>
+    <string name="yer_kisa_tanim_bilgisi">Yer kısa tanım bilgisi</string>
+    <string name="kisa_aciklama">Kısa Açıklama</string>
+    <string name="kisa_aciklama_bilgisi">Kısa Açıklama en fazla 3 satır</string>
+    <string name="ziyaret_geçmisi">Ziyaret Geçmişi</string>
+    <string name="girilen_aciklama_bilgisi">Girilen Açıklama en fazla 3 satır</string>
+    <string name="konum_goster">Konum Göster</string>
+    <string name="konum_ekle">Konum Ekle</string>
+    <string name="oncelik">Öncelik</string>
+    <string name="oncelik_sec">Öncelik Seç</string>
+    <string name="ziyaret_ekle">Ziyaret Ekle</string>
+    <string name="yer_adi">Yer Adı</string>
+    <string name="fotograf_ekle">Fotograf Ekle</string>
+    <string name="ziyaret_tarihi">Ziyaret Tarihi</string>
+    <string name="ziyaret_aciklamasi">Ziyaret Açıklaması</string>
+    <string name="aciklama">Açıklama</string>
+    <string name="kaydet">Kaydet</string>
+
+    <string name="date_ex"> __.__.____</string>
+    <string name="ornek_ziyaret_gecmisi_20">10.05.2020</string>
+    <string name="ornek_ziyaret_gecmisi_18">10.05.2018</string>
 </resources>
