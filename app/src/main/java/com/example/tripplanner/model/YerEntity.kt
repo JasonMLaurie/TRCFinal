@@ -8,5 +8,6 @@ class YerEntity {
     var yerAdi: String? = null
     var kisaTanim: String? = null
     var kisaAciklama: String? = null
+    var oncelik: Int? = null
 
 }
