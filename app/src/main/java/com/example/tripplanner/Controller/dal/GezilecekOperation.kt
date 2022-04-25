@@ -1,7 +1,9 @@
-package com.example.tripplanner.dal
+package com.example.tripplanner.Controller.dal
 
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import com.example.tripplanner.model.YerEntity
 
@@ -45,5 +47,32 @@ class GezilecekOperation(context: Context) {
         closeDB()
 
         return effectedRowCount>0
+    }
+
+
+    fun getGezilecekYer(): Cursor {
+        val sorgu = "SELECT * FROM Yer"
+        return tripPlannerDatabase!!.rawQuery(sorgu,null)
+    }
+
+    @SuppressLint("Range")
+    fun getTumGezilecekYer():ArrayList<YerEntity>{
+        val gezilecekListe=ArrayList<YerEntity>()
+        var yer : YerEntity
+        openDB()
+        var cursor: Cursor =getGezilecekYer()
+        if (cursor.moveToFirst()){
+            do {
+                yer= YerEntity()
+                yer.id=cursor.getInt(0)
+                yer.yerAdi=cursor.getString(cursor.getColumnIndex(yerAdiStr))
+                yer.kisaTanim=cursor.getString(cursor.getColumnIndex(yerTanimStr))
+                yer.kisaAciklama=cursor.getString(cursor.getColumnIndex(yerAciklamaStr))
+
+                gezilecekListe.add(yer)
+            }while (cursor.moveToNext())
+        }
+        closeDB()
+        return gezilecekListe
     }
 }

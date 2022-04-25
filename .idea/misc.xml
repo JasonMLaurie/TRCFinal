@@ -7,19 +7,44 @@
         <entry key="..\:/Collection/Classes/KotlinTRC/Self/FinalProject/app/src/main/res/layout/fragment_detay.xml" value="0.20208333333333334" />
         <entry key="..\:/Collection/Classes/KotlinTRC/Self/FinalProject/app/src/main/res/layout/fragment_gezdiklerim.xml" value="0.20208333333333334" />
         <entry key="..\:/Collection/Classes/KotlinTRC/Self/FinalProject/app/src/main/res/layout/fragment_gezilecek.xml" value="0.3875" />
+        <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/drawable/add_circle.xml" value="0.159" />
+        <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/drawable/add_va.xml" value="0.197" />
+        <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/drawable/bb.xml" value="0.1" />
+        <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/drawable/bg_transparent.xml" value="0.1" />
+        <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/drawable/bottom_nav_bg.xml" value="0.1295" />
         <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/drawable/box.xml" value="0.1" />
-        <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/drawable/delete_image.xml" value="0.2325" />
+        <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/drawable/gezdiklerim_va.xml" value="0.2325" />
+        <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/drawable/gezilecekler_va.xml" value="0.2325" />
+        <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2325" />
+        <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/drawable/oncelik2_sekil.xml" value="0.182" />
+        <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/layout/activity_splash_screen.xml" value="0.24010416666666667" />
+        <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/layout/activity_tab.xml" value="0.264" />
         <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/layout/box.xml" value="0.1" />
+        <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/layout/custom_tab.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/layout/fragment_detay.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/layout/fragment_gezilecek.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/layout/fragment_harita.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/layout/fragment_yer_ekle.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/layout/fragment_yer_ekle.xml" value="0.264" />
         <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/layout/fragment_ziyaret_ekle.xml" value="0.48507462686567165" />
         <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/layout/gezdiklerim_card.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/layout/gezilecekler_card.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/layout/tab_layout.xml" value="0.536" />
         <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/layout/ziyaret_fotograf_card.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/layout/ziyaret_fotograf_ekle_card.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/layout/ziyaret_gecmisi_card.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/menu/bottom_nav_menu.xml" value="0.176" />
+        <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/menu/bottom_navigation.xml" value="0.264" />
+        <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/menu/menu.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/yunli/Documents/TRCFinal/app/src/main/res/drawable/add_circle.xml" value="0.1" />
+        <entry key="..\:/Users/yunli/Documents/TRCFinal/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/Users/yunli/Documents/TRCFinal/app/src/main/res/layout/activity_tab.xml" value="0.1" />
+        <entry key="..\:/Users/yunli/Documents/TRCFinal/app/src/main/res/layout/custom_tab.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/yunli/Documents/TRCFinal/app/src/main/res/layout/fragment_gezdiklerim.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/yunli/Documents/TRCFinal/app/src/main/res/layout/fragment_gezilecek.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/yunli/Documents/TRCFinal/app/src/main/res/layout/fragment_ziyaret_ekle.xml" value="0.1" />
+        <entry key="..\:/Users/yunli/Documents/TRCFinal/app/src/main/res/layout/tab_layout.xml" value="0.25416666666666665" />
       </map>
     </option>
   </component>
@@ -28,5 +53,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.4" />
+      </ProjectState>
+    </option>
   </component>
 </project>

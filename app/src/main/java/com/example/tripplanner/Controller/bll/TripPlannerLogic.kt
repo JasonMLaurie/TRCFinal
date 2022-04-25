@@ -1,9 +1,13 @@
-package com.example.tripplanner.bll
+package com.example.tripplanner.Controller.bll
 
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.util.Base64.encodeToString
+import android.util.Base64
+import com.example.tripplanner.Controller.dal.GezdiklerimOperation
+import com.example.tripplanner.Controller.dal.GezilecekOperation
+import com.example.tripplanner.model.GezdiklerimEntity
+import com.example.tripplanner.model.YerEntity
 import java.io.ByteArrayOutputStream
 import java.io.FileOutputStream
 import java.lang.Exception
@@ -22,7 +26,7 @@ class TripPlannerLogic {
         // TODO Base64 in DB or a local png and URI in DB as str.
 
         // May need additional libraries for pre API 8, v 2.2
-        fun decodeBase64(context:Context, base64ImageData : ByteArray?){
+        fun decodeBase64(context: Context, base64ImageData : ByteArray?){
             var fos : FileOutputStream? = null;
             try {
                 if (base64ImageData != null) {
@@ -49,10 +53,24 @@ class TripPlannerLogic {
             bm.compress(Bitmap.CompressFormat.JPEG, 100, baos); // bm is the bitmap object
             var byteArrayImage : ByteArray = baos.toByteArray();
 
-            var encodedImage = encodeToString(byteArrayImage, android.util.Base64.DEFAULT);
+            var encodedImage = Base64.encodeToString(byteArrayImage, Base64.DEFAULT);
 
         }
-    }
 
+        fun getGezilecekYerler(context: Context):ArrayList<YerEntity>{
+            return GezilecekOperation(context).getTumGezilecekYer()
+        }
+
+        fun getGezdiklerimYerler(context: Context):ArrayList<GezdiklerimEntity>{
+            return GezdiklerimOperation(context).getGezilecekYer()
+
+        }
+
+        fun ekleGezilecekYer(context: Context, item:YerEntity){
+            val goA=GezilecekOperation(context)
+            goA.yerEkle(item)
+        }
+
+    }
 
 }
