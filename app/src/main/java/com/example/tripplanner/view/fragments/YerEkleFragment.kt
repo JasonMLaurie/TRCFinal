@@ -2,19 +2,13 @@ package com.example.tripplanner.view.fragments
 
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.example.tripplanner.R
-import com.example.tripplanner.bll.TripPlannerLogic
 import com.example.tripplanner.databinding.FragmentYerEkleBinding
-import com.example.tripplanner.model.GezdiklerimEntity
-import com.example.tripplanner.model.YerEntity
 import com.example.tripplanner.view.adapters.foto.FotoAdapter
-import kotlin.properties.Delegates
 
 /** Gezilecek Yer Ekleme Fragment*/
 class YerEkleFragment : Fragment() {
@@ -32,10 +26,6 @@ class YerEkleFragment : Fragment() {
 
         createTempList()
         setAdapters()
-
-        binding.btnKonumEkle.setOnClickListener {
-            tempFuncZiyaretEkle()
-        }
 
         return binding.root
     }
