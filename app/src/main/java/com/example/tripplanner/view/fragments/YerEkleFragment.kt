@@ -32,7 +32,7 @@ class YerEkleFragment : Fragment() {
 
     fun setAdapters() {
 
-        val rvAdapter = FotoAdapter(requireContext(), resimListe)
+        val rvAdapter = FotoAdapter(requireContext(), resimListe, ::photoCardClickEvent)
         binding.rvYerEkle.layoutManager =
             StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
         binding.rvYerEkle.adapter = rvAdapter
@@ -40,6 +40,8 @@ class YerEkleFragment : Fragment() {
         // TODO Fill spinner with colors
 
     }
+
+    fun photoCardClickEvent(){}
 
     /** Test Case */
     fun createTempList() {

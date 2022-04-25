@@ -16,9 +16,11 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.tripplanner.bll.PermissionLogic
 import com.example.tripplanner.bll.TripPlannerLogic
 import com.example.tripplanner.databinding.FragmentZiyaretEkleBinding
 import com.example.tripplanner.model.ZiyaretEntity
+import com.example.tripplanner.view.activities.MainActivity
 import com.example.tripplanner.view.adapters.foto.FotoAdapter
 import java.io.FileNotFoundException
 import java.util.*
@@ -29,7 +31,7 @@ import java.util.*
 class ZiyaretEkleFragment : Fragment() {
 
     private lateinit var binding : FragmentZiyaretEkleBinding
-    private var resimUriList: ArrayList<Uri> = arrayListOf()
+    private var resimUriList: ArrayList<Uri> = arrayListOf(Uri.EMPTY)
     lateinit var adapter: FotoAdapter
 
 
@@ -37,7 +39,7 @@ class ZiyaretEkleFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentZiyaretEkleBinding.inflate(inflater, container, false)
 
-        createTempList()
+//        createTempList()
         setInitialViews()
         clickListeners()
 
@@ -47,8 +49,7 @@ class ZiyaretEkleFragment : Fragment() {
     /** Fill views with default values */
     @SuppressLint("SetTextI18n")
     fun setInitialViews(){
-
-        adapter = FotoAdapter(requireContext(), resimUriList)
+        adapter = FotoAdapter(requireContext(), resimUriList, ::photoCardClickEvent)
         binding.rvZiyaretEkle.layoutManager =
             StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
         binding.rvZiyaretEkle.adapter = adapter
@@ -73,6 +74,15 @@ class ZiyaretEkleFragment : Fragment() {
             i++
         }
 
+    }
+
+    /** Click Event for Adapter */
+    fun photoCardClickEvent(){
+        if(resimUriList.size<10){
+            openGallery()
+        }else{
+            Toast.makeText(requireContext(),"10 adetten fazla fotoğraf eklenemez", Toast.LENGTH_SHORT).show()
+        }
     }
 
     /** Click Listeners */
@@ -122,11 +132,13 @@ class ZiyaretEkleFragment : Fragment() {
                 try {
                     val imageUri: Uri = result.data!!.data!!
                     resimUriList.add(imageUri)
-                    if (resimUriList.size == 1) {
-                        (adapter).notifyItemInserted(0)
-                    } else {
-                        (adapter).notifyItemInserted(resimUriList.size - 1)
+                    if (resimUriList.size == 2) {
+                        // TODO a more suitable solution for empty Uri list.
+                            if(resimUriList[0].equals(Uri.EMPTY)){
+                                resimUriList.removeAt(0)
+                            }
                     }
+                    (adapter).notifyDataSetChanged()
                 } catch (e: FileNotFoundException) {
                     e.printStackTrace()
                     Toast.makeText(requireContext(), "Dosya bulunamadı.", Toast.LENGTH_LONG).show()
@@ -137,10 +149,22 @@ class ZiyaretEkleFragment : Fragment() {
     /** Open Gallery Func */
     fun openGallery() {
 
-        //V1
-        val intent = Intent(Intent.ACTION_PICK)
-        intent.setType("image/*")
-        galleryResultLauncher.launch(intent)
+        // TODO Permission problem here. Maybe about SDK.
+        // It asks for permission but opens gallery before it. If a photo is selected then it returns
+        // to the source page where the permission pop up still up, and if you permit it, it works as
+        // intended, but if you deny the permission it still adds the selected photo from gallery,
+        // and this process is doable indefinitely.
+        // Remove condition check to reproduce it.
+
+        // Made mediaPermissionControl return a boolean value for a temp. (or definite) solution
+        if(PermissionLogic.mediaPermissionControl((activity as MainActivity),requireContext())){
+            //V1
+            val intent = Intent(Intent.ACTION_PICK)
+            intent.setType("image/*")
+            galleryResultLauncher.launch(intent)
+        }else{
+            Toast.makeText(requireContext(),"This app needs specified permissions", Toast.LENGTH_SHORT).show()
+        }
 
     }
 
@@ -158,7 +182,7 @@ class ZiyaretEkleFragment : Fragment() {
     private fun customDatePicker(dateList : ArrayList<Int>){
 
         val dp = DatePickerDialog(requireContext(), DatePickerDialog.OnDateSetListener { _, year, month, dom ->
-            binding.textZiyaretTarihi.text = "$dom.${month+1}.$year"
+            binding.tvTarihEkle.text = "$dom.${month+1}.$year"
         }, dateList[2], dateList[1], dateList[0])
 
         dp.datePicker.maxDate = System.currentTimeMillis()
