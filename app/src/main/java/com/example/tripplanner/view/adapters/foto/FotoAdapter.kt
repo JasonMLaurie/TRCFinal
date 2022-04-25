@@ -16,7 +16,7 @@ class FotoAdapter(var mContext : Context, var resimUriList : ArrayList<Uri>) : R
     }
 
     override fun onBindViewHolder(holder: FotoViewHolder, position: Int) {
-        holder.bindDataToViews(resimUriList[position])
+        holder.bindDataToViews(resimUriList[position], position==(resimUriList.size-1))
     }
 
     override fun getItemCount(): Int {

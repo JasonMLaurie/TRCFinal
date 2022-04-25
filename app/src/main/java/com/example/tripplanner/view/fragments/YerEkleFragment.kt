@@ -41,8 +41,8 @@ class YerEkleFragment : Fragment() {
     fun createTempList(){
 
         var i = 1
-        while(i<=7){
-            val uri : Uri = Uri.parse("android.resource://" + requireActivity().packageName + "/drawable/tempimage1");
+        while(i<=3){
+            val uri : Uri = Uri.parse("android.resource://" + requireActivity().packageName + "/drawable/tempimage1")
             resimListe.add(uri)
             i++
         }
