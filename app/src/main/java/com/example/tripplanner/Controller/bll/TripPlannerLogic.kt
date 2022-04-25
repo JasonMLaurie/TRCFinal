@@ -20,6 +20,8 @@ class TripPlannerLogic {
         fun persistDate(date: Date?): Long? {
             return if (date != null) {
                 date.getTime()
+                //dsasadadsadasdsadsads
+                //dasdasdsd
             } else null
         }
 
