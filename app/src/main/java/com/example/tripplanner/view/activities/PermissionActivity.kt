@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 
 abstract class PermissionActivity:AppCompatActivity() {
 
+    abstract fun grantedFunc()
+
 
 
     override fun onRequestPermissionsResult(
@@ -25,7 +27,7 @@ abstract class PermissionActivity:AppCompatActivity() {
         }
         if (allGranted){
             Toast.makeText(this,"Permissions Granted", Toast.LENGTH_SHORT).show()
-
+            grantedFunc()
         }else{
             Toast.makeText(this,"Permissions Not Granted", Toast.LENGTH_SHORT).show()
 
