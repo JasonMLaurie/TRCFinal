@@ -66,12 +66,6 @@ class MapsActivity : PermissionActivity(), OnMapReadyCallback {
     private fun initializeMode(){
         mode= Intent().getBooleanExtra("mode",false)
     }
-    @RequiresApi(Build.VERSION_CODES.M)
-    fun getLocation(){
-        PermissionLogic.locationPermissionControl(this,this)
-    }
-
-
     @SuppressLint("MissingPermission")
     override fun grantedFunc() {
         locationManager!!.requestLocationUpdates(LocationManager.GPS_PROVIDER,1000, 0.1f,locationListener)
@@ -102,7 +96,7 @@ class MapsActivity : PermissionActivity(), OnMapReadyCallback {
             binding.btnKonumKaydet.setOnClickListener {
                 val intent=Intent()
                 intent.putExtra("location",locationPair)
-                setResult(RESULT_OK,)
+                setResult(RESULT_OK,intent)
                 finish()
             }
         }
