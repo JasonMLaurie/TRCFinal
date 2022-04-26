@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory
 import android.util.Base64.encodeToString
 import android.widget.Toast
 import com.example.tripplanner.dal.TripPlannerOperation
+import com.example.tripplanner.model.ResimEntity
 import com.example.tripplanner.model.ZiyaretEntity
 import com.example.tripplanner.model.YerEntity
 import java.io.ByteArrayOutputStream
@@ -24,6 +25,11 @@ class TripPlannerLogic {
             }
         }
 
+        fun gezdiklerimiGetir(context: Context) : ArrayList<YerEntity> {
+            val tripPlannerOperation = TripPlannerOperation(context)
+            return tripPlannerOperation.gezdiklerimiGetir()
+        }
+
         fun ziyaretEkle(context: Context, ziyaretEntity: ZiyaretEntity) : Boolean{
             val tripPlannerOperation = TripPlannerOperation(context)
             return tripPlannerOperation.ziyaretEkle(ziyaretEntity).also {
@@ -32,20 +38,35 @@ class TripPlannerLogic {
             }
         }
 
-        fun tumYerleriGetir(context: Context) : ArrayList<YerEntity>{
-            val tripPlannerOperation = TripPlannerOperation(context)
-            return tripPlannerOperation.tumYerleriGetir()
-        }
-
         fun ziyaretleriGetir(context: Context, yerEntity: YerEntity) : ArrayList<ZiyaretEntity> {
             val tripPlannerOperation = TripPlannerOperation(context)
             return tripPlannerOperation.ziyaretleriGetir(yerEntity)
         }
 
-        fun gezdiklerimiGetir(context: Context) : ArrayList<YerEntity> {
+        fun fotoEkle(context: Context, resimEntity: ResimEntity) : Boolean{
             val tripPlannerOperation = TripPlannerOperation(context)
-            return tripPlannerOperation.gezdiklerimiGetir()
+            return tripPlannerOperation.fotoEkle(resimEntity).also {
+                if(it)
+                    Toast.makeText(context,"Resim başarıyla eklenmiştir", Toast.LENGTH_SHORT).show()
+            }
         }
+
+        fun fotoGetir(context: Context, yerId: Int) : ArrayList<ResimEntity> {
+            val tripPlannerOperation = TripPlannerOperation(context)
+            return tripPlannerOperation.fotoGetir(yerId)
+        }
+
+        fun tumYerleriGetir(context: Context) : ArrayList<YerEntity>{
+            val tripPlannerOperation = TripPlannerOperation(context)
+            return tripPlannerOperation.tumYerleriGetir()
+        }
+
+        fun tumZiyaretleriGetir(context: Context) : ArrayList<ZiyaretEntity>{
+            val tripPlannerOperation = TripPlannerOperation(context)
+            return tripPlannerOperation.tumZiyaretleriGetir()
+        }
+
+
 
         // To Be Used Later.
 /*        fun persistDate(date: Date?): Long? {

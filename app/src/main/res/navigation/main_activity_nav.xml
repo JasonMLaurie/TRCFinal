@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_activity_nav"
-    app:startDestination="@id/ziyaretEkleFragment">
+    app:startDestination="@id/detayFragment">
 
     <fragment
         android:id="@+id/detayFragment"
@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_detayFragment_to_haritaFragment"
             app:destination="@id/haritaFragment" />
+        <argument
+            android:name="yerObject"
+            app:argType="com.example.tripplanner.model.YerEntity" />
     </fragment>
     <fragment
         android:id="@+id/gezdiklerimFragment"
@@ -47,7 +50,11 @@
         android:id="@+id/ziyaretEkleFragment"
         android:name="com.example.tripplanner.view.fragments.ZiyaretEkleFragment"
         android:label="fragment_ziyaret_ekle"
-        tools:layout="@layout/fragment_ziyaret_ekle" />
+        tools:layout="@layout/fragment_ziyaret_ekle" >
+        <argument
+            android:name="yerId"
+            app:argType="integer" />
+    </fragment>
     <fragment
         android:id="@+id/gezilecekFragment2"
         android:name="com.example.tripplanner.view.fragments.GezilecekFragment"

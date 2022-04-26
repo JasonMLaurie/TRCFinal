@@ -82,6 +82,7 @@ class MapsActivity : PermissionActivity(), OnMapReadyCallback {
 
         override fun onProviderDisabled(provider: String) {
             super.onProviderDisabled(provider)
+            //TODO konum kapalıyken crash
         }
 
         override fun onProviderEnabled(provider: String) {

@@ -22,7 +22,7 @@
             app:iss_error_image="@drawable/ic_launcher_background"
             app:iss_period="1000"
             app:iss_placeholder="@drawable/ic_launcher_foreground"
-            app:layout_constraintBottom_toTopOf="@+id/recyclerView"
+            app:layout_constraintBottom_toTopOf="@+id/rv_ziyaret_gecmisi"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -115,7 +115,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/tvYerKisaTanim" />
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/button"
+                android:id="@+id/btn_konum_goster"
                 android:layout_width="51dp"
                 android:layout_height="32dp"
                 android:layout_marginTop="4dp"
@@ -191,7 +191,7 @@
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+            android:id="@+id/rv_ziyaret_gecmisi"
             android:layout_width="340dp"
             android:layout_height="0dp"
             android:layout_marginTop="13dp"
