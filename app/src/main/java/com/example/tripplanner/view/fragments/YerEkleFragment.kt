@@ -14,9 +14,12 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.tripplanner.Controller.bll.TripPlannerLogic
 import com.example.tripplanner.databinding.FragmentYerEkleBinding
+import com.example.tripplanner.model.Oncelik
+import com.example.tripplanner.model.Oncelikler
 import com.example.tripplanner.model.YerEntity
 import com.example.tripplanner.view.activities.MainActivity
 import com.example.tripplanner.view.activities.MapsActivity
+import com.example.tripplanner.view.adapters.SpinnerAdapter
 import com.example.tripplanner.view.adapters.foto.FotoAdapter
 
 /** Gezilecek Yer Ekleme Fragment*/
@@ -36,7 +39,7 @@ class YerEkleFragment : Fragment() {
 
         createTempList()
         setAdapters()
-
+        setupSpinner()
 
         var yer= YerEntity(0.0,0.0)
 
@@ -153,6 +156,11 @@ class YerEkleFragment : Fragment() {
 //        (activity as MainActivity).binding.fabYerEkle.isVisible=false
 //    }
 
+    fun setupSpinner(){
+        val adapter =SpinnerAdapter(requireContext(),Oncelikler.list!!)
+        binding.spinner.adapter=adapter
+
+    }
 
 
 }
