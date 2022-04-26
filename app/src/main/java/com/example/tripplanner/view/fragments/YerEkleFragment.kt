@@ -1,17 +1,22 @@
 package com.example.tripplanner.view.fragments
 
+import android.app.Activity.RESULT_OK
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.tripplanner.Controller.bll.TripPlannerLogic
 import com.example.tripplanner.databinding.FragmentYerEkleBinding
 import com.example.tripplanner.model.YerEntity
 import com.example.tripplanner.view.activities.MainActivity
+import com.example.tripplanner.view.activities.MapsActivity
 import com.example.tripplanner.view.adapters.foto.FotoAdapter
 
 /** Gezilecek Yer Ekleme Fragment*/
@@ -19,6 +24,7 @@ class YerEkleFragment : Fragment() {
 
     private lateinit var binding: FragmentYerEkleBinding
     private var resimListe: ArrayList<Uri> = arrayListOf()
+    private lateinit var locationIntent:Pair<Double,Double>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,11 +37,12 @@ class YerEkleFragment : Fragment() {
         createTempList()
         setAdapters()
 
+
         var yer= YerEntity(0.0,0.0)
 
 
-
         binding.btnYerKaydet.setOnClickListener {
+            yer=YerEntity(locationIntent.first,locationIntent.second)
             yer.yerAdi=binding.eTvYerAdi.text.toString()
             yer.kisaTanim=binding.eTvYerKisaTanim.text.toString()
             yer.kisaAciklama=binding.eTvYerKisaAciklama.text.toString()
@@ -47,11 +54,24 @@ class YerEkleFragment : Fragment() {
             requireActivity().onBackPressed()
         }
 
+
         //TODO tabb layout düzenlenecek
         (activity as MainActivity).binding.tabLayout.isVisible=false
         (activity as MainActivity).binding.fabYerEkle.isVisible=false
 
 
+        val resLauncher=registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == RESULT_OK) {
+                locationIntent=Pair(it.data?.getDoubleExtra("Latitude",0.5)!!,it.data?.getDoubleExtra("Longitude",0.5)!!)
+                //Toast.makeText(requireContext(),"lat: ${locationIntent.first} lon: ${locationIntent.second}",Toast.LENGTH_SHORT).show()
+            }
+        }
+        binding.btnKonumEkle.setOnClickListener{
+            val intent= Intent(requireActivity(),MapsActivity::class.java)
+            intent.putExtra("mode",false)
+            resLauncher.launch(intent)
+
+        }
         return binding.root
     }
 
@@ -127,7 +147,11 @@ class YerEkleFragment : Fragment() {
 
     }
 
-
+//    override fun onResume() {
+//        super.onResume()
+//        (activity as MainActivity).binding.tabLayout.isVisible=false
+//        (activity as MainActivity).binding.fabYerEkle.isVisible=false
+//    }
 
 
 
