@@ -40,6 +40,8 @@ class YerEkleFragment : Fragment() {
             yer.kisaTanim=binding.eTvYerKisaTanim.text.toString()
             yer.kisaAciklama=binding.eTvYerKisaAciklama.text.toString()
 
+            //todo öncelik ve fotoğraf bilgileri atamaı yapılacak
+
             TripPlannerLogic.yerEkle(requireContext(),yer)
 
             (activity as MainActivity).fragmentDegistir(GezilecekFragment())
