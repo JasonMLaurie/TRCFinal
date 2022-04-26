@@ -11,6 +11,8 @@ object Oncelikler {
 
     private val oncelikDurumlari = arrayOf("oncelik1", "oncelik2", "oncelik3")
 
+
+
     var list: ArrayList<Oncelik>? = null
         get() {
             if (field != null)

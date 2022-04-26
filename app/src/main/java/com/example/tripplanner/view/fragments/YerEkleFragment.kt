@@ -46,8 +46,11 @@ class YerEkleFragment : Fragment() {
 
 
 
+
         binding.btnYerKaydet.setOnClickListener {
             yerEkle()
+            TripPlannerLogic.yerEkle(requireContext(),yer)
+
         }
 
 
@@ -81,7 +84,6 @@ class YerEkleFragment : Fragment() {
 
         //todo öncelik ve fotoğraf bilgileri atamaı yapılacak
 
-        TripPlannerLogic.yerEkle(requireContext(),yer)
 
         requireActivity().onBackPressed()
     }
@@ -168,8 +170,9 @@ class YerEkleFragment : Fragment() {
             spinner.adapter=adapter
             spinner.onItemSelectedListener = object :AdapterView.OnItemSelectedListener{
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                     //var secilenOncelik = parent!!.getItemAtPosition(position
+                    //var secilenOncelik = parent!!.getItemAtPosition(position)
                     var secilenOncelik= Oncelikler.list!!.get(position)
+                    Toast.makeText(requireContext(),"${secilenOncelik.oncelikDurumu}",Toast.LENGTH_SHORT).show()
                     yer.oncelik=secilenOncelik.oncelikDurumu
 
                 }
