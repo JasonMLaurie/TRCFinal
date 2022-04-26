@@ -13,6 +13,9 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import androidx.viewpager.widget.ViewPager
+import com.denzcoskun.imageslider.ImageSlider
+import com.denzcoskun.imageslider.models.SlideModel
 import com.example.tripplanner.Controller.bll.TripPlannerLogic
 import com.example.tripplanner.R
 import com.example.tripplanner.databinding.FragmentDetayBinding
@@ -23,6 +26,10 @@ import com.example.tripplanner.model.ZiyaretEntity
 import com.example.tripplanner.view.activities.MapsActivity
 import com.example.tripplanner.view.adapters.foto.FotoAdapter
 import com.example.tripplanner.view.adapters.ziyaret.ZiyaretAdapter
+
+import com.denzcoskun.imageslider.constants.ScaleTypes // important
+import com.example.tripplanner.view.adapters.ViewPagerAdapter
+
 
 /** Gezilecek Yer Detay Fragment */
 class DetayFragment : Fragment() {
@@ -38,6 +45,8 @@ class DetayFragment : Fragment() {
 //        tempSol()
         setInitialViews()
         clickListeners()
+        deneme()
+        //imagesliderViewPager()
 
         return binding.root
     }
@@ -115,5 +124,36 @@ class DetayFragment : Fragment() {
     Navigation.findNavController(it).navigate(foodList2DetailNavDir)
             */
 
+    fun deneme(){
+        val imageSlider = binding.imageSlider
+        val imageList = ArrayList<SlideModel>()
+
+        imageList.add(SlideModel(R.drawable.tempimage1,"."))
+        imageList.add(SlideModel(R.drawable.tempimage1,"."))
+        imageList.add(SlideModel(R.drawable.tempimage1,"."))
+        imageList.add(SlideModel(R.drawable.tempimage1,"."))
+
+        imageSlider.setImageList(imageList,ScaleTypes.FIT)
+    }
+
+
+
+
+/*
+    var viewPager:ViewPager?= null
+    var images = intArrayOf(R.drawable.tempimage1,R.drawable.tempimage1)
+    var vpAdapter:ViewPagerAdapter?=null
+
+    fun imagesliderViewPager(){
+
+
+        val adapter=ViewPagerAdapter()
+        viewPager=binding.vpImages as ViewPager
+        vpAdapter= ViewPagerAdapter(requireContext(),images)
+        viewPager!!.adapter
+
+
+
+    }*/
 
 }

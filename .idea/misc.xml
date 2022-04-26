@@ -20,10 +20,22 @@
         <entry key="..\:/Collection/Classes/KotlinTRC/Self/TRCFinal/app/src/main/res/layout/ziyaret_fotograf_card.xml" value="0.3875" />
         <entry key="..\:/Collection/Classes/KotlinTRC/Self/TRCFinal/app/src/main/res/layout/ziyaret_fotograf_ekle_card.xml" value="0.67" />
         <entry key="..\:/Collection/Classes/KotlinTRC/Self/TRCFinal/app/src/main/res/layout/ziyaret_gecmisi_card.xml" value="0.3875" />
+        <entry key="..\:/Users/yunli/.gradle/caches/transforms-3/880a9956a6124d9ad352f9c1a0e15800/transformed/jetified-ImageSlideshow-0.1.0/res/drawable/default_selected_dot.xml" value="0.1455" />
+        <entry key="..\:/Users/yunli/.gradle/caches/transforms-3/880a9956a6124d9ad352f9c1a0e15800/transformed/jetified-ImageSlideshow-0.1.0/res/drawable/default_unselected_dot.xml" value="0.2375" />
+        <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/drawable/bg_transparent.xml" value="0.1455" />
         <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/drawable/box.xml" value="0.1" />
+        <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/drawable/custom_viewpager_layout.xml" value="0.1" />
+        <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/drawable/custom_viewpager_loayout.xml" value="0.1875" />
+        <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/drawable/oncelik3_sekil.xml" value="0.1055" />
+        <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/drawable/oval_shape.xml" value="0.1" />
+        <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/drawable/selected_dot.xml" value="0.1" />
+        <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/drawable/unselected_dot.xml" value="0.1" />
+        <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/drawable/viewpager_item.xml" value="0.1" />
         <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/layout/box.xml" value="0.1" />
-        <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/layout/fragment_detay.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/layout/custom_viewpager_layout.xml" value="0.264" />
+        <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/layout/fragment_detay.xml" value="0.264" />
+        <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/layout/fragment_detay_view_pager.xml" value="0.264" />
         <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/layout/fragment_gezdiklerim.xml" value="0.1" />
         <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/layout/fragment_gezilecek.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/layout/fragment_harita.xml" value="0.25416666666666665" />
@@ -31,8 +43,9 @@
         <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/layout/fragment_ziyaret_ekle.xml" value="0.48507462686567165" />
         <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/layout/gezdiklerim_card.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/layout/gezilecekler_card.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/layout/oncelik_spinner_item.xml" value="0.1" />
+        <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/layout/oncelik_spinner_item.xml" value="0.6" />
         <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/layout/spinner_bg.xml" value="0.1" />
+        <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/layout/viewpager_item.xml" value="0.264" />
         <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/layout/ziyaret_fotograf_card.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/layout/ziyaret_fotograf_ekle_card.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/layout/ziyaret_gecmisi_card.xml" value="0.25416666666666665" />

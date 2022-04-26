@@ -56,17 +56,21 @@
         <com.denzcoskun.imageslider.ImageSlider
             android:id="@+id/imageSlider"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginBottom="252dp"
-            app:iss_auto_cycle="true"
+            android:layout_height="200dp"
+            app:iss_auto_cycle="false"
+            app:iss_corner_radius="5"
+            app:iss_title_background="@drawable/bg_transparent"
             app:iss_delay="0"
-            app:iss_error_image="@drawable/ic_launcher_background"
+            app:iss_error_image="@drawable/error"
             app:iss_period="1000"
-            app:iss_placeholder="@drawable/ic_launcher_foreground"
-            app:layout_constraintBottom_toTopOf="@+id/rv_ziyaret_gecmisi"
+            app:iss_placeholder="@drawable/placeholder"
+            app:iss_selected_dot="@drawable/selected_dot"
+            app:iss_unselected_dot="@drawable/unselected_dot"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" >
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints">
 
         </com.denzcoskun.imageslider.ImageSlider>
 
@@ -210,11 +214,11 @@
             android:id="@+id/rv_ziyaret_gecmisi"
             android:layout_width="340dp"
             android:layout_height="0dp"
-            android:layout_marginTop="13dp"
+            android:layout_marginTop="12dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageSlider" />
+            app:layout_constraintTop_toBottomOf="@+id/textZiyaretGecmisi" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
