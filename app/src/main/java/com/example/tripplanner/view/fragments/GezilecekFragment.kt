@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tripplanner.Controller.bll.TripPlannerLogic
@@ -42,8 +44,11 @@ class GezilecekFragment : Fragment() {
 
     fun itemClick(position:Int,itemView:View){
         Toast.makeText(requireContext(),yerlerListe.get(position).yerAdi + " tıklandı", Toast.LENGTH_SHORT).show()
-        //findNavController().navigate(R.id.action_gezilecekFragment2_to_detayFragment)
-        (activity as MainActivity).fragmentDegistir(DetayFragment())
+//        findNavController().navigate(R.id.action_gezilecekFragment2_to_detayFragment)
+//        (activity as MainActivity).fragmentDegistir(DetayFragment())
+
+        val gezilecek2DetayNavDir = GezilecekFragmentDirections.actionGezilecekFragment2ToDetayFragment(yerlerListe[position])
+        (activity as MainActivity).fragmentDegistir(gezilecek2DetayNavDir)
     }
 
 }
