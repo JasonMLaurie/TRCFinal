@@ -6,8 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.tripplanner.Controller.bll.TripPlannerLogic
 import com.example.tripplanner.databinding.FragmentYerEkleBinding
+import com.example.tripplanner.model.YerEntity
+import com.example.tripplanner.view.activities.MainActivity
 import com.example.tripplanner.view.adapters.foto.FotoAdapter
 
 /** Gezilecek Yer Ekleme Fragment*/
@@ -26,6 +30,25 @@ class YerEkleFragment : Fragment() {
 
         createTempList()
         setAdapters()
+
+        var yer= YerEntity(0.0,0.0)
+
+
+
+        binding.btnYerKaydet.setOnClickListener {
+            yer.yerAdi=binding.eTvYerAdi.text.toString()
+            yer.kisaTanim=binding.eTvYerKisaTanim.text.toString()
+            yer.kisaAciklama=binding.eTvYerKisaAciklama.text.toString()
+
+            TripPlannerLogic.yerEkle(requireContext(),yer)
+
+            (activity as MainActivity).fragmentDegistir(GezilecekFragment())
+        }
+
+        //TODO tabb layout düzenlenecek
+        (activity as MainActivity).binding.tabLayout.isVisible=false
+        (activity as MainActivity).binding.fabYerEkle.isVisible=false
+
 
         return binding.root
     }
