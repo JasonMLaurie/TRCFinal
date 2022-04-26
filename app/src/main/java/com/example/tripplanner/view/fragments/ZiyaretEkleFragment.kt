@@ -187,6 +187,8 @@ class ZiyaretEkleFragment : Fragment() {
     fun openGallery() {
 
         // TODO Permission problem here. Maybe about SDK.
+        /** Notes From ARAS: PermissionLogic requires an activity specifically derived from PermissionActivity. Since this is a fragment it will not work as intended.
+         * For now it might be better of with manual permission requests. After the project is done, Permission Activity should be changed into an interface */
         // It asks for permission but opens gallery before it. If a photo is selected then it returns
         // to the source page where the permission pop up still up, and if you permit it, it works as
         // intended, but if you deny the permission it still adds the selected photo from gallery,
