@@ -84,6 +84,7 @@ class DetayFragment : Fragment() {
             val intent = Intent(requireContext(), MapsActivity::class.java)
             intent.putExtra("Latitude",yerObject.latitude)
             intent.putExtra("Longitude",yerObject.longitude)
+            intent.putExtra("mode",true)
             startActivity(intent)
         }
 

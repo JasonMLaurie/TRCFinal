@@ -25,9 +25,5 @@ class GezilecekFragment : Fragment() {
 
     private fun clickListeners(){
 
-        binding.tempButton.setOnClickListener {
-             Navigation.findNavController(binding.tempButton).navigate(R.id.action_gezilecekFragment2_to_yerEkleFragment)
-        }
-
     }
 }
