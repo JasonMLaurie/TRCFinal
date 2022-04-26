@@ -32,12 +32,16 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBK7c5GCLPG5RUCq0Ms6q_kAlQj9Xnzd6k" />
 
+        <activity android:name=".view.activities.MainActivity"
+            android:exported="false"
+            android:label="MainActivity"/>
+
         <activity
             android:name=".view.activities.MapsActivity"
             android:exported="false"
             android:label="@string/title_activity_maps" />
         <activity
-            android:name=".view.activities.MainActivity"
+            android:name=".view.activities.SplashScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

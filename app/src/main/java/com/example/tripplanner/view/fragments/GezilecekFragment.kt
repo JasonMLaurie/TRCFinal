@@ -5,29 +5,45 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.Navigation
+import android.widget.Toast
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.tripplanner.Controller.bll.TripPlannerLogic
 import com.example.tripplanner.R
 import com.example.tripplanner.databinding.FragmentGezilecekBinding
+import com.example.tripplanner.model.YerEntity
+import com.example.tripplanner.view.activities.MainActivity
+import com.example.tripplanner.view.adapters.yer.YerAdapter
 
 
 class GezilecekFragment : Fragment() {
 
-    private lateinit var binding : FragmentGezilecekBinding
+    lateinit var binding:FragmentGezilecekBinding
+    lateinit var yerlerListe:ArrayList<YerEntity>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        binding = FragmentGezilecekBinding.inflate(layoutInflater, container, false)
 
-        clickListeners()
+        binding= FragmentGezilecekBinding.inflate(inflater)
+
+        getTumGezilecekYerler()
 
         return binding.root
     }
 
-    private fun clickListeners(){
+    fun getTumGezilecekYerler(){
 
-        binding.tempButton.setOnClickListener {
-             Navigation.findNavController(binding.tempButton).navigate(R.id.action_gezilecekFragment2_to_yerEkleFragment)
-        }
+        yerlerListe= TripPlannerLogic.tumYerleriGetir(requireContext())
+        val lm = LinearLayoutManager(requireContext())
+        lm.orientation= LinearLayoutManager.VERTICAL
+        binding.rvGezilecekYerler.layoutManager=lm
+        binding.rvGezilecekYerler.adapter=YerAdapter(requireContext(),yerlerListe,::itemClick)
 
     }
+
+    fun itemClick(position:Int,itemView:View){
+        Toast.makeText(requireContext(),yerlerListe.get(position).yerAdi + " tıklandı", Toast.LENGTH_SHORT).show()
+        //findNavController().navigate(R.id.action_gezilecekFragment2_to_detayFragment)
+        (activity as MainActivity).fragmentDegistir(DetayFragment())
+    }
+
 }

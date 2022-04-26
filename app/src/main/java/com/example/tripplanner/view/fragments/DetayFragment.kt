@@ -45,8 +45,8 @@ class DetayFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     fun setInitialViews(){
 
-//        val bundle : DetayFragmentArgs by navArgs()
-//        yerObject = bundle.yerObject
+        val bundle : DetayFragmentArgs by navArgs()
+        yerObject = bundle.yerObject
 
 
         binding.tvYerKisaTanimBilgi.text = yerObject.kisaTanim
