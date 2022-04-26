@@ -147,7 +147,11 @@ class YerEkleFragment : Fragment() {
 
     }
 
-
+//    override fun onResume() {
+//        super.onResume()
+//        (activity as MainActivity).binding.tabLayout.isVisible=false
+//        (activity as MainActivity).binding.fabYerEkle.isVisible=false
+//    }
 
 
 

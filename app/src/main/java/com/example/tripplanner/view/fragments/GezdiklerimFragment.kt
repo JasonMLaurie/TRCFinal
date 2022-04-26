@@ -54,8 +54,8 @@ class GezdiklerimFragment : Fragment() {
         Toast.makeText(requireContext(),"Tiklandi",Toast.LENGTH_SHORT).show()
         var fragment=DetayFragment()
 
-        fragment.yerObject=gezdiklerimListe[position]
-        (requireActivity() as MainActivity).fragmentDegistir(fragment)
+        val gezdiklerim2DetayFragment = GezdiklerimFragmentDirections.actionGezdiklerimFragmentToDetayFragment(gezdiklerimListe[position])
+        (requireActivity() as MainActivity).fragmentDegistir(gezdiklerim2DetayFragment)
         //Navigation.findNavController(requireActivity().findViewById(R.id.fragmentContainerView)).navigate(gezdiklerim2DetayNavDir)
         //itemView.findNavController().navigate(gezdiklerim2DetayNavDir)
     }
