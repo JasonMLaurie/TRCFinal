@@ -13,6 +13,7 @@ import com.example.tripplanner.Controller.bll.TripPlannerLogic
 import com.example.tripplanner.R
 import com.example.tripplanner.databinding.FragmentGezdiklerimBinding
 import com.example.tripplanner.model.YerEntity
+import com.example.tripplanner.model.ZiyaretEntity
 import com.example.tripplanner.view.activities.MainActivity
 import com.example.tripplanner.view.adapters.yer.YerAdapter
 import java.text.FieldPosition
@@ -32,8 +33,14 @@ class GezdiklerimFragment : Fragment() {
     }
 
     private fun getGezdiklerim() {
-        gezdiklerimListe= arrayListOf()
-        gezdiklerimListe.mockData()
+       /* var temp=TripPlannerLogic.tumYerleriGetir(requireContext())[3]
+        var ziyaret=ZiyaretEntity()
+        ziyaret.aciklama=temp.kisaAciklama
+        ziyaret.tarih="01.01.01"
+        ziyaret.yerId=temp.id
+        TripPlannerLogic.ziyaretEkle(requireContext(),ziyaret)*/
+
+        gezdiklerimListe= TripPlannerLogic.gezdiklerimiGetir(requireContext())
     }
 
     private fun initRcv(){
@@ -41,21 +48,16 @@ class GezdiklerimFragment : Fragment() {
         lm.orientation=LinearLayoutManager.VERTICAL
         binding.frgGezdiklerimRv.layoutManager=lm
         binding.frgGezdiklerimRv.adapter=YerAdapter(requireContext(),gezdiklerimListe,::itemClick)
-        binding.frgGezdiklerimRv.apply{
-            val lm=LinearLayoutManager(requireContext())
-            lm.orientation=LinearLayoutManager.VERTICAL
-            layoutManager=lm
-        }
-
     }
 
-    private fun itemClick(position: Int) {
+    private fun itemClick(position: Int,itemView:View) {
         Toast.makeText(requireContext(),"Tiklandi",Toast.LENGTH_SHORT).show()
         var fragment=DetayFragment()
-        val gezdiklerim2DetayNavDir= GezdiklerimFragmentDirections.actionGezdiklerimFragmentToDetayFragment(gezdiklerimListe[position])
 
+        fragment.yerObject=gezdiklerimListe[position]
+        (requireActivity() as MainActivity).fragmentDegistir(fragment)
         //Navigation.findNavController(requireActivity().findViewById(R.id.fragmentContainerView)).navigate(gezdiklerim2DetayNavDir)
-        itemView.findNavController().navigate(gezdiklerim2DetayNavDir)
+        //itemView.findNavController().navigate(gezdiklerim2DetayNavDir)
     }
 
     private fun ArrayList<YerEntity>.mockData(){
@@ -64,6 +66,7 @@ class GezdiklerimFragment : Fragment() {
         tempEntity.kisaTanim="temp"
         tempEntity.yerAdi="TEMP"
         tempEntity.ziyaretEdildi=1
+        tempEntity.id=1
         this.add(tempEntity)
         this.add(tempEntity)
         this.add(tempEntity)

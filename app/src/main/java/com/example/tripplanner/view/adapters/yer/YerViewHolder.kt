@@ -9,7 +9,7 @@ import com.example.tripplanner.R
 import com.example.tripplanner.model.YerEntity
 import java.util.*
 
-class YerViewHolder(itemView: View, glist:ArrayList<YerEntity>, itemClick:(position:Int)->Unit):RecyclerView.ViewHolder(itemView) {
+class YerViewHolder(itemView: View, glist:ArrayList<YerEntity>, itemClick:(position:Int,itemView:View)->Unit):RecyclerView.ViewHolder(itemView) {
 
     var tvYerAdı:TextView
     var tvYerKisaTanim:TextView
@@ -24,7 +24,7 @@ class YerViewHolder(itemView: View, glist:ArrayList<YerEntity>, itemClick:(posit
         ivYerFotograf=itemView.findViewById(R.id.ivYerFotografGC)
         ivOncelik=itemView.findViewById(R.id.ivOncelikGC)
 
-        itemView.setOnClickListener { itemClick(adapterPosition) }
+        itemView.setOnClickListener { itemClick(adapterPosition,itemView) }
     }
 
 

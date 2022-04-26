@@ -163,8 +163,8 @@ class TripPlannerOperation(context: Context) {
 
         if (dbObject.moveToFirst()) {
             do {
-                if (!gezdiklerimIDList.contains(dbObject.getInt(dbObject.getColumnIndex(yerTableStr)))) {
-                    gezdiklerimIDList.add(dbObject.getInt(dbObject.getColumnIndex(yerTableStr)))
+                if (!gezdiklerimIDList.contains(dbObject.getInt(dbObject.getColumnIndex(yerStr)))) {
+                    gezdiklerimIDList.add(dbObject.getInt(dbObject.getColumnIndex(yerStr)))
                 }
             } while (dbObject.moveToNext())
         }
