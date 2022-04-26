@@ -49,7 +49,7 @@ class GezdiklerimFragment : Fragment() {
 
     }
 
-    private fun itemClick(position: Int,itemView:View) {
+    private fun itemClick(position: Int) {
         Toast.makeText(requireContext(),"Tiklandi",Toast.LENGTH_SHORT).show()
         var fragment=DetayFragment()
         val gezdiklerim2DetayNavDir= GezdiklerimFragmentDirections.actionGezdiklerimFragmentToDetayFragment(gezdiklerimListe[position])
