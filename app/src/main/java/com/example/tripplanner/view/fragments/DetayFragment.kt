@@ -27,7 +27,7 @@ class DetayFragment : Fragment() {
 
 
     private lateinit var binding : FragmentDetayBinding
-    private lateinit var yerObject : YerEntity
+     lateinit var yerObject : YerEntity
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -35,6 +35,8 @@ class DetayFragment : Fragment() {
 
         setInitialViews()
         clickListeners()
+
+
 
         return binding.root
     }
@@ -44,8 +46,8 @@ class DetayFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     fun setInitialViews(){
 
-        val bundle : DetayFragmentArgs by navArgs()
-        yerObject = bundle.yerObject
+        //val bundle : DetayFragmentArgs by navArgs()
+        //yerObject = bundle.yerObject
 
 
         binding.tvYerKisaTanimBilgi.text = yerObject.kisaTanim
@@ -70,6 +72,7 @@ class DetayFragment : Fragment() {
             val intent = Intent(requireContext(), MapsActivity::class.java)
             intent.putExtra("Latitude",yerObject.latitude)
             intent.putExtra("Longitude",yerObject.longitude)
+            intent.putExtra("mode",true)
             startActivity(intent)
         }
 
