@@ -13,8 +13,8 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.tripplanner.Controller.bll.TripPlannerLogic
 import com.example.tripplanner.R
-import com.example.tripplanner.bll.TripPlannerLogic
 import com.example.tripplanner.databinding.FragmentDetayBinding
 import com.example.tripplanner.model.YerEntity
 import com.example.tripplanner.model.ZiyaretEntity
@@ -60,7 +60,7 @@ class DetayFragment : Fragment() {
             binding.rvZiyaretGecmisi.adapter = adapter
         }
 
-        Log.e("Logcat",TripPlannerLogic.tumZiyaretleriGetir(requireContext()).size.toString())
+        Log.e("Logcat", TripPlannerLogic.tumZiyaretleriGetir(requireContext()).size.toString())
         Log.e("Logcat",TripPlannerLogic.tumZiyaretleriGetir(requireContext()).toString())
     }
 
