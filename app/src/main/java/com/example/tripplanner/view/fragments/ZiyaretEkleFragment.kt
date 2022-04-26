@@ -17,7 +17,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.example.tripplanner.bll.PermissionLogic
+import com.example.tripplanner.Controller.bll.PermissionLogic
 import com.example.tripplanner.bll.TripPlannerLogic
 import com.example.tripplanner.databinding.FragmentZiyaretEkleBinding
 import com.example.tripplanner.model.ResimEntity

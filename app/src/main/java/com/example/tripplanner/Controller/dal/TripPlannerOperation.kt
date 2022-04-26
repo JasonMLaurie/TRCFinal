@@ -1,10 +1,10 @@
-package com.example.tripplanner.dal
+package com.example.tripplanner.Controller.dal
 
 import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
-import android.net.Uri
+import com.example.tripplanner.dal.DatabaseOpenHelper
 import com.example.tripplanner.model.ResimEntity
 import com.example.tripplanner.model.ZiyaretEntity
 import com.example.tripplanner.model.YerEntity
