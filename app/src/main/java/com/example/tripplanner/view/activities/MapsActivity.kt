@@ -47,6 +47,7 @@ class MapsActivity : PermissionActivity(), OnMapReadyCallback {
             .findFragmentById(R.id.MapsActivity_map) as SupportMapFragment
         mapFragment.getMapAsync(this)
         PermissionLogic.locationPermissionControl(this,this)
+
         initializeMode()
         configureButton()
     }
@@ -89,7 +90,7 @@ class MapsActivity : PermissionActivity(), OnMapReadyCallback {
         }
 
     }
-    fun configureButton(){
+    private fun configureButton(){
         if(mode){
             //Konuma gidis
         }else{
