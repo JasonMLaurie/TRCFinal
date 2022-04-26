@@ -1,11 +1,9 @@
 package com.example.tripplanner.view.activities
 
 import android.annotation.SuppressLint
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.NavHostFragment
 import com.example.tripplanner.R
@@ -14,20 +12,22 @@ import com.example.tripplanner.databinding.TabLayoutBinding
 import com.example.tripplanner.view.fragments.*
 import com.google.android.material.tabs.TabLayout
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : PermissionActivity() {
 
     lateinit var binding :ActivityMainBinding
+    lateinit var navHostFragment : NavHostFragment
+
+
+    override fun grantedFunc() {
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
 
-        binding.fabYerEkle.setOnClickListener {
-            val navDir2YerEkleFragment = GezilecekFragmentDirections.actionGezilecekFragment2ToYerEkleFragment()
-            fragmentDegistir(navDir2YerEkleFragment)
-        }
 
         //adding tabs
         binding.tabLayout.addTab(binding.tabLayout.newTab())
@@ -35,16 +35,10 @@ class MainActivity : AppCompatActivity() {
 
         tabOlustur()
 
-        binding.tabLayout.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                tabSec(tab!!.position)
-            }
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
+        clickListeners()
 
-            }
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-            }
-        })
+        tabListener()
+
 //        tabSec(0) //tekrar aynı fragment oluşmasını engelliyoruz
 
     }
@@ -63,14 +57,25 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun tabSec(index:Int){
+        val primeFragmentName = supportFragmentManager.primaryNavigationFragment!!.childFragmentManager.fragments[0].javaClass.name
         when (index)
         {
             0 -> {
-                val navDir2GezilecekFragment = GezdiklerimFragmentDirections.actionGezdiklerimFragmentToGezilecekFragment2()
+                val navDir2GezilecekFragment : NavDirections
+                if(primeFragmentName.equals("com.example.tripplanner.view.fragments.GezdiklerimFragment")){
+                    navDir2GezilecekFragment = GezdiklerimFragmentDirections.actionGezdiklerimFragmentToGezilecekFragment2()
+                }else{
+                    navDir2GezilecekFragment = DetayFragmentDirections.actionDetayFragmentToGezilecekFragment2()
+                }
                 fragmentDegistir(navDir2GezilecekFragment)
             }
             1 -> {
-                val navDir2GezdiklerimFragment = GezilecekFragmentDirections.actionGezilecekFragment2ToGezdiklerimFragment()
+                val navDir2GezdiklerimFragment : NavDirections
+                if(primeFragmentName.equals("com.example.tripplanner.view.fragments.GezilecekFragment")){
+                    navDir2GezdiklerimFragment = GezilecekFragmentDirections.actionGezilecekFragment2ToGezdiklerimFragment()
+                }else{
+                    navDir2GezdiklerimFragment = DetayFragmentDirections.actionDetayFragmentToGezdiklerimFragment()
+                }
                 fragmentDegistir(navDir2GezdiklerimFragment)
             }
         }
@@ -80,7 +85,6 @@ class MainActivity : AppCompatActivity() {
         binding.tabLayout.isVisible=true
         binding.fabYerEkle.isVisible=true
 
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         val navController = navHostFragment.navController
         navController.navigate(navDirObject)
 
@@ -90,20 +94,60 @@ class MainActivity : AppCompatActivity() {
             .commit()*/
     }
 
+    private fun clickListeners(){
 
+        binding.fabYerEkle.setOnClickListener {
+
+            val navDir2YerEkleFragment : NavDirections
+
+            val primeFragmentName = supportFragmentManager.primaryNavigationFragment!!.childFragmentManager.fragments[0].javaClass.name
+            when(primeFragmentName){
+                "com.example.tripplanner.view.fragments.GezdiklerimFragment" -> {
+                    navDir2YerEkleFragment = GezdiklerimFragmentDirections.actionGezdiklerimFragmentToYerEkleFragment()
+
+                }
+                "com.example.tripplanner.view.fragments.GezilecekFragment" -> {
+                    navDir2YerEkleFragment = GezilecekFragmentDirections.actionGezilecekFragment2ToYerEkleFragment()
+
+                }
+                "com.example.tripplanner.view.fragments.DetayFragment" -> {
+                    navDir2YerEkleFragment = DetayFragmentDirections.actionDetayFragmentToYerEkleFragment()
+                }
+                else ->
+                    navDir2YerEkleFragment = GezilecekFragmentDirections.actionGezilecekFragment2ToYerEkleFragment()
+            }
+
+            fragmentDegistir(navDir2YerEkleFragment)
+        }
+
+    }
+
+    private fun tabListener(){
+        binding.tabLayout.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                tabSec(tab!!.position)
+            }
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+
+            }
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+            }
+
+        })
+    }
 
     override fun onBackPressed() {
+        if(!binding.tabLayout.isVisible){
+            binding.tabLayout.isVisible=true
+            binding.fabYerEkle.isVisible=true
+        }
         super.onBackPressed()
-        //todo değistir - geri gidince main activityi tekrar başlatıyor
-//        val intent= Intent(this,MainActivity::class.java)
-//        startActivity(intent)
     }
 
     override fun onResume() {
-        super.onResume()
         binding.tabLayout.isVisible=true
         binding.fabYerEkle.isVisible=true
+        super.onResume()
     }
-
 
 }

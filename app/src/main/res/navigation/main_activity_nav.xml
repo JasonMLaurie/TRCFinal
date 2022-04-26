@@ -19,6 +19,15 @@
         <argument
             android:name="yerObject"
             app:argType="com.example.tripplanner.model.YerEntity" />
+        <action
+            android:id="@+id/action_detayFragment_to_gezilecekFragment2"
+            app:destination="@id/gezilecekFragment2" />
+        <action
+            android:id="@+id/action_detayFragment_to_gezdiklerimFragment"
+            app:destination="@id/gezdiklerimFragment" />
+        <action
+            android:id="@+id/action_detayFragment_to_yerEkleFragment"
+            app:destination="@id/yerEkleFragment" />
     </fragment>
     <fragment
         android:id="@+id/gezdiklerimFragment"

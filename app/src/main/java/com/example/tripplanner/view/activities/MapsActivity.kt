@@ -58,6 +58,7 @@ class MapsActivity : PermissionActivity(), OnMapReadyCallback {
         }
         if (mode){// Detaydan gelirsen
             mMap.addMarker(MarkerOptions().position(locationPair!!.second))
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(locationPair!!.second))
         }
 
     }
@@ -67,7 +68,6 @@ class MapsActivity : PermissionActivity(), OnMapReadyCallback {
         if (!mode){//Yer Ekle kismindan gelirsen
             println(mode)
             PermissionLogic.locationPermissionControl(this,this)
-            locationManager=getSystemService(LOCATION_SERVICE) as LocationManager
         }else{//Detay kismindan gelirsen
             locationPair= Pair("Konum", LatLng(intent.getDoubleExtra("Latitude",40.0),intent.getDoubleExtra("Longitude",40.0)))
             Toast.makeText(this,"Lat: ${locationPair!!.second.latitude} lon: ${locationPair!!.second.longitude}",Toast.LENGTH_SHORT).show()
@@ -94,12 +94,18 @@ class MapsActivity : PermissionActivity(), OnMapReadyCallback {
     @SuppressLint("MissingPermission")
     override fun grantedFunc() {
         if (!mode){
+            locationManager=getSystemService(LOCATION_SERVICE) as LocationManager
             locationManager!!.requestLocationUpdates(LocationManager.GPS_PROVIDER,1000, 0.1f,locationListener)
         }
     }
 
 
     var locationListener = object : LocationListener{
+
+        override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
+            super.onStatusChanged(provider, status, extras)
+        }
+
         override fun onLocationChanged(p0: Location) {
             mMap.clear()
             Toast.makeText(this@MapsActivity,"Konum degisti",Toast.LENGTH_SHORT).show()
