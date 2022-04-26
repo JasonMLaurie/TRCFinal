@@ -1,22 +1,16 @@
 package com.example.tripplanner.view.activities
 
-import android.Manifest
 import android.annotation.SuppressLint
-import android.app.Activity
-import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.core.content.ContextCompat
 import com.example.tripplanner.R
-import com.example.tripplanner.bll.PermissionLogic
+import com.example.tripplanner.Controller.bll.PermissionLogic
 import com.example.tripplanner.databinding.ActivityMapsBinding
 
 

@@ -17,12 +17,13 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.example.tripplanner.bll.PermissionLogic
-import com.example.tripplanner.bll.TripPlannerLogic
+import com.example.tripplanner.Controller.bll.PermissionLogic
+import com.example.tripplanner.Controller.bll.TripPlannerLogic
 import com.example.tripplanner.databinding.FragmentZiyaretEkleBinding
 import com.example.tripplanner.model.ResimEntity
 import com.example.tripplanner.model.ZiyaretEntity
 import com.example.tripplanner.view.activities.MainActivity
+import com.example.tripplanner.view.activities.PermissionActivity
 import com.example.tripplanner.view.adapters.foto.FotoAdapter
 import java.io.FileNotFoundException
 import java.util.*
@@ -185,6 +186,8 @@ class ZiyaretEkleFragment : Fragment() {
     fun openGallery() {
 
         // TODO Permission problem here. Maybe about SDK.
+        /** Notes From ARAS: PermissionLogic requires an activity specifically derived from PermissionActivity. Since this is a fragment it will not work as intended.
+         * For now it might be better of with manual permission requests. After the project is done, Permission Activity should be changed into an interface */
         // It asks for permission but opens gallery before it. If a photo is selected then it returns
         // to the source page where the permission pop up still up, and if you permit it, it works as
         // intended, but if you deny the permission it still adds the selected photo from gallery,
@@ -192,7 +195,7 @@ class ZiyaretEkleFragment : Fragment() {
         // Remove condition check to reproduce it.
 
         // Made mediaPermissionControl return a boolean value for a temp. (or definite) solution
-        if(PermissionLogic.mediaPermissionControl((activity as MainActivity),requireContext())){
+        if(PermissionLogic.mediaPermissionControl((activity as PermissionActivity),requireContext())){
             //V1
             val intent = Intent(Intent.ACTION_PICK)
             intent.setType("image/*")

@@ -1,4 +1,4 @@
-package com.example.tripplanner.dal
+package com.example.tripplanner.Controller.dal
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase

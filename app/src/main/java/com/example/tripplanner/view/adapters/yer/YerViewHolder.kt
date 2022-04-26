@@ -2,7 +2,6 @@ package com.example.tripplanner.view.adapters.yer
 
 import android.content.Context
 import android.view.View
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -10,7 +9,7 @@ import com.example.tripplanner.R
 import com.example.tripplanner.model.YerEntity
 import java.util.*
 
-class YerViewHolder(itemView: View, glist:ArrayList<YerEntity>,var itemClick:(position:Int, itemView:View)->Unit):RecyclerView.ViewHolder(itemView) {
+class YerViewHolder(itemView: View, glist:ArrayList<YerEntity>, itemClick:(position:Int)->Unit):RecyclerView.ViewHolder(itemView) {
 
     var tvYerAdı:TextView
     var tvYerKisaTanim:TextView
@@ -22,12 +21,10 @@ class YerViewHolder(itemView: View, glist:ArrayList<YerEntity>,var itemClick:(po
         tvYerAdı=itemView.findViewById(R.id.tvYerAdiGC)
         tvYerKisaTanim=itemView.findViewById(R.id.tvYerKisaTanimGC)
         tvYerKisaAciklama=itemView.findViewById(R.id.tvYerKisaAciklemaGC)
-        ivYerFotograf=itemView.findViewById(R.id.ivEklenenFotografZC)
+        ivYerFotograf=itemView.findViewById(R.id.ivYerFotografGC)
         ivOncelik=itemView.findViewById(R.id.ivOncelikGC)
 
-        itemView.setOnClickListener {
-            itemClick(adapterPosition, it)
-        }
+        itemView.setOnClickListener { itemClick(adapterPosition) }
     }
 
 
