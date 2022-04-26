@@ -2,6 +2,7 @@ package com.example.tripplanner.view.adapters.yer
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tripplanner.R
