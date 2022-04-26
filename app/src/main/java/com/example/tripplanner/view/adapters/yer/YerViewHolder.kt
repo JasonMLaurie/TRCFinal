@@ -41,7 +41,7 @@ class YerViewHolder(itemView: View, glist:ArrayList<YerEntity>, itemClick:(posit
         if (item.oncelik.equals("oncelik1"))//yeşil
         { ivOncelik.setImageResource(R.drawable.oncelik1_sekil) }
         else if (item.oncelik.equals("oncelik2"))//mavi
-        { ivOncelik.setBackgroundColor(R.drawable.oncelik2_sekil) }
+        { ivOncelik.setImageResource(R.drawable.oncelik2_sekil) }
         else if (item.oncelik.equals("oncelik3"))//gri
         { ivOncelik.setImageResource(R.drawable.oncelik3_sekil)}
 

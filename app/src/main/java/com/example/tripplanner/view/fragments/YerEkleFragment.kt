@@ -30,6 +30,7 @@ class YerEkleFragment : Fragment() {
     private var resimListe: ArrayList<Uri> = arrayListOf()
     private lateinit var locationIntent:Pair<Double,Double>
     var yer= YerEntity(0.0,0.0)
+    var secilenOncelik=Oncelik(0,"")
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -81,6 +82,7 @@ class YerEkleFragment : Fragment() {
         yer.yerAdi=binding.eTvYerAdi.text.toString()
         yer.kisaTanim=binding.eTvYerKisaTanim.text.toString()
         yer.kisaAciklama=binding.eTvYerKisaAciklama.text.toString()
+        yer.oncelik=secilenOncelik.oncelikDurumu
 
         //todo öncelik ve fotoğraf bilgileri atamaı yapılacak
 
@@ -171,9 +173,8 @@ class YerEkleFragment : Fragment() {
             spinner.onItemSelectedListener = object :AdapterView.OnItemSelectedListener{
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                     //var secilenOncelik = parent!!.getItemAtPosition(position)
-                    var secilenOncelik= Oncelikler.list!!.get(position)
+                    secilenOncelik = Oncelikler.list!!.get(position)
                     Toast.makeText(requireContext(),"${secilenOncelik.oncelikDurumu}",Toast.LENGTH_SHORT).show()
-                    yer.oncelik=secilenOncelik.oncelikDurumu
 
                 }
 
