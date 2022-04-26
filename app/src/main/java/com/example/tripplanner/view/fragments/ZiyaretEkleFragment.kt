@@ -54,7 +54,6 @@ class ZiyaretEkleFragment : Fragment() {
 
         return binding.root
     }
-
     /** Fill views with default values */
     @SuppressLint("SetTextI18n")
     fun setInitialViews(){
@@ -83,8 +82,7 @@ class ZiyaretEkleFragment : Fragment() {
         textWatchers()
     }
 
-    private fun resimUriListCheck() {
-        // TODO 5.fotoğraf yüklendikten sonra fotoğraf ekle tuşu GONE.
+    private fun resimUriListCheck(){
         if (resimUriList.contains(Uri.EMPTY) && resimUriList.size>1){
             resimUriList.remove(Uri.EMPTY)
         }
@@ -229,5 +227,10 @@ class ZiyaretEkleFragment : Fragment() {
         dp.setButton(DialogInterface.BUTTON_POSITIVE, "Seç", dp)
         dp.setButton(DialogInterface.BUTTON_NEGATIVE, "İptal", dp)
         dp.show()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setInitialViews()
     }
 }

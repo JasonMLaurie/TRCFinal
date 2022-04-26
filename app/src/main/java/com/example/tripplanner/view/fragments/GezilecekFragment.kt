@@ -37,7 +37,6 @@ class GezilecekFragment : Fragment() {
         lm.orientation= LinearLayoutManager.VERTICAL
         binding.rvGezilecekYerler.layoutManager=lm
         binding.rvGezilecekYerler.adapter=YerAdapter(requireContext(),yerlerListe,::itemClick)
-
     }
 
     fun itemClick(position:Int,itemView: View){
