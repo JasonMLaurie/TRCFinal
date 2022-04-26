@@ -16,6 +16,8 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.tripplanner.Controller.bll.TripPlannerLogic
 import com.example.tripplanner.R
 import com.example.tripplanner.databinding.FragmentDetayBinding
+import com.example.tripplanner.model.Oncelik
+import com.example.tripplanner.model.Oncelikler
 import com.example.tripplanner.model.YerEntity
 import com.example.tripplanner.model.ZiyaretEntity
 import com.example.tripplanner.view.activities.MapsActivity
@@ -44,14 +46,21 @@ class DetayFragment : Fragment() {
     /** Fill views with default values */
     @SuppressLint("SetTextI18n")
     fun setInitialViews(){
-
         val bundle : DetayFragmentArgs by navArgs()
         yerObject = bundle.yerObject
 
+        binding.apply {
+            tvYerKisaTanimBilgi.text = yerObject.kisaTanim
+            tvKisaAciklamaBilgisi.text = yerObject.kisaAciklama
+            // TODO Oncelik için kontrol
+            if (yerObject.oncelik.equals("oncelik1"))//yeşil
+            { ivOncelikD.setImageResource(R.drawable.oncelik1_sekil) }
+            else if (yerObject.oncelik.equals("oncelik2"))//mavi
+            { ivOncelikD.setImageResource(R.drawable.oncelik2_sekil) }
+            else if (yerObject.oncelik.equals("oncelik3"))//gri
+            { ivOncelikD.setImageResource(R.drawable.oncelik3_sekil)}
+        }
 
-        binding.tvYerKisaTanimBilgi.text = yerObject.kisaTanim
-        binding.tvKisaAciklamaBilgisi.text = yerObject.kisaAciklama
-        // TODO Oncelik için kontrol
 
         val ziyaretList = TripPlannerLogic.ziyaretleriGetir(yerEntity = yerObject, context = requireContext())
         if(!ziyaretList.isNullOrEmpty()){
