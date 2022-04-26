@@ -15,6 +15,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.tripplanner.Controller.bll.PermissionLogic
@@ -232,5 +233,7 @@ class ZiyaretEkleFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         setInitialViews()
+        (activity as MainActivity).binding.tabLayout.isVisible=false
+        (activity as MainActivity).binding.fabYerEkle.isVisible=false
     }
 }

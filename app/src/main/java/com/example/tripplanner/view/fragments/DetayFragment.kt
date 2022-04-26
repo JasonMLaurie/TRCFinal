@@ -33,6 +33,7 @@ class DetayFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentDetayBinding.inflate(inflater, container, false)
 
+//        tempSol()
         setInitialViews()
         clickListeners()
 
@@ -44,8 +45,8 @@ class DetayFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     fun setInitialViews(){
 
-//        val bundle : DetayFragmentArgs by navArgs()
-//        yerObject = bundle.yerObject
+        val bundle : DetayFragmentArgs by navArgs()
+        yerObject = bundle.yerObject
 
 
         binding.tvYerKisaTanimBilgi.text = yerObject.kisaTanim
@@ -61,6 +62,19 @@ class DetayFragment : Fragment() {
 
         Log.e("Logcat", TripPlannerLogic.tumZiyaretleriGetir(requireContext()).size.toString())
         Log.e("Logcat",TripPlannerLogic.tumZiyaretleriGetir(requireContext()).toString())
+    }
+
+    fun tempSol(){
+        yerObject = YerEntity(0.0,0.0).apply{
+            kisaAciklama = "Aciklama"
+            kisaTanim = "Tanim"
+            yerAdi = "Yeradi"
+            oncelik = "Oncelik1"
+            ziyaretEdildi = 0
+        }
+        TripPlannerLogic.yerEkle(requireContext(),yerObject)
+        yerObject = TripPlannerLogic.tumYerleriGetir(requireContext())[0]
+
     }
 
     /** Click Listeners*/
