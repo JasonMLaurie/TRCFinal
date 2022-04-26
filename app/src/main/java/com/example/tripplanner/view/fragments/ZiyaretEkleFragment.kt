@@ -15,10 +15,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.tripplanner.bll.PermissionLogic
 import com.example.tripplanner.bll.TripPlannerLogic
 import com.example.tripplanner.databinding.FragmentZiyaretEkleBinding
+import com.example.tripplanner.model.ResimEntity
 import com.example.tripplanner.model.ZiyaretEntity
 import com.example.tripplanner.view.activities.MainActivity
 import com.example.tripplanner.view.adapters.foto.FotoAdapter
@@ -32,12 +34,18 @@ class ZiyaretEkleFragment : Fragment() {
 
     private lateinit var binding : FragmentZiyaretEkleBinding
     private var resimUriList: ArrayList<Uri> = arrayListOf(Uri.EMPTY)
-    lateinit var adapter: FotoAdapter
+    private var addedUriList : ArrayList<Uri> = arrayListOf()
+    private lateinit var adapter: FotoAdapter
+    private var gelenYerId : Int = 0
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         binding = FragmentZiyaretEkleBinding.inflate(inflater, container, false)
+
+
+        val bundle : ZiyaretEkleFragmentArgs by navArgs()
+        gelenYerId = bundle.yerId
 
 //        createTempList()
         setInitialViews()
@@ -49,6 +57,18 @@ class ZiyaretEkleFragment : Fragment() {
     /** Fill views with default values */
     @SuppressLint("SetTextI18n")
     fun setInitialViews(){
+
+        val resimList = TripPlannerLogic.fotoGetir(requireContext() ,gelenYerId)
+
+        resimList.forEach {
+            var uri = Uri.parse(it.uri)
+            if(!resimUriList.contains(uri)){
+                resimUriList.add(uri)
+            }
+        }
+
+        resimUriListCheck()
+
         adapter = FotoAdapter(requireContext(), resimUriList, ::photoCardClickEvent)
         binding.rvZiyaretEkle.layoutManager =
             StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
@@ -60,6 +80,13 @@ class ZiyaretEkleFragment : Fragment() {
 
         // Create line limiter for explanation
         textWatchers()
+    }
+
+    private fun resimUriListCheck() {
+        // TODO 5.fotoğraf yüklendikten sonra fotoğraf ekle tuşu GONE.
+        if (resimUriList.contains(Uri.EMPTY) && resimUriList.size>1){
+            resimUriList.remove(Uri.EMPTY)
+        }
     }
 
 
@@ -89,14 +116,23 @@ class ZiyaretEkleFragment : Fragment() {
     fun clickListeners(){
 
         binding.btnZiyaretKaydet.setOnClickListener {
+
             val ziyaretEntity = ZiyaretEntity().apply {
-                tarih = binding.tvTarihEkle.toString()
-                aciklama = binding.etZiyaretEkleAciklama.toString()
-                // yerId = intent.getInt("yerId")
-                // TODO get YerId from DetailsFragment
+                tarih = binding.tvTarihEkle.text.toString()
+                aciklama = binding.etZiyaretEkleAciklama.text.toString()
+                yerId = gelenYerId
             }
             // TODO restriction to make Ziyaret Yer field non-null-0
             TripPlannerLogic.ziyaretEkle(requireContext(),ziyaretEntity)
+
+            addedUriList.forEach {
+                val resimEntity = ResimEntity().apply {
+                    uri = it.toString()
+                    yerId = gelenYerId
+                }
+                TripPlannerLogic.fotoEkle(requireContext(),resimEntity)
+            }
+
             requireActivity().onBackPressed()
         }
 
@@ -132,6 +168,7 @@ class ZiyaretEkleFragment : Fragment() {
                 try {
                     val imageUri: Uri = result.data!!.data!!
                     resimUriList.add(imageUri)
+                    addedUriList.add(imageUri)
                     if (resimUriList.size == 2) {
                         // TODO a more suitable solution for empty Uri list.
                             if(resimUriList[0].equals(Uri.EMPTY)){
