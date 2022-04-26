@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
@@ -28,6 +29,7 @@ class YerEkleFragment : Fragment() {
     private lateinit var binding: FragmentYerEkleBinding
     private var resimListe: ArrayList<Uri> = arrayListOf()
     private lateinit var locationIntent:Pair<Double,Double>
+    var yer= YerEntity(0.0,0.0)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,20 +43,11 @@ class YerEkleFragment : Fragment() {
         setAdapters()
         setupSpinner()
 
-        var yer= YerEntity(0.0,0.0)
+
 
 
         binding.btnYerKaydet.setOnClickListener {
-            yer=YerEntity(locationIntent.first,locationIntent.second)
-            yer.yerAdi=binding.eTvYerAdi.text.toString()
-            yer.kisaTanim=binding.eTvYerKisaTanim.text.toString()
-            yer.kisaAciklama=binding.eTvYerKisaAciklama.text.toString()
-
-            //todo öncelik ve fotoğraf bilgileri atamaı yapılacak
-
-            TripPlannerLogic.yerEkle(requireContext(),yer)
-
-            requireActivity().onBackPressed()
+            yerEkle()
         }
 
 
@@ -79,6 +72,19 @@ class YerEkleFragment : Fragment() {
     }
 
 
+    fun yerEkle(){
+
+        yer=YerEntity(locationIntent.first,locationIntent.second)
+        yer.yerAdi=binding.eTvYerAdi.text.toString()
+        yer.kisaTanim=binding.eTvYerKisaTanim.text.toString()
+        yer.kisaAciklama=binding.eTvYerKisaAciklama.text.toString()
+
+        //todo öncelik ve fotoğraf bilgileri atamaı yapılacak
+
+        TripPlannerLogic.yerEkle(requireContext(),yer)
+
+        requireActivity().onBackPressed()
+    }
     fun setAdapters() {
 
         val rvAdapter = FotoAdapter(requireContext(), resimListe, ::photoCardClickEvent)
@@ -158,9 +164,23 @@ class YerEkleFragment : Fragment() {
 
     fun setupSpinner(){
         val adapter =SpinnerAdapter(requireContext(),Oncelikler.list!!)
-        binding.spinner.adapter=adapter
+        binding.apply {
+            spinner.adapter=adapter
+            spinner.onItemSelectedListener = object :AdapterView.OnItemSelectedListener{
+                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                     //var secilenOncelik = parent!!.getItemAtPosition(position
+                    var secilenOncelik= Oncelikler.list!!.get(position)
+                    yer.oncelik=secilenOncelik.oncelikDurumu
+
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+            }
+        }
 
     }
+
+
 
 
 }
