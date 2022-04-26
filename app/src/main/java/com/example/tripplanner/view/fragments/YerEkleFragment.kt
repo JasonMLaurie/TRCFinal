@@ -101,4 +101,8 @@ class YerEkleFragment : Fragment() {
 
     }
 
+
+
+
+
 }
