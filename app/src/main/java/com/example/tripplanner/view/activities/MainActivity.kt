@@ -78,6 +78,8 @@ class MainActivity : AppCompatActivity() {
         ft.commit()
     }
 
+
+
     override fun onBackPressed() {
         //todo değistir - geri gidince main activityi tekrar başlatıyor
         val intent= Intent(this,MainActivity::class.java)
