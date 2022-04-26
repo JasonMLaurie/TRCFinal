@@ -30,6 +30,7 @@ class YerEkleFragment : Fragment() {
         return binding.root
     }
 
+
     fun setAdapters() {
 
         val rvAdapter = FotoAdapter(requireContext(), resimListe, ::photoCardClickEvent)
