@@ -39,7 +39,7 @@
         <activity
             android:name=".view.activities.MainActivity"
             android:exported="false"
-            android:label="@string/title_activity_maps" />
+            android:label="MainActivity" />
 
         <activity
             android:name=".view.activities.SplashScreen"
