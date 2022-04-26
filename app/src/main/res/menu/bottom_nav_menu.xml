@@ -3,12 +3,12 @@
 
     <item
         android:id="@+id/miGezilecekler"
-        android:icon="@drawable/gezilecekler_icon"
+        android:icon="@drawable/gezilecekler_va"
         android:title="Gezilecekler" />
 
     <item
         android:id="@+id/miGezdiklerim"
-        android:icon="@drawable/gezdiklerim_icon"
+        android:icon="@drawable/gezdiklerim_va"
         android:title="Gezdiklerim" />
 
 </menu>

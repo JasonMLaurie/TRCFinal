@@ -139,7 +139,7 @@
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnKonumEkle"
             android:layout_width="94dp"
-            android:layout_height="30dp"
+            android:layout_height="24dp"
             android:layout_marginTop="15dp"
             android:layout_marginEnd="19dp"
             android:background="@drawable/box"
@@ -147,7 +147,7 @@
             android:text="@string/konum_ekle"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textColor="@color/white"
-            android:textSize="12sp"
+            android:textSize="10sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.942"
             app:layout_constraintStart_toStartOf="parent"
@@ -156,7 +156,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout6"
             android:layout_width="340dp"
-            android:layout_height="34dp"
+            android:layout_height="29dp"
             android:layout_marginTop="13dp"
             android:background="@drawable/box"
             app:layout_constraintEnd_toEndOf="parent"
@@ -189,7 +189,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="340dp"
-            android:layout_height="167dp"
+            android:layout_height="157dp"
             android:layout_marginTop="11dp"
             android:background="@drawable/box"
             app:layout_constraintEnd_toEndOf="parent"

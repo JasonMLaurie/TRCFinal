@@ -6,16 +6,16 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
+import androidx.navigation.NavDirections
+import androidx.navigation.fragment.NavHostFragment
 import com.example.tripplanner.R
 import com.example.tripplanner.databinding.ActivityMainBinding
 import com.example.tripplanner.databinding.TabLayoutBinding
-import com.example.tripplanner.view.fragments.GezdiklerimFragment
-import com.example.tripplanner.view.fragments.GezilecekFragment
-import com.example.tripplanner.view.fragments.YerEkleFragment
+import com.example.tripplanner.view.fragments.*
 import com.google.android.material.tabs.TabLayout
 
 class MainActivity : AppCompatActivity() {
+
     lateinit var binding :ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,7 +25,8 @@ class MainActivity : AppCompatActivity() {
 
 
         binding.fabYerEkle.setOnClickListener {
-            fragmentDegistir(YerEkleFragment())
+            val navDir2YerEkleFragment = GezilecekFragmentDirections.actionGezilecekFragment2ToYerEkleFragment()
+            fragmentDegistir(navDir2YerEkleFragment)
         }
 
         //adding tabs
@@ -44,7 +45,7 @@ class MainActivity : AppCompatActivity() {
             override fun onTabReselected(tab: TabLayout.Tab?) {
             }
         })
-        tabSec(0) //tekrar aynı fragment oluşmasını engelliyoruz
+//        tabSec(0) //tekrar aynı fragment oluşmasını engelliyoruz
 
     }
 
@@ -64,26 +65,44 @@ class MainActivity : AppCompatActivity() {
     fun tabSec(index:Int){
         when (index)
         {
-            0 ->fragmentDegistir(GezilecekFragment())
-            1 ->fragmentDegistir(GezdiklerimFragment())
+            0 -> {
+                val navDir2GezilecekFragment = GezdiklerimFragmentDirections.actionGezdiklerimFragmentToGezilecekFragment2()
+                fragmentDegistir(navDir2GezilecekFragment)
+            }
+            1 -> {
+                val navDir2GezdiklerimFragment = GezilecekFragmentDirections.actionGezilecekFragment2ToGezdiklerimFragment()
+                fragmentDegistir(navDir2GezdiklerimFragment)
+            }
         }
     }
 
-    fun fragmentDegistir(fragment:Fragment){
+    fun fragmentDegistir(navDirObject : NavDirections){
         binding.tabLayout.isVisible=true
         binding.fabYerEkle.isVisible=true
 
-        val ft = supportFragmentManager.beginTransaction()
-        ft.replace(R.id.fragmentContainerView, fragment)
-        ft.commit()
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
+        val navController = navHostFragment.navController
+        navController.navigate(navDirObject)
+
+        /*supportFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainerView, fragment)
+            .setPrimaryNavigationFragment(fragment)
+            .commit()*/
     }
 
 
 
     override fun onBackPressed() {
+        super.onBackPressed()
         //todo değistir - geri gidince main activityi tekrar başlatıyor
-        val intent= Intent(this,MainActivity::class.java)
-        startActivity(intent)
+//        val intent= Intent(this,MainActivity::class.java)
+//        startActivity(intent)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.tabLayout.isVisible=true
+        binding.fabYerEkle.isVisible=true
     }
 
 

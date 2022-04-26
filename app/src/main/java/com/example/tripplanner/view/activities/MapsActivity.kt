@@ -25,7 +25,7 @@ class MapsActivity : PermissionActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsBinding
-    private var mode=false  //Ekleden gelirsen->false-> Konum secimi, Detaydan gelirsen->true->Konuma git
+    private var mode=false  //false-> Konum secimi, true->Konuma git
     val reqCodeLocations=0
     var locationPair:Pair<String,LatLng>?=null
     var locationManager:LocationManager?=null
@@ -35,70 +35,35 @@ class MapsActivity : PermissionActivity(), OnMapReadyCallback {
         super.onCreate(savedInstanceState)
         binding = ActivityMapsBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        initializeMode()
 
-
-
+        locationManager=getSystemService(LOCATION_SERVICE) as LocationManager
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.MapsActivity_map) as SupportMapFragment
         mapFragment.getMapAsync(this)
-
-
+        PermissionLogic.locationPermissionControl(this,this)
+        initializeMode()
         configureButton()
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-        if (!mode){ // Yer Ekle kismindan gelirsen
+        if (!mode){
             mMap.setOnMapLongClickListener {
                 mMap.clear()
                 locationPair= Pair("Konum",it)
                 mMap.addMarker(MarkerOptions().position(locationPair!!.second).title(locationPair!!.first))
             }
         }
-        if (mode){// Detaydan gelirsen
-            mMap.addMarker(MarkerOptions().position(locationPair!!.second))
-        }
 
     }
 
     private fun initializeMode(){
-        mode= intent.getBooleanExtra("mode",false)
-        if (!mode){//Yer Ekle kismindan gelirsen
-            println(mode)
-            PermissionLogic.locationPermissionControl(this,this)
-            locationManager=getSystemService(LOCATION_SERVICE) as LocationManager
-        }else{//Detay kismindan gelirsen
-            locationPair= Pair("Konum", LatLng(intent.getDoubleExtra("Latitude",40.0),intent.getDoubleExtra("Longitude",40.0)))
-            Toast.makeText(this,"Lat: ${locationPair!!.second.latitude} lon: ${locationPair!!.second.longitude}",Toast.LENGTH_SHORT).show()
-        }
+        mode= Intent().getBooleanExtra("mode",false)
     }
-
-    private fun configureButton(){
-        if(mode){//Detay kismindan gelirsen
-            //Konuma gidis
-        }else{//Yer ekle kismindan gelirsen
-            binding.btnKonumKaydet.setOnClickListener {
-                val intent=Intent()
-                val bundle=Bundle()
-                bundle.putDouble("Latitude",locationPair!!.second.latitude)
-                bundle.putDouble("Longitude",locationPair!!.second.longitude)
-                intent.putExtras(bundle)
-                setResult(RESULT_OK,intent)
-                finish()
-            }
-        }
-    }
-
-
     @SuppressLint("MissingPermission")
     override fun grantedFunc() {
-        if (!mode){
-            locationManager!!.requestLocationUpdates(LocationManager.GPS_PROVIDER,1000, 0.1f,locationListener)
-        }
+        locationManager!!.requestLocationUpdates(LocationManager.GPS_PROVIDER,1000, 0.1f,locationListener)
     }
-
-
     var locationListener = object : LocationListener{
         override fun onLocationChanged(p0: Location) {
             mMap.clear()
@@ -119,5 +84,18 @@ class MapsActivity : PermissionActivity(), OnMapReadyCallback {
         }
 
     }
+    fun configureButton(){
+        if(mode){
+            //Konuma gidis
+        }else{
+            binding.btnKonumKaydet.setOnClickListener {
+                val intent=Intent()
+                intent.putExtra("location",locationPair)
+                setResult(RESULT_OK,intent)
+                finish()
+            }
+        }
+    }
+
 
 }
