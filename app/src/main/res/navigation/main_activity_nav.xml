@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_activity_nav"
-    app:startDestination="@id/detayFragment">
+    app:startDestination="@id/gezilecekFragment2">
 
     <fragment
         android:id="@+id/detayFragment"
@@ -31,6 +31,9 @@
         <action
             android:id="@+id/action_gezdiklerimFragment_to_detayFragment"
             app:destination="@id/detayFragment" />
+        <action
+            android:id="@+id/action_gezdiklerimFragment_to_gezilecekFragment2"
+            app:destination="@id/gezilecekFragment2" />
     </fragment>
     <fragment
         android:id="@+id/haritaFragment"
@@ -66,5 +69,8 @@
         <action
             android:id="@+id/action_gezilecekFragment2_to_detayFragment"
             app:destination="@id/detayFragment" />
+        <action
+            android:id="@+id/action_gezilecekFragment2_to_gezdiklerimFragment"
+            app:destination="@id/gezdiklerimFragment" />
     </fragment>
 </navigation>

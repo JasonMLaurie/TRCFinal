@@ -51,7 +51,7 @@ class YerEkleFragment : Fragment() {
 
             TripPlannerLogic.yerEkle(requireContext(),yer)
 
-            (activity as MainActivity).fragmentDegistir(GezilecekFragment())
+            requireActivity().onBackPressed()
         }
 
 

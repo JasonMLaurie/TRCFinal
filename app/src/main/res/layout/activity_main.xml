@@ -29,6 +29,7 @@
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
         app:defaultNavHost="true"
+        app:navGraph="@navigation/main_activity_nav"
         app:layout_constraintBottom_toTopOf="@+id/tabLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
