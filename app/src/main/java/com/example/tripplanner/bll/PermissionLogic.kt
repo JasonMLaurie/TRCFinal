@@ -44,7 +44,7 @@ class PermissionLogic {
         @RequiresApi(Build.VERSION_CODES.M)
         fun mediaPermissionControl(
             activity: PermissionActivity,
-            context: Context){
+            context: Context) : Boolean{
             val requestList= ArrayList<String>()
             var permStatus=
                 ContextCompat.checkSelfPermission(context,Manifest.permission.READ_EXTERNAL_STORAGE)==PackageManager.PERMISSION_GRANTED
@@ -58,8 +58,10 @@ class PermissionLogic {
             }
             if (requestList.size==0){
                 activity.grantedFunc()
+                return true
             }else{
                 activity.requestPermissions(requestList.toTypedArray(), reqCodeLocations)
+                return false
             }
         }
     }

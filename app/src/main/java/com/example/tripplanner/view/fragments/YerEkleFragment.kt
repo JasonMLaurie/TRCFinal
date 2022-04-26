@@ -2,19 +2,13 @@ package com.example.tripplanner.view.fragments
 
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.example.tripplanner.R
-import com.example.tripplanner.bll.TripPlannerLogic
 import com.example.tripplanner.databinding.FragmentYerEkleBinding
-import com.example.tripplanner.model.GezdiklerimEntity
-import com.example.tripplanner.model.YerEntity
 import com.example.tripplanner.view.adapters.foto.FotoAdapter
-import kotlin.properties.Delegates
 
 /** Gezilecek Yer Ekleme Fragment*/
 class YerEkleFragment : Fragment() {
@@ -33,16 +27,12 @@ class YerEkleFragment : Fragment() {
         createTempList()
         setAdapters()
 
-        binding.btnKonumEkle.setOnClickListener {
-            tempFuncZiyaretEkle()
-        }
-
         return binding.root
     }
 
     fun setAdapters() {
 
-        val rvAdapter = FotoAdapter(requireContext(), resimListe)
+        val rvAdapter = FotoAdapter(requireContext(), resimListe, ::photoCardClickEvent)
         binding.rvYerEkle.layoutManager =
             StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
         binding.rvYerEkle.adapter = rvAdapter
@@ -50,6 +40,8 @@ class YerEkleFragment : Fragment() {
         // TODO Fill spinner with colors
 
     }
+
+    fun photoCardClickEvent(){}
 
     /** Test Case */
     fun createTempList() {
