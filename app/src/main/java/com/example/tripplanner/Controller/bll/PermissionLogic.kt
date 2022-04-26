@@ -1,7 +1,6 @@
-package com.example.tripplanner.bll
+package com.example.tripplanner.Controller.bll
 
 import android.Manifest
-import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build

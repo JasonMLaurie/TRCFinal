@@ -20,6 +20,8 @@
     <string name="ziyaret_aciklamasi">Ziyaret Açıklaması</string>
     <string name="aciklama">Açıklama</string>
     <string name="kaydet">Kaydet</string>
+    <string name="gezi_rehberim">Gezi Rehberim</string>
+
 
     <string name="date_ex"> __.__.____</string>
     <string name="ornek_ziyaret_gecmisi_20">10.05.2020</string>

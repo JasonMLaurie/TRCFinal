@@ -1,11 +1,11 @@
-package com.example.tripplanner.bll
+package com.example.tripplanner.Controller.bll
 
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Base64.encodeToString
 import android.widget.Toast
-import com.example.tripplanner.dal.TripPlannerOperation
+import com.example.tripplanner.Controller.dal.TripPlannerOperation
 import com.example.tripplanner.model.ResimEntity
 import com.example.tripplanner.model.ZiyaretEntity
 import com.example.tripplanner.model.YerEntity

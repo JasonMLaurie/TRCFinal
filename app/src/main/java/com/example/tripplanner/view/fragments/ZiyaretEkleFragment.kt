@@ -17,12 +17,13 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.example.tripplanner.bll.PermissionLogic
-import com.example.tripplanner.bll.TripPlannerLogic
+import com.example.tripplanner.Controller.bll.PermissionLogic
+import com.example.tripplanner.Controller.bll.TripPlannerLogic
 import com.example.tripplanner.databinding.FragmentZiyaretEkleBinding
 import com.example.tripplanner.model.ResimEntity
 import com.example.tripplanner.model.ZiyaretEntity
 import com.example.tripplanner.view.activities.MainActivity
+import com.example.tripplanner.view.activities.PermissionActivity
 import com.example.tripplanner.view.adapters.foto.FotoAdapter
 import java.io.FileNotFoundException
 import java.util.*
@@ -196,7 +197,7 @@ class ZiyaretEkleFragment : Fragment() {
         // Remove condition check to reproduce it.
 
         // Made mediaPermissionControl return a boolean value for a temp. (or definite) solution
-        if(PermissionLogic.mediaPermissionControl((activity as MainActivity),requireContext())){
+        if(PermissionLogic.mediaPermissionControl((activity as PermissionActivity),requireContext())){
             //V1
             val intent = Intent(Intent.ACTION_PICK)
             intent.setType("image/*")

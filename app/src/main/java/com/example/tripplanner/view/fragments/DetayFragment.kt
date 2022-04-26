@@ -13,8 +13,8 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.tripplanner.Controller.bll.TripPlannerLogic
 import com.example.tripplanner.R
-import com.example.tripplanner.bll.TripPlannerLogic
 import com.example.tripplanner.databinding.FragmentDetayBinding
 import com.example.tripplanner.model.YerEntity
 import com.example.tripplanner.model.ZiyaretEntity
@@ -33,7 +33,6 @@ class DetayFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentDetayBinding.inflate(inflater, container, false)
 
-        testCase()
         setInitialViews()
         clickListeners()
 
@@ -60,21 +59,8 @@ class DetayFragment : Fragment() {
             binding.rvZiyaretGecmisi.adapter = adapter
         }
 
-        Log.e("Logcat",TripPlannerLogic.tumZiyaretleriGetir(requireContext()).size.toString())
+        Log.e("Logcat", TripPlannerLogic.tumZiyaretleriGetir(requireContext()).size.toString())
         Log.e("Logcat",TripPlannerLogic.tumZiyaretleriGetir(requireContext()).toString())
-    }
-
-    fun testCase(){
-        yerObject = YerEntity(15.5,25.5).apply {
-            yerAdi = "Yer1"
-            kisaTanim = "Tanim1"
-            kisaAciklama = "Aciklama1"
-            oncelik = "Oncelik1"
-            ziyaretEdildi = 0
-        }
-        TripPlannerLogic.yerEkle(requireContext(), yerObject)
-
-        yerObject = TripPlannerLogic.tumYerleriGetir(requireContext())[0]
     }
 
     /** Click Listeners*/
