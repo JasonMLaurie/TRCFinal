@@ -66,6 +66,8 @@ class DetayFragment : Fragment(), ViewPager.OnPageChangeListener, View.OnClickLi
             { ivOncelikD.setImageResource(R.drawable.oncelik3_sekil)}
 
             //TODO yer fotoğrafna göre tarih
+
+
         }
 
 
@@ -89,19 +91,6 @@ class DetayFragment : Fragment(), ViewPager.OnPageChangeListener, View.OnClickLi
             yerObject.ziyaretEdildi = 1
             TripPlannerLogic.yerGuncelle(requireContext(), yerObject)
         }
-    }
-
-    fun tempSol(){
-        yerObject = YerEntity(0.0,0.0).apply{
-            kisaAciklama = "Aciklama"
-            kisaTanim = "Tanim"
-            yerAdi = "Yeradi"
-            oncelik = "oncelik1"
-            ziyaretEdildi = 0
-        }
-        TripPlannerLogic.yerEkle(requireContext(),yerObject)
-        yerObject = TripPlannerLogic.tumYerleriGetir(requireContext())[0]
-
     }
 
     /** Click Listeners*/
@@ -134,38 +123,9 @@ class DetayFragment : Fragment(), ViewPager.OnPageChangeListener, View.OnClickLi
             */
 
 
-
-   /* fun imageSlider(){
-        val imageSlider = binding.imageSlider
-        val imageList = ArrayList<SlideModel>()
-        //imageList.add(SlideModel(yerResimListe.get(0).uri))
-
-        imageList.add(SlideModel(R.drawable.tempimage1,""))
-        imageList.add(SlideModel(R.drawable.tempimage1,""))
-        imageList.add(SlideModel(R.drawable.tempimage1,""))
-        imageList.add(SlideModel(R.drawable.tempimage1,""))
-
-        imageSlider.setImageList(imageList, ScaleTypes.FIT)
-
-        imageSlider.setTouchListener(object :TouchListener{
-            override fun onTouched(touched: ActionTypes) {
-                //todo tarih bigisi
-                //binding.tvSliderFotografTarih.text=
-            }
-
-        })
-        imageSlider.setItemClickListener(object : ItemClickListener {
-            override fun onItemSelected(position: Int) {
-                //todo fotoğraf tam ekran açılacak
-
-            }
-        })
-
-    }*/
-
-
     //viewPagerImplements
     var yerFotograflari = intArrayOf(R.drawable.tempimage1, R.drawable.tempimage1, R.drawable.tempimage1)
+    var yerTarihleri= arrayOf("tarih1","tarih2","tarih3")
     var mViewPager: ViewPager? = null
     private var mAdapter: CustomPagerAdapter? = null
     private var pager_indicator: LinearLayout? = null
@@ -176,11 +136,13 @@ class DetayFragment : Fragment(), ViewPager.OnPageChangeListener, View.OnClickLi
 
         mViewPager = binding.viewpager
         pager_indicator = binding.viewPagerCountDots
-        mAdapter = CustomPagerAdapter(requireContext(), yerFotograflari)
+        mAdapter = CustomPagerAdapter(requireContext(), yerFotograflari,yerTarihleri)
         mViewPager!!.adapter = mAdapter
         mViewPager!!.currentItem = 0
         mViewPager!!.setOnPageChangeListener(this)
         setPageViewIndicator()
+
+
 
 
     }

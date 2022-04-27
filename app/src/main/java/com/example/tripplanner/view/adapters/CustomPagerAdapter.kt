@@ -5,20 +5,28 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.viewpager.widget.PagerAdapter
 import com.example.tripplanner.R
 
 
-class CustomPagerAdapter(private val mContext: Context, resources: IntArray) :
+class CustomPagerAdapter(private val context: Context, fotograflar: IntArray,tarihler:Array<String>) :
     PagerAdapter() {
     var mLayoutInflater: LayoutInflater
-    private val mResources: IntArray
+    private val vpFotografListe: IntArray
+    private val vpTarihListe: Array<String>
+
+
+
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         val itemView = mLayoutInflater.inflate(R.layout.pager_item, container, false)
-        val imageView = itemView.findViewById<View>(R.id.ivSliderFotograf) as ImageView
-        imageView.setImageResource(mResources[position])
-        /* LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(950, 950);
-            imageView.setLayoutParams(layoutParams);*/container.addView(itemView)
+        val ivFotograf = itemView.findViewById<View>(R.id.ivSliderFotograf) as ImageView
+        val tvTarih = itemView.findViewById<View>(R.id.tvSliderTarih) as TextView
+        ivFotograf.setImageResource(vpFotografListe[position])
+        tvTarih.setText(vpTarihListe[position])
+
+
+        container.addView(itemView)
         return itemView
     }
 
@@ -27,7 +35,7 @@ class CustomPagerAdapter(private val mContext: Context, resources: IntArray) :
     }
 
     override fun getCount(): Int {
-        return mResources.size
+        return vpFotografListe.size
     }
 
     override fun isViewFromObject(view: View, `object`: Any): Boolean {
@@ -36,7 +44,8 @@ class CustomPagerAdapter(private val mContext: Context, resources: IntArray) :
 
     init {
         mLayoutInflater =
-            mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        mResources = resources
+            context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        vpFotografListe = fotograflar
+        vpTarihListe = tarihler
     }
 }
