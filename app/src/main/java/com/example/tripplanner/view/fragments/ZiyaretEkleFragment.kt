@@ -23,8 +23,10 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.tripplanner.Controller.bll.PermissionLogic
 import com.example.tripplanner.Controller.bll.TripPlannerLogic
+import com.example.tripplanner.R
 import com.example.tripplanner.databinding.FragmentZiyaretEkleBinding
 import com.example.tripplanner.model.ResimEntity
+import com.example.tripplanner.model.YerEntity
 import com.example.tripplanner.model.ZiyaretEntity
 import com.example.tripplanner.view.activities.MainActivity
 import com.example.tripplanner.view.activities.PermissionActivity
@@ -49,6 +51,8 @@ class ZiyaretEkleFragment : PermissionHandlingFragment() {
 
 
     private lateinit var resimUri : Uri
+    val bundle : ZiyaretEkleFragmentArgs by navArgs()
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -57,10 +61,10 @@ class ZiyaretEkleFragment : PermissionHandlingFragment() {
         addedBase64List = arrayListOf()
 
 
-        val bundle : ZiyaretEkleFragmentArgs by navArgs()
-        gelenYerId = bundle.yerId
+        //Todo Ziyeret Ekle Tool Bar Title Yer adı yapılacak
+        //(activity as MainActivity).binding.tvToolText.setText(yer.yerAdi)
+        (activity as MainActivity).binding.tvToolText.setText( R.string.ziyaret_ekle)
 
-//        createTempList()
         setInitialViews()
         clickListeners()
 
@@ -128,21 +132,6 @@ class ZiyaretEkleFragment : PermissionHandlingFragment() {
         }
         if(resimBase64List.isEmpty()){ resimBase64List.add("") }
         setInitialViews()
-    }
-
-
-    /** Test Case */
-    fun createTempList() {
-
-        var i = 1
-        while (i <= 3) {
-            val uri: Uri =
-                Uri.parse("android.resource://" + requireActivity().packageName + "/drawable/tempimage1")
-                val encodedImage = TripPlannerLogic.encodeBase64(uri,(activity as MainActivity).contentResolver)
-            resimBase64List.add(encodedImage)
-            i++
-        }
-
     }
 
     /** Click Event for Adapter */
@@ -367,5 +356,7 @@ class ZiyaretEkleFragment : PermissionHandlingFragment() {
         setInitialViews()
         (activity as MainActivity).binding.tabLayout.isVisible=false
         (activity as MainActivity).binding.fabYerEkle.isVisible=false
+        (activity as MainActivity).binding.btnBack.isVisible=true
+
     }
 }

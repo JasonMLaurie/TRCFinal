@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tripplanner.Controller.bll.TripPlannerLogic
 import com.example.tripplanner.R
@@ -25,6 +26,8 @@ class GezilecekFragment : Fragment() {
 
        // binding.toolbar.setTitle("Gezilecekler")
         (activity as MainActivity).binding.tvToolText.setText(R.string.gezilecekler_bar_text)
+        (activity as MainActivity).binding.btnBack.isVisible=false
+
 
 
         getTumGezilecekYerler()

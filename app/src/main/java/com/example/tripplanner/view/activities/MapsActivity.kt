@@ -39,6 +39,9 @@ class MapsActivity : PermissionActivity(), OnMapReadyCallback {
         initializeMode()
 
 
+        binding.btnBackM.setOnClickListener {
+            onBackPressed()
+        }
 
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.MapsActivity_map) as SupportMapFragment

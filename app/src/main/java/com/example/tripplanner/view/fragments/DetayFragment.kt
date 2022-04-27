@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
@@ -112,6 +113,8 @@ class DetayFragment : Fragment(), ViewPager.OnPageChangeListener, View.OnClickLi
 
     /** Refreshing views in case of any visit being added */
     override fun onResume() {
+        (activity as MainActivity).binding.btnBack.isVisible=true
+
         super.onResume()
         setInitialViews()
     }

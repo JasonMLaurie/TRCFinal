@@ -73,7 +73,6 @@ class YerEkleFragment : PermissionHandlingFragment() {
             val intent= Intent(requireActivity(),MapsActivity::class.java)
             intent.putExtra("mode",false)
             resLauncher.launch(intent)
-
         }
         return binding.root
     }
@@ -196,9 +195,10 @@ class YerEkleFragment : PermissionHandlingFragment() {
     override fun onResume() {
         (activity as MainActivity).binding.tabLayout.isVisible=false
         (activity as MainActivity).binding.fabYerEkle.isVisible=false
+        (activity as MainActivity).binding.btnBack.isVisible=true
+
         super.onResume()
     }
-
 
     fun setupSpinner(){
         val adapter =SpinnerAdapter(requireContext(),Oncelikler.list!!)
@@ -206,7 +206,6 @@ class YerEkleFragment : PermissionHandlingFragment() {
             spinner.adapter=adapter
             spinner.onItemSelectedListener = object :AdapterView.OnItemSelectedListener{
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                    //var secilenOncelik = parent!!.getItemAtPosition(position)
                     secilenOncelik = Oncelikler.list!!.get(position)
                 }
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
