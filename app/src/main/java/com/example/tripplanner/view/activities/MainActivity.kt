@@ -52,7 +52,6 @@ class MainActivity : PermissionActivity() {
         tab= TabLayoutBinding.inflate(layoutInflater)
 
         tab.tvbaslik.text="Gezilecek"
-
         tab.ivTabIcon.setImageResource(R.drawable.tab_select_gezilecek)
         //tab.ivTabIcon.setColorFilter(R.drawable.tab_select)
         binding.tabLayout.getTabAt(0)!!.setCustomView(tab.root)
