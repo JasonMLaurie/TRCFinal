@@ -33,7 +33,7 @@ import java.util.*
 
 /** Ziyaret Ekleme Fragment
  */
-class ZiyaretEkleFragment : Fragment() {
+class ZiyaretEkleFragment : PermissionHandlingFragment() {
 
 
     private lateinit var binding : FragmentZiyaretEkleBinding
@@ -43,6 +43,8 @@ class ZiyaretEkleFragment : Fragment() {
     private var resimUriList: ArrayList<Uri> = arrayListOf(Uri.EMPTY)
     private var addedUriList : ArrayList<Uri> = arrayListOf()
     private var gelenYerId : Int = 0
+
+
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -143,7 +145,8 @@ class ZiyaretEkleFragment : Fragment() {
     /** Click Event for Adapter */
     fun photoCardClickEvent(){
         if(resimUriList.size<10){
-            openGallery()
+            //openGallery()
+            PermissionLogic.mediaPermissionControl(this,requireContext())
         }else{
             Toast.makeText(requireContext(),"10 adetten fazla fotoğraf eklenemez", Toast.LENGTH_SHORT).show()
         }
@@ -210,6 +213,11 @@ class ZiyaretEkleFragment : Fragment() {
 
                     val imageUri: Uri = result.data!!.data!!
 
+                    val contentResolver = requireContext().contentResolver
+                    val takeFlags: Int = Intent.FLAG_GRANT_READ_URI_PERMISSION or
+                            Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                    imageUri?.let { contentResolver.takePersistableUriPermission(it, takeFlags) }
+
                     // Get resimList from DB to check if selected photo is already exits.
                     val tempResimUriList : ArrayList<Uri> = arrayListOf()
                         TripPlannerLogic.fotolarGetir(requireContext(),gelenYerId).forEach {
@@ -238,27 +246,34 @@ class ZiyaretEkleFragment : Fragment() {
         }
 
     /** Open Gallery Func */
-    fun openGallery() {
 
-        // TODO Permission problem here. Maybe about SDK.
-        /** Notes From ARAS: PermissionLogic requires an activity specifically derived from PermissionActivity. Since this is a fragment it will not work as intended.
-         * For now it might be better of with manual permission requests. After the project is done, Permission Activity should be changed into an interface */
-        // It asks for permission but opens gallery before it. If a photo is selected then it returns
-        // to the source page where the permission pop up still up, and if you permit it, it works as
-        // intended, but if you deny the permission it still adds the selected photo from gallery,
-        // and this process is doable indefinitely.
-        // Remove condition check to reproduce it.
-
-        // Made mediaPermissionControl return a boolean value for a temp. (or definite) solution
-        if(PermissionLogic.mediaPermissionControl((activity as PermissionActivity),requireContext())){
-            val intent = Intent(Intent.ACTION_PICK)
-            intent.setType("image/*")
-            galleryResultLauncher.launch(intent)
-        }else{
-            Toast.makeText(requireContext(),"This app needs specified permissions", Toast.LENGTH_SHORT).show()
-        }
-
+    override fun grantedFunc() {
+        val intent = Intent(Intent.ACTION_PICK)
+                    intent.setType("image/*")
+                    galleryResultLauncher.launch(intent)
     }
+
+    //fun openGallery() {
+    //
+    //            // TODO Permission problem here. Maybe about SDK.
+    //            /** Notes From ARAS: PermissionLogic requires an activity specifically derived from PermissionActivity. Since this is a fragment it will not work as intended.
+    //             * For now it might be better of with manual permission requests. After the project is done, Permission Activity should be changed into an interface */
+    //            // It asks for permission but opens gallery before it. If a photo is selected then it returns
+    //            // to the source page where the permission pop up still up, and if you permit it, it works as
+    //            // intended, but if you deny the permission it still adds the selected photo from gallery,
+    //            // and this process is doable indefinitely.
+    //            // Remove condition check to reproduce it.
+    //
+    //            // Made mediaPermissionControl return a boolean value for a temp. (or definite) solution
+    //            if(PermissionLogic.mediaPermissionControl((activity as PermissionActivity),requireContext())){
+    //                val intent = Intent(Intent.ACTION_PICK)
+    //                intent.setType("image/*")
+    //                galleryResultLauncher.launch(intent)
+    //            }else{
+    //                Toast.makeText(requireContext(),"This app needs specified permissions", Toast.LENGTH_SHORT).show()
+    //            }
+    //
+    //        }
 
     /** Get Current Date from Calender */
     private fun calenderFunc() : ArrayList<Int> {
