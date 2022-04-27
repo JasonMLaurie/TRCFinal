@@ -270,6 +270,7 @@ class TripPlannerOperation(context: Context) {
         val cv = ContentValues()
         cv.put(resimBaseStr, resimEntity.base64)
         cv.put(yerStr, resimEntity.yerId)
+        cv.put(ziyaretTarihStr,resimEntity.tarih)
 
         // TODO any condition-ensurement
 

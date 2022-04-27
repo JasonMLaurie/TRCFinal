@@ -50,6 +50,7 @@ class DetayFragment : Fragment(), ViewPager.OnPageChangeListener, View.OnClickLi
     fun setInitialViews(){
         val bundle : DetayFragmentArgs by navArgs()
         yerObject = bundle.yerObject
+        resimListe=TripPlannerLogic.fotolarGetir(requireContext(),yerObject.id)
 
         binding.apply {
             tvYerKisaTanimBilgi.text = yerObject.kisaTanim
@@ -122,8 +123,10 @@ class DetayFragment : Fragment(), ViewPager.OnPageChangeListener, View.OnClickLi
 
 
     //viewPagerImplements
-    var yerFotograflari = intArrayOf(R.drawable.tempimage1, R.drawable.tempimage1, R.drawable.tempimage1)
-    var yerTarihleri= arrayOf("tarih1","tarih2","tarih3")
+    //var yerFotograflari = intArrayOf(R.drawable.tempimage1, R.drawable.tempimage1, R.drawable.tempimage1)
+
+    var resimListe =ArrayList<ResimEntity>()
+
 
 
     var mViewPager: ViewPager? = null
@@ -139,7 +142,7 @@ class DetayFragment : Fragment(), ViewPager.OnPageChangeListener, View.OnClickLi
         mViewPager = binding.viewpager
         pager_indicator = binding.viewPagerCountDots
 
-        mAdapter = CustomPagerAdapter(requireContext(), yerFotograflari,yerTarihleri)
+        mAdapter = CustomPagerAdapter(requireContext(), resimListe)
 
         mViewPager!!.adapter = mAdapter
         mViewPager!!.currentItem = 0
@@ -149,24 +152,26 @@ class DetayFragment : Fragment(), ViewPager.OnPageChangeListener, View.OnClickLi
 
     @SuppressLint("ClickableViewAccessibility")
     private fun setPageViewIndicator() {
-        Log.d("###setPageViewIndicator", " : called")
         dotsCount = mAdapter!!.count
-        dots = arrayOfNulls(dotsCount)
-        for (i in 0 until dotsCount) {
-            dots[i] = ImageView(requireContext())
-            dots[i]!!.setImageResource(R.drawable.unselected_dot_slider)
-            val params = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            )
-            params.setMargins(4, 0, 4, 0)
-            dots[i]!!.setOnTouchListener { v, event ->
-                mViewPager!!.currentItem = i
-                true
+
+        if (dotsCount>0){
+            dots = arrayOfNulls(dotsCount)
+            for (i in 0 until dotsCount) {
+                dots[i] = ImageView(requireContext())
+                dots[i]!!.setImageResource(R.drawable.unselected_dot_slider)
+                val params = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                )
+                params.setMargins(4, 0, 4, 0)
+                dots[i]!!.setOnTouchListener { v, event ->
+                    mViewPager!!.currentItem = i
+                    true
+                }
+                pager_indicator!!.addView(dots[i], params)
             }
-            pager_indicator!!.addView(dots[i], params)
+            dots[0]!!.setImageResource(R.drawable.selected_dot_slider)
         }
-        dots[0]!!.setImageResource(R.drawable.selected_dot_slider)
     }
 
     override fun onPageSelected(position: Int) {

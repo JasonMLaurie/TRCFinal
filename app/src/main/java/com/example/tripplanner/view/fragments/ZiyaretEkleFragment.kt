@@ -164,6 +164,7 @@ class ZiyaretEkleFragment : PermissionHandlingFragment() {
                 tarih = binding.tvTarihEkle.text.toString()
                 aciklama = binding.etZiyaretEkleAciklama.text.toString()
                 yerId = gelenYerId
+
             }
 
             // TODO restriction to make Ziyaret Yer field non-null-0
@@ -173,6 +174,7 @@ class ZiyaretEkleFragment : PermissionHandlingFragment() {
                 val resimEntity = ResimEntity().apply {
                     base64 = it
                     yerId = gelenYerId
+                    tarih=binding.tvTarihEkle.text.toString()
                 }
                 TripPlannerLogic.fotoEkle(requireContext(),resimEntity)
             }
