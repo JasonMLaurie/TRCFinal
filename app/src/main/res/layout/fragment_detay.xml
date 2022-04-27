@@ -13,15 +13,55 @@
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout8"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.denzcoskun.imageslider.ImageSlider
+                android:id="@+id/image_slider"
+                app:iss_text_align="RIGHT"
+                app:iss_title_background="@drawable/bg_transparent"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                app:iss_auto_cycle="false"
+                app:iss_selected_dot="@drawable/selected_dot"
+                app:iss_unselected_dot="@drawable/unselected_dot"
+                app:iss_delay="0"
+                app:iss_period="1000"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" >
+
+                <TextView
+                    android:id="@+id/tvSliderFotografTarih"
+                    android:layout_width="97dp"
+                    android:layout_height="26dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="283dp"
+                    android:layout_marginEnd="29dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/box"
+                    android:gravity="center"
+                    android:text="@string/date_ex" />
+            </com.denzcoskun.imageslider.ImageSlider>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="14dp"
             android:background="@drawable/box"
             app:layout_constraintEnd_toStartOf="@+id/btnZiyaretEkle"
             app:layout_constraintHorizontal_bias="0.223"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageSlider">
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout8">
 
             <TextView
                 android:id="@+id/textOncelik"
@@ -53,27 +93,6 @@
                 app:layout_constraintTop_toTopOf="@+id/textOncelik" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <com.denzcoskun.imageslider.ImageSlider
-            android:id="@+id/imageSlider"
-            android:layout_width="0dp"
-            android:layout_height="200dp"
-            app:iss_auto_cycle="false"
-            app:iss_corner_radius="5"
-            app:iss_title_background="@drawable/bg_transparent"
-            app:iss_delay="0"
-            app:iss_error_image="@drawable/error"
-            app:iss_period="1000"
-            app:iss_placeholder="@drawable/placeholder"
-            app:iss_selected_dot="@drawable/selected_dot"
-            app:iss_unselected_dot="@drawable/unselected_dot"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="MissingConstraints">
-
-        </com.denzcoskun.imageslider.ImageSlider>
-
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnZiyaretEkle"
             android:layout_width="94dp"
@@ -88,7 +107,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.889"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageSlider" />
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout8" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"

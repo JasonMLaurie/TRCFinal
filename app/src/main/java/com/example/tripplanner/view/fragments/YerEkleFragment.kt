@@ -49,13 +49,16 @@ class YerEkleFragment : Fragment() {
 
 
         binding.btnYerKaydet.setOnClickListener {
-            yerEkle()
-            TripPlannerLogic.yerEkle(requireContext(),yer)
-
-                requireActivity().onBackPressed()
-            }else {
-                Toast.makeText(requireContext(), "Konum girilmesi zorunludur.", Toast.LENGTH_SHORT).show()
+            if(this::locationIntent.isInitialized){
+                yerEkle()
+                TripPlannerLogic.yerEkle(requireContext(),yer)
             }
+            else {
+            Toast.makeText(requireContext(), "Konum girilmesi zorunludur.", Toast.LENGTH_SHORT).show()
+            }
+
+
+
         }
 
 
@@ -88,8 +91,7 @@ class YerEkleFragment : Fragment() {
         yer.kisaAciklama=binding.eTvYerKisaAciklama.text.toString()
         yer.oncelik=secilenOncelik.oncelikDurumu
 
-        //todo öncelik ve fotoğraf bilgileri atamaı yapılacak
-
+        //todo fotoğraf bilgileri atamaı yapılacak
 
         requireActivity().onBackPressed()
     }

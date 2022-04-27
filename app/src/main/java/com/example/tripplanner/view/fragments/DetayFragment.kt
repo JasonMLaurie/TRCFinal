@@ -4,21 +4,27 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.widget.ViewPager2
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.denzcoskun.imageslider.constants.ScaleTypes
+import com.denzcoskun.imageslider.models.SlideModel
 import com.example.tripplanner.Controller.bll.TripPlannerLogic
 import com.example.tripplanner.R
 import com.example.tripplanner.databinding.FragmentDetayBinding
+import com.example.tripplanner.model.ResimEntity
 import com.example.tripplanner.model.YerEntity
 import com.example.tripplanner.model.ZiyaretEntity
 import com.example.tripplanner.view.activities.MapsActivity
+import com.google.android.material.tabs.TabLayoutMediator
+import com.google.android.material.tabs.TabLayoutMediator.TabConfigurationStrategy
 import com.example.tripplanner.view.adapters.foto.FotoAdapter
 import com.example.tripplanner.view.adapters.ziyaret.ZiyaretAdapter
 
@@ -28,6 +34,8 @@ class DetayFragment : Fragment() {
 
     private lateinit var binding : FragmentDetayBinding
     private lateinit var yerObject : YerEntity
+    private var yerResimListe=ArrayList<ResimEntity>()
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -36,6 +44,7 @@ class DetayFragment : Fragment() {
 //        tempSol()
         setInitialViews()
         clickListeners()
+        imageSlider()
 
         return binding.root
     }
@@ -50,13 +59,16 @@ class DetayFragment : Fragment() {
         binding.apply {
             tvYerKisaTanimBilgi.text = yerObject.kisaTanim
             tvKisaAciklamaBilgisi.text = yerObject.kisaAciklama
-            // TODO Oncelik için kontrol
+
+            //Oncelik için kontrol
             if (yerObject.oncelik.equals("oncelik1"))//yeşil
             { ivOncelikD.setImageResource(R.drawable.oncelik1_sekil) }
             else if (yerObject.oncelik.equals("oncelik2"))//mavi
             { ivOncelikD.setImageResource(R.drawable.oncelik2_sekil) }
             else if (yerObject.oncelik.equals("oncelik3"))//gri
             { ivOncelikD.setImageResource(R.drawable.oncelik3_sekil)}
+
+            //TODO yer fotoğrafna göre tarih
         }
 
 
@@ -70,6 +82,9 @@ class DetayFragment : Fragment() {
 
         Log.e("Logcat", TripPlannerLogic.tumZiyaretleriGetir(requireContext()).size.toString())
         Log.e("Logcat",TripPlannerLogic.tumZiyaretleriGetir(requireContext()).toString())
+
+
+
     }
 
     private fun ziyaretControl(ziyaretList : ArrayList<ZiyaretEntity>) {
@@ -84,7 +99,7 @@ class DetayFragment : Fragment() {
             kisaAciklama = "Aciklama"
             kisaTanim = "Tanim"
             yerAdi = "Yeradi"
-            oncelik = "Oncelik1"
+            oncelik = "oncelik1"
             ziyaretEdildi = 0
         }
         TripPlannerLogic.yerEkle(requireContext(),yerObject)
@@ -116,6 +131,112 @@ class DetayFragment : Fragment() {
         setInitialViews()
     }
 
+    /*
+    val foodList2DetailNavDir = FoodListFragmentDirections.foodList2Detail(foodObject)
+    Navigation.findNavController(it).navigate(foodList2DetailNavDir)
+            */
 
+
+
+    fun imageSlider(){
+        val imageSlider = binding.imageSlider
+        val imageList = ArrayList<SlideModel>()
+        imageList.add(SlideModel(yerResimListe.get(0).uri))
+
+        imageList.add(SlideModel(R.drawable.tempimage1,""))
+        imageList.add(SlideModel(R.drawable.tempimage1,""))
+        imageList.add(SlideModel(R.drawable.tempimage1,""))
+        imageList.add(SlideModel(R.drawable.tempimage1,""))
+
+        imageSlider.setImageList(imageList, ScaleTypes.FIT)
+    }
+
+/*
+    var viewPager: ViewPager2? = null
+    var adapter: ViewPagerAdapter? = null
+    fun FragmentimageSliderViewPager(){
+        var tab_layout=binding.tabLayout
+
+        viewPager = binding.photosViewpager
+        adapter = ViewPagerAdapter(requireContext())
+        viewPager!!.setAdapter(adapter)
+        val tabLayoutMediator = TabLayoutMediator(tab_layout, viewPager!!, true,
+            TabConfigurationStrategy { tab, position -> }
+        )
+        tabLayoutMediator.attach()
+
+
+    }*/
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+    //slider implements
+    var mResources = intArrayOf(R.drawable.tempimage1, R.drawable.tempimage1, R.drawable.tempimage1)
+    var mViewPager: ViewPager? = null
+    private var mAdapter: ViewPagerAdapter? = null
+    private var pager_indicator: LinearLayout? = null
+    private var dotsCount = 0
+    private lateinit var dots: Array<ImageView?>
+*/
+/*
+    fun imageSliderViewPager(){
+
+        mViewPager=binding.viewpager
+        pager_indicator=binding.viewPagerCountDots
+        mAdapter= ViewPagerAdapter(requireContext(),mResources)
+        mViewPager!!.adapter=mAdapter
+        mViewPager!!.currentItem=0
+        mViewPager!!.setOnPageChangeListener(this)
+        setPageViewIndicator()
+
+
+    }
+    @SuppressLint("ClickableViewAccessibility")
+    private fun setPageViewIndicator() {
+        Log.d("###setPageViewIndicator", " : called")
+        dotsCount = mAdapter!!.count
+        dots = arrayOfNulls(dotsCount)
+        for (i in 0 until dotsCount) {
+            dots[i] = ImageView(requireContext())
+            dots[i]!!.setImageResource(R.drawable.unselected_dot_slider)
+            val params = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+            params.setMargins(4, 0, 4, 0)
+            dots[i]!!.setOnTouchListener { v, event ->
+                mViewPager!!.currentItem = i
+                true
+            }
+            pager_indicator!!.addView(dots[i], params)
+        }
+        dots[0]!!.setImageResource(R.drawable.selected_dot_slider)
+    }
+
+    override fun onClick(v: View) {}
+    override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
+    override fun onPageSelected(position: Int) {
+        Log.d("###onPageSelected, pos ", position.toString())
+        for (i in 0 until dotsCount) {
+            dots[i]!!.setImageResource(R.drawable.unselected_dot_slider)
+        }
+        dots[position]!!.setImageResource(R.drawable.selected_dot_slider)
+        if (position + 1 == dotsCount) {
+        } else {
+        }
+    }
+
+    override fun onPageScrollStateChanged(state: Int) {}
+*/
 
 }
