@@ -124,6 +124,8 @@ class DetayFragment : Fragment(), ViewPager.OnPageChangeListener, View.OnClickLi
     //viewPagerImplements
     var yerFotograflari = intArrayOf(R.drawable.tempimage1, R.drawable.tempimage1, R.drawable.tempimage1)
     var yerTarihleri= arrayOf("tarih1","tarih2","tarih3")
+
+
     var mViewPager: ViewPager? = null
     private var mAdapter: CustomPagerAdapter? = null
     private var pager_indicator: LinearLayout? = null
@@ -136,7 +138,9 @@ class DetayFragment : Fragment(), ViewPager.OnPageChangeListener, View.OnClickLi
 
         mViewPager = binding.viewpager
         pager_indicator = binding.viewPagerCountDots
+
         mAdapter = CustomPagerAdapter(requireContext(), yerFotograflari,yerTarihleri)
+
         mViewPager!!.adapter = mAdapter
         mViewPager!!.currentItem = 0
         mViewPager!!.setOnPageChangeListener(this)
