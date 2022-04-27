@@ -15,6 +15,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.tripplanner.Controller.bll.PermissionLogic
 import com.example.tripplanner.Controller.bll.TripPlannerLogic
+import com.example.tripplanner.R
 import com.example.tripplanner.databinding.FragmentYerEkleBinding
 import com.example.tripplanner.model.Oncelik
 import com.example.tripplanner.model.Oncelikler
@@ -27,18 +28,13 @@ import com.example.tripplanner.view.adapters.foto.FotoAdapter
 /** Gezilecek Yer Ekleme Fragment*/
 class YerEkleFragment : PermissionHandlingFragment() {
 
-
-
-
     private lateinit var binding: FragmentYerEkleBinding
     private var resimListe: ArrayList<String> = arrayListOf("")
     private lateinit var locationIntent:Pair<Double,Double>
     var yer= YerEntity(0.0,0.0)
     var secilenOncelik=Oncelik(0,"")
 
-    override fun grantedFunc(){
-        Toast.makeText(requireContext(),"toast",Toast.LENGTH_SHORT).show()
-    }
+    override fun grantedFunc(){}
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,13 +44,11 @@ class YerEkleFragment : PermissionHandlingFragment() {
         // Inflate the layout for this fragment
         binding = FragmentYerEkleBinding.inflate(inflater, container, false)
 
+        (activity as MainActivity).binding.tvToolText.setText(R.string.yer_ekle_bar_text)
+
         createTempList()
         setAdapters()
         setupSpinner()
-
-
-
-
 
         binding.btnYerKaydet.setOnClickListener {
             if(this::locationIntent.isInitialized){
@@ -68,12 +62,6 @@ class YerEkleFragment : PermissionHandlingFragment() {
 
 
         }
-
-
-        //TODO tabb layout düzenlenecek
-        (activity as MainActivity).binding.tabLayout.isVisible=false
-        (activity as MainActivity).binding.fabYerEkle.isVisible=false
-
 
         val resLauncher=registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == RESULT_OK) {
@@ -104,16 +92,11 @@ class YerEkleFragment : PermissionHandlingFragment() {
         requireActivity().onBackPressed()
     }
     fun setAdapters() {
-
         resimUriListCheck()
-
         val rvAdapter = FotoAdapter(requireContext(), resimListe, ::photoCardClickEvent, ::silmeClickEvent)
         binding.rvYerEkle.layoutManager =
             StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
         binding.rvYerEkle.adapter = rvAdapter
-
-        // TODO Fill spinner with colors
-
     }
 
     fun photoCardClickEvent(){
@@ -225,14 +208,10 @@ class YerEkleFragment : PermissionHandlingFragment() {
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                     //var secilenOncelik = parent!!.getItemAtPosition(position)
                     secilenOncelik = Oncelikler.list!!.get(position)
-                    Toast.makeText(requireContext(),"${secilenOncelik.oncelikDurumu}",Toast.LENGTH_SHORT).show()
-
                 }
-
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
         }
-
     }
 
 

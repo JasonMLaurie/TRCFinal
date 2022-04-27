@@ -28,4 +28,10 @@
     <string name="ornek_ziyaret_gecmisi_18">10.05.2018</string>
     <string name="title_activity_maps">MapsActivity</string>
 
+
+    <string name="gezilecekler_bar_text">Gezilecekler</string>
+    <string name="gezdiklerim_bar_text">Gezdiklerim</string>
+    <string name="yer_ekle_bar_text">Yer Ekle</string>
+    <string name="konum_sec_bar_text">Konum Seç</string>
+
 </resources>

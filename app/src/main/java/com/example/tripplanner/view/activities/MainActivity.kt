@@ -1,8 +1,10 @@
 package com.example.tripplanner.view.activities
 
 import android.annotation.SuppressLint
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
 import androidx.core.view.isVisible
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.NavHostFragment
@@ -14,7 +16,7 @@ import com.google.android.material.tabs.TabLayout
 
 class MainActivity : PermissionActivity() {
 
-    lateinit var binding :ActivityMainBinding
+    lateinit var binding : ActivityMainBinding
     lateinit var navHostFragment : NavHostFragment
 
 
@@ -26,6 +28,9 @@ class MainActivity : PermissionActivity() {
         binding= ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
+
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
         navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
 
 
@@ -131,6 +136,7 @@ class MainActivity : PermissionActivity() {
 
             }
             override fun onTabReselected(tab: TabLayout.Tab?) {
+
             }
 
         })

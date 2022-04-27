@@ -20,6 +20,7 @@ import com.example.tripplanner.databinding.FragmentDetayBinding
 import com.example.tripplanner.model.ResimEntity
 import com.example.tripplanner.model.YerEntity
 import com.example.tripplanner.model.ZiyaretEntity
+import com.example.tripplanner.view.activities.MainActivity
 import com.example.tripplanner.view.activities.MapsActivity
 import com.example.tripplanner.view.adapters.CustomPagerAdapter
 import com.example.tripplanner.view.adapters.ziyaret.ZiyaretAdapter
@@ -30,12 +31,15 @@ class DetayFragment : Fragment(), ViewPager.OnPageChangeListener, View.OnClickLi
 
     private lateinit var binding : FragmentDetayBinding
     private lateinit var yerObject : YerEntity
-    private var yerResimListe=ArrayList<ResimEntity>()
 
+    val bundle : DetayFragmentArgs by navArgs()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         binding = FragmentDetayBinding.inflate(inflater, container, false)
+        yerObject = bundle.yerObject
+
+        (activity as MainActivity).binding.tvToolText.setText(yerObject.yerAdi)
 
         setInitialViews()
         clickListeners()
@@ -48,8 +52,7 @@ class DetayFragment : Fragment(), ViewPager.OnPageChangeListener, View.OnClickLi
     /** Fill views with default values */
     @SuppressLint("SetTextI18n")
     fun setInitialViews(){
-        val bundle : DetayFragmentArgs by navArgs()
-        yerObject = bundle.yerObject
+
         resimListe=TripPlannerLogic.fotolarGetir(requireContext(),yerObject.id)
 
         binding.apply {
@@ -63,9 +66,6 @@ class DetayFragment : Fragment(), ViewPager.OnPageChangeListener, View.OnClickLi
             { ivOncelikD.setImageResource(R.drawable.oncelik2_sekil) }
             else if (yerObject.oncelik.equals("oncelik3"))//gri
             { ivOncelikD.setImageResource(R.drawable.oncelik3_sekil)}
-
-            //TODO yer fotoğrafna göre tarih
-
 
         }
 

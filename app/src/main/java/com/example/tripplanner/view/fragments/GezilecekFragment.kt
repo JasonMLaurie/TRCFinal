@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tripplanner.Controller.bll.TripPlannerLogic
+import com.example.tripplanner.R
 import com.example.tripplanner.databinding.FragmentGezilecekBinding
 import com.example.tripplanner.model.YerEntity
 import com.example.tripplanner.view.activities.MainActivity
@@ -21,6 +22,10 @@ class GezilecekFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding= FragmentGezilecekBinding.inflate(inflater)
+
+       // binding.toolbar.setTitle("Gezilecekler")
+        (activity as MainActivity).binding.tvToolText.setText(R.string.gezilecekler_bar_text)
+
 
         getTumGezilecekYerler()
         initRcv()

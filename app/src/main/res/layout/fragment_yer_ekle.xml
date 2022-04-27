@@ -13,9 +13,11 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout4"
-            android:layout_width="340dp"
+            android:layout_width="0dp"
             android:layout_height="128dp"
-            android:layout_marginTop="21dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="19dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -32,9 +34,11 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_ziyaret_ekle_tarih"
-            android:layout_width="340dp"
+            android:layout_width="0dp"
             android:layout_height="56dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="13dp"
+            android:layout_marginEnd="19dp"
             android:background="@drawable/box"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -77,9 +81,11 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout7"
-            android:layout_width="340dp"
+            android:layout_width="0dp"
             android:layout_height="56dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="11dp"
+            android:layout_marginEnd="19dp"
             android:background="@drawable/box"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -134,13 +140,15 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.503"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout10"
+            app:layout_constraintVertical_bias="1.0" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnKonumEkle"
             android:layout_width="94dp"
             android:layout_height="24dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="19dp"
             android:background="@drawable/box"
             android:backgroundTint="@color/blue"
@@ -155,9 +163,11 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout6"
-            android:layout_width="340dp"
+            android:layout_width="0dp"
             android:layout_height="29dp"
-            android:layout_marginTop="13dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="19dp"
             android:background="@drawable/box"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -187,13 +197,18 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="340dp"
-            android:layout_height="157dp"
+            android:id="@+id/constraintLayout10"
+            android:layout_width="0dp"
+            android:layout_height="147dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="11dp"
+            android:layout_marginEnd="19dp"
             android:background="@drawable/box"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout7">
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout7"
+            app:layout_constraintVertical_bias="0.0">
 
             <TextView
                 android:id="@+id/textKisaAciklama"
@@ -216,7 +231,8 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginBottom="9dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="16dp"
                 android:fontFamily="sans-serif-medium"
                 android:gravity="start|top"
                 android:hint="Kısa Açıklama Giriniz"

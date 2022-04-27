@@ -10,6 +10,7 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tripplanner.Controller.bll.TripPlannerLogic
+import com.example.tripplanner.R
 import com.example.tripplanner.databinding.FragmentGezdiklerimBinding
 import com.example.tripplanner.model.YerEntity
 import com.example.tripplanner.view.activities.MainActivity
@@ -26,6 +27,8 @@ class GezdiklerimFragment : Fragment() {
 
         getGezdiklerim()
         initRcv()
+
+        (activity as MainActivity).binding.tvToolText.setText(R.string.gezdiklerim_bar_text)
 
         return binding.root
     }
@@ -59,5 +62,6 @@ class GezdiklerimFragment : Fragment() {
         this.add(tempEntity)
         this.add(tempEntity)
     }
+
 
 }

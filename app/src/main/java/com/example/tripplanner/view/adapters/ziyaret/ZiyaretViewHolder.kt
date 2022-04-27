@@ -11,19 +11,13 @@ import java.util.*
 
 class ZiyaretViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
 
-    val yerAdiTv : TextView
     val tarihTV : TextView
     val aciklamaTV : TextView
-    val kisaTanimTV : TextView
-    val fotografIV :ImageView
 
 
     init {
         tarihTV = itemView.findViewById(R.id.tvTarihCardZG)
         aciklamaTV = itemView.findViewById(R.id.tvAciklamaCardZg)
-        yerAdiTv = itemView.findViewById(R.id.tvYerAdiZg)
-        kisaTanimTV = itemView.findViewById(R.id.tvKisaTanimZg)
-        fotografIV = itemView.findViewById(R.id.ivFotografZg)
 
     }
 
@@ -35,8 +29,6 @@ class ZiyaretViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
         tarihTV.text = ziyaretEntity.tarih
         aciklamaTV.text = ziyaretEntity.aciklama
 
-        yerAdiTv.text=yer.yerAdi
-        kisaTanimTV.text=yer.kisaTanim
 
         // TODO bind entity fields to view elements
 
