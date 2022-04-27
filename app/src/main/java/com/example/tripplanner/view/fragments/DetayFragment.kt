@@ -37,10 +37,8 @@ class DetayFragment : Fragment(), ViewPager.OnPageChangeListener, View.OnClickLi
         // Inflate the layout for this fragment
         binding = FragmentDetayBinding.inflate(inflater, container, false)
 
-//        tempSol()
         setInitialViews()
         clickListeners()
-        //imageSlider()
         viewPagerImageSlider()
 
         return binding.root
@@ -132,6 +130,8 @@ class DetayFragment : Fragment(), ViewPager.OnPageChangeListener, View.OnClickLi
     private var dotsCount = 0
     private lateinit var dots: Array<ImageView?>
 
+
+    /** ViewPagerSlide operations */
     fun viewPagerImageSlider(){
 
         mViewPager = binding.viewpager
@@ -141,10 +141,6 @@ class DetayFragment : Fragment(), ViewPager.OnPageChangeListener, View.OnClickLi
         mViewPager!!.currentItem = 0
         mViewPager!!.setOnPageChangeListener(this)
         setPageViewIndicator()
-
-
-
-
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -169,8 +165,6 @@ class DetayFragment : Fragment(), ViewPager.OnPageChangeListener, View.OnClickLi
         dots[0]!!.setImageResource(R.drawable.selected_dot_slider)
     }
 
-    override fun onClick(v: View) {}
-    override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
     override fun onPageSelected(position: Int) {
         Log.d("###onPageSelected, pos ", position.toString())
         for (i in 0 until dotsCount) {
@@ -181,6 +175,10 @@ class DetayFragment : Fragment(), ViewPager.OnPageChangeListener, View.OnClickLi
         } else { }
     }
 
+    override fun onClick(v: View) {
+        //TODO resim tam ekran açılacak
+    }
+    override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
     override fun onPageScrollStateChanged(state: Int) {}
 
 
