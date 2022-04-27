@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
@@ -15,9 +16,12 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.tripplanner.Controller.bll.PermissionLogic
 import com.example.tripplanner.Controller.bll.TripPlannerLogic
 import com.example.tripplanner.databinding.FragmentYerEkleBinding
+import com.example.tripplanner.model.Oncelik
+import com.example.tripplanner.model.Oncelikler
 import com.example.tripplanner.model.YerEntity
 import com.example.tripplanner.view.activities.MainActivity
 import com.example.tripplanner.view.activities.MapsActivity
+import com.example.tripplanner.view.adapters.SpinnerAdapter
 import com.example.tripplanner.view.adapters.foto.FotoAdapter
 
 /** Gezilecek Yer Ekleme Fragment*/
@@ -29,6 +33,8 @@ class YerEkleFragment : PermissionHandlingFragment() {
     private lateinit var binding: FragmentYerEkleBinding
     private var resimListe: ArrayList<String> = arrayListOf("")
     private lateinit var locationIntent:Pair<Double,Double>
+    var yer= YerEntity(0.0,0.0)
+    var secilenOncelik=Oncelik(0,"")
 
     override fun grantedFunc(){
         Toast.makeText(requireContext(),"toast",Toast.LENGTH_SHORT).show()
@@ -44,26 +50,23 @@ class YerEkleFragment : PermissionHandlingFragment() {
 
         createTempList()
         setAdapters()
+        setupSpinner()
 
 
-        var yer= YerEntity(0.0,0.0)
+
 
 
         binding.btnYerKaydet.setOnClickListener {
             if(this::locationIntent.isInitialized){
-                yer=YerEntity(locationIntent.first,locationIntent.second)
-                yer.yerAdi=binding.eTvYerAdi.text.toString()
-                yer.kisaTanim=binding.eTvYerKisaTanim.text.toString()
-                yer.kisaAciklama=binding.eTvYerKisaAciklama.text.toString()
-
-                //todo öncelik ve fotoğraf bilgileri atamaı yapılacak
-
+                yerEkle()
                 TripPlannerLogic.yerEkle(requireContext(),yer)
-
-                requireActivity().onBackPressed()
-            }else {
-                Toast.makeText(requireContext(), "Konum girilmesi zorunludur.", Toast.LENGTH_SHORT).show()
             }
+            else {
+            Toast.makeText(requireContext(), "Konum girilmesi zorunludur.", Toast.LENGTH_SHORT).show()
+            }
+
+
+
         }
 
 
@@ -88,6 +91,18 @@ class YerEkleFragment : PermissionHandlingFragment() {
     }
 
 
+    fun yerEkle(){
+
+        yer=YerEntity(locationIntent.first,locationIntent.second)
+        yer.yerAdi=binding.eTvYerAdi.text.toString()
+        yer.kisaTanim=binding.eTvYerKisaTanim.text.toString()
+        yer.kisaAciklama=binding.eTvYerKisaAciklama.text.toString()
+        yer.oncelik=secilenOncelik.oncelikDurumu
+
+        //todo fotoğraf bilgileri atamaı yapılacak
+
+        requireActivity().onBackPressed()
+    }
     fun setAdapters() {
 
         resimUriListCheck()
@@ -199,6 +214,25 @@ class YerEkleFragment : PermissionHandlingFragment() {
         (activity as MainActivity).binding.tabLayout.isVisible=false
         (activity as MainActivity).binding.fabYerEkle.isVisible=false
         super.onResume()
+    }
+
+
+    fun setupSpinner(){
+        val adapter =SpinnerAdapter(requireContext(),Oncelikler.list!!)
+        binding.apply {
+            spinner.adapter=adapter
+            spinner.onItemSelectedListener = object :AdapterView.OnItemSelectedListener{
+                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                    //var secilenOncelik = parent!!.getItemAtPosition(position)
+                    secilenOncelik = Oncelikler.list!!.get(position)
+                    Toast.makeText(requireContext(),"${secilenOncelik.oncelikDurumu}",Toast.LENGTH_SHORT).show()
+
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+            }
+        }
+
     }
 
 

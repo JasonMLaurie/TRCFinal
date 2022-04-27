@@ -52,14 +52,12 @@ class YerViewHolder(itemView: View, glist:ArrayList<YerEntity>, itemClick:(posit
 
         //TODO setting image to ivYerFotograf
 
-        /*
-        //!!
-        if (item.Oncelik=="Oncelik1")//yeşil
-        { ivOncelik.setBackgroundColor(R.drawable.oncelik1_sekil) }
-        else if (item.Oncelik=="Oncelik2")//mavi
-        { ivOncelik.setBackgroundColor(R.drawable.oncelik2_sekil) }
-        else if (item.Oncelik=="Oncelik3")//gri
-        { ivOncelik.setBackgroundColor(R.drawable.oncelik3_sekil) }*/
+        if (item.oncelik.equals("oncelik1"))//yeşil
+        { ivOncelik.setImageResource(R.drawable.oncelik1_sekil) }
+        else if (item.oncelik.equals("oncelik2"))//mavi
+        { ivOncelik.setImageResource(R.drawable.oncelik2_sekil) }
+        else if (item.oncelik.equals("oncelik3"))//gri
+        { ivOncelik.setImageResource(R.drawable.oncelik3_sekil)}
 
     }
     }

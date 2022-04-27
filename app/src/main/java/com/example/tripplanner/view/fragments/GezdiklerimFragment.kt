@@ -17,6 +17,7 @@ import com.example.tripplanner.view.adapters.yer.YerAdapter
 
 /** Gezdiklerim Liste Fragment (bknz. GezilecekFragment) */
 class GezdiklerimFragment : Fragment() {
+
     lateinit var binding: FragmentGezdiklerimBinding
     lateinit var gezdiklerimListe: ArrayList<YerEntity>
 
@@ -30,13 +31,6 @@ class GezdiklerimFragment : Fragment() {
     }
 
     private fun getGezdiklerim() {
-       /* var temp=TripPlannerLogic.tumYerleriGetir(requireContext())[3]
-        var ziyaret=ZiyaretEntity()
-        ziyaret.aciklama=temp.kisaAciklama
-        ziyaret.tarih="01.01.01"
-        ziyaret.yerId=temp.id
-        TripPlannerLogic.ziyaretEkle(requireContext(),ziyaret)*/
-
         gezdiklerimListe= TripPlannerLogic.gezdiklerimiGetir(requireContext())
     }
 
@@ -48,12 +42,8 @@ class GezdiklerimFragment : Fragment() {
     }
 
     private fun itemClick(position: Int,itemView:View) {
-        Toast.makeText(requireContext(),"Tiklandi",Toast.LENGTH_SHORT).show()
-
         val gezdiklerim2DetayNavDir = GezdiklerimFragmentDirections.actionGezdiklerimFragmentToDetayFragment(gezdiklerimListe[position])
-//        (activity as MainActivity).fragmentDegistir(gezdiklerim2DetayNavDir)
         findNavController().navigate(gezdiklerim2DetayNavDir)
-        //itemView.findNavController().navigate(gezdiklerim2DetayNavDir)
     }
 
     private fun ArrayList<YerEntity>.mockData(){

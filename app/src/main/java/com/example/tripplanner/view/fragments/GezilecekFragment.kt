@@ -20,27 +20,26 @@ class GezilecekFragment : Fragment() {
     lateinit var yerlerListe:ArrayList<YerEntity>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
         binding= FragmentGezilecekBinding.inflate(inflater)
 
         getTumGezilecekYerler()
+        initRcv()
 
         return binding.root
     }
 
-    fun getTumGezilecekYerler(){
-
-        yerlerListe= TripPlannerLogic.gezilecekleriGetir(requireContext())
+    private fun initRcv(){
         val lm = LinearLayoutManager(requireContext())
         lm.orientation= LinearLayoutManager.VERTICAL
         binding.rvGezilecekYerler.layoutManager=lm
         binding.rvGezilecekYerler.adapter=YerAdapter(requireContext(),yerlerListe,::itemClick)
     }
 
+    fun getTumGezilecekYerler(){
+        yerlerListe= TripPlannerLogic.gezilecekleriGetir(requireContext())
+    }
+
     fun itemClick(position:Int,itemView: View){
-        Toast.makeText(requireContext(),yerlerListe.get(position).yerAdi + " tıklandı", Toast.LENGTH_SHORT).show()
-
-
         val gezilecek2DetayNavDir = GezilecekFragmentDirections.actionGezilecekFragment2ToDetayFragment(yerlerListe[position])
         (activity as MainActivity).fragmentDegistir(gezilecek2DetayNavDir)
     }

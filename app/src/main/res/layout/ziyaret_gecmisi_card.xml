@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,18 +17,32 @@
         app:layout_constraintTop_toBottomOf="@+id/textView5">
 
         <TextView
+            android:id="@+id/tvYerAdiZg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="6dp"
+            android:text="@string/yer_adi"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/ivFotografZg"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
             android:id="@+id/tvTarihCardZG"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="14dp"
             android:layout_marginTop="12dp"
+            android:layout_marginEnd="9dp"
             android:fontFamily="sans-serif-medium"
             android:text="@string/ornek_ziyaret_gecmisi_20"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textColor="@color/black"
             android:textSize="10sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -35,8 +50,8 @@
             android:id="@+id/tvAciklamaCardZg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="14dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="2dp"
             android:fontFamily="sans-serif-medium"
             android:text="@string/girilen_aciklama_bilgisi"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
@@ -44,7 +59,33 @@
             android:textSize="10sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/ivFotografZg"
+            app:layout_constraintTop_toBottomOf="@+id/tvKisaTanimZg" />
+
+        <TextView
+            android:id="@+id/tvKisaTanimZg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/yer_kisa_tanim"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="10sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/ivFotografZg"
+            app:layout_constraintTop_toBottomOf="@+id/tvYerAdiZg" />
+
+        <ImageView
+            android:id="@+id/ivFotografZg"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp"
+            android:background="@drawable/box"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvTarihCardZG" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/avatars" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

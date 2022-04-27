@@ -61,6 +61,7 @@ class MapsActivity : PermissionActivity(), OnMapReadyCallback {
         if (mode){// Detaydan gelirsen
             mMap.addMarker(MarkerOptions().position(locationPair!!.second))
             mMap.moveCamera(CameraUpdateFactory.newLatLng(locationPair!!.second))
+
         }
 
     }
@@ -68,8 +69,6 @@ class MapsActivity : PermissionActivity(), OnMapReadyCallback {
     private fun initializeMode(){
         mode= intent.getBooleanExtra("mode",false)
         if (!mode){//Yer Ekle kismindan gelirsen
-
-
         }else{//Detay kismindan gelirsen
             locationPair= Pair("Konum", LatLng(intent.getDoubleExtra("Latitude",40.0),intent.getDoubleExtra("Longitude",40.0)))
         }
