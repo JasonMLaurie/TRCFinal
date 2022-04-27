@@ -5,7 +5,7 @@ import kotlin.properties.Delegates
 class ResimEntity {
 
     var id by Delegates.notNull<Int>()
-    var uri: String? = null
+    var base64: String? = null
     var yerId by Delegates.notNull<Int>()
 
 }

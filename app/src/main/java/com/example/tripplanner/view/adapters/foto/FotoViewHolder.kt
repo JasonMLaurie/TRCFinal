@@ -9,12 +9,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
+import com.example.tripplanner.Controller.bll.TripPlannerLogic
 import com.example.tripplanner.R
 import com.example.tripplanner.model.ResimEntity
 import com.example.tripplanner.model.YerEntity
 import java.util.*
 
-class FotoViewHolder(itemView: View,var cardClick : () -> Unit, var silClick : (uri : Uri) -> Unit) : RecyclerView.ViewHolder(itemView) {
+class FotoViewHolder(itemView: View,var cardClick : () -> Unit, var silClick : (encodedImage : String) -> Unit) : RecyclerView.ViewHolder(itemView) {
 
     /** Define View Elements*/
     val imageView : ImageView
@@ -36,12 +37,12 @@ class FotoViewHolder(itemView: View,var cardClick : () -> Unit, var silClick : (
         }
     }
 
-    fun bindDataToViews(uri : Uri, isLastItem: Boolean){
+    fun bindDataToViews(encodedImage: String, isLastItem: Boolean){
 
-        if (uri != null && !uri.equals(Uri.EMPTY)) {
+        if (encodedImage != null && !encodedImage.equals("")) {
             ekliFotoConstraintLayout.visibility = View.VISIBLE
 
-            imageView.setImageURI(uri)
+            imageView.setImageBitmap(TripPlannerLogic.decodeBase64(encodedImage))
 
             if(!isLastItem){
                 fotoEkleConstraintLayout.visibility = View.GONE
@@ -55,7 +56,7 @@ class FotoViewHolder(itemView: View,var cardClick : () -> Unit, var silClick : (
         }
 
         fotoSilBtn.setOnClickListener {
-            silClick(uri)
+            silClick(encodedImage)
         }
 
         // TODO bind entity fields to view elements

@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.tripplanner.R
 import com.example.tripplanner.model.ResimEntity
 
-class FotoAdapter(var mContext : Context, var resimUriList : ArrayList<Uri>,var cardClick : () -> Unit, var silClick : (uri : Uri) -> Unit) : RecyclerView.Adapter<FotoViewHolder>() {
+class FotoAdapter(var mContext : Context, var resimUriList : ArrayList<String>,var cardClick : () -> Unit, var silClick : (encodedImage : String) -> Unit) : RecyclerView.Adapter<FotoViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FotoViewHolder {
         val layoutInflater = LayoutInflater.from(mContext)

@@ -27,7 +27,7 @@ class YerEkleFragment : PermissionHandlingFragment() {
 
 
     private lateinit var binding: FragmentYerEkleBinding
-    private var resimListe: ArrayList<Uri> = arrayListOf(Uri.EMPTY)
+    private var resimListe: ArrayList<String> = arrayListOf("")
     private lateinit var locationIntent:Pair<Double,Double>
 
     override fun grantedFunc(){
@@ -107,7 +107,7 @@ class YerEkleFragment : PermissionHandlingFragment() {
 
 
     /** Photo deletion function.*/
-    fun silmeClickEvent(uri : Uri){
+    fun silmeClickEvent(encodedImage : String){
 /*            val tempResimObject = TripPlannerLogic.fotoGetir(requireContext(), uri.toString())
             if(tempResimObject.uri.isNullOrEmpty()){
                 if(resimListe.contains(uri)){
@@ -131,8 +131,8 @@ class YerEkleFragment : PermissionHandlingFragment() {
 
     /** A function used for empty list situation. It is used to still show the add button */
     private fun resimUriListCheck(){
-        if (resimListe.contains(Uri.EMPTY) && resimListe.size>1){
-            resimListe.remove(Uri.EMPTY)
+        if (resimListe.contains("") && resimListe.size>1){
+            resimListe.remove("")
         }
     }
 
@@ -143,7 +143,8 @@ class YerEkleFragment : PermissionHandlingFragment() {
         while (i <= 3) {
             val uri: Uri =
                 Uri.parse("android.resource://" + requireActivity().packageName + "/drawable/tempimage1")
-            resimListe.add(uri)
+            val encodedImage = TripPlannerLogic.encodeBase64(uri, (activity as MainActivity).contentResolver)
+            resimListe.add(encodedImage)
             i++
         }
 

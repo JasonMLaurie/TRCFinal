@@ -35,19 +35,19 @@ class YerViewHolder(itemView: View, glist:ArrayList<YerEntity>, itemClick:(posit
 
 
 
-    fun bindDataToViews(context: Context, item: YerEntity){
+    fun bindDataToViews(context: Context, item: YerEntity) {
 
-        tvYerAdı.text=item.yerAdi
-        tvYerKisaTanim.text=item.kisaTanim
-        tvYerKisaAciklama.text=item.kisaAciklama
+        tvYerAdı.text = item.yerAdi
+        tvYerKisaTanim.text = item.kisaTanim
+        tvYerKisaAciklama.text = item.kisaAciklama
 
-            val tempResimList = TripPlannerLogic.fotolarGetir(context, item.id)
+/*            val tempResimList = TripPlannerLogic.fotolarGetir(context, item.id)
             if(tempResimList.isNullOrEmpty()){
                 ivYerFotograf.setImageResource(R.drawable.tempimage1)
             }else{
                 ivYerFotograf.setImageURI(Uri.parse(TripPlannerLogic.fotolarGetir(context, item.id)[0].uri))
             }
-        }
+        }*/
 
 
         //TODO setting image to ivYerFotograf
@@ -61,8 +61,5 @@ class YerViewHolder(itemView: View, glist:ArrayList<YerEntity>, itemClick:(posit
         else if (item.Oncelik=="Oncelik3")//gri
         { ivOncelik.setBackgroundColor(R.drawable.oncelik3_sekil) }*/
 
-
-
-
-
+    }
     }
