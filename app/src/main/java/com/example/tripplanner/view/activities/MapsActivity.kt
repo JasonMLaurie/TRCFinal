@@ -5,6 +5,7 @@ import android.content.Intent
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
@@ -71,13 +72,31 @@ class MapsActivity : PermissionActivity(), OnMapReadyCallback {
 
         }else{//Detay kismindan gelirsen
             locationPair= Pair("Konum", LatLng(intent.getDoubleExtra("Latitude",40.0),intent.getDoubleExtra("Longitude",40.0)))
-            Toast.makeText(this,"Lat: ${locationPair!!.second.latitude} lon: ${locationPair!!.second.longitude}",Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun configureButton(){
         if(mode){//Detay kismindan gelirsen
             //Konuma gidis
+            binding.btnKonumKaydet.text="Git"
+            binding.btnKonumKaydet.setOnClickListener {
+                var gmmIntentUri=Uri.parse("google.navigation:q=${locationPair!!.second.latitude.toString().dropLast(locationPair!!.second.latitude.toString().length-5)},${locationPair!!.second.longitude.toString().dropLast(locationPair!!.second.latitude.toString().length-5)}")
+                var mapIntent=Intent(Intent.ACTION_VIEW,gmmIntentUri)
+                mapIntent.setPackage("com.google.android.apps.maps")
+                startActivity(mapIntent)
+            }
+            //val gmmIntentUri =
+            //  Uri.parse("google.navigation:q=Taronga+Zoo,+Sydney+Australia")
+            //val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+            //mapIntent.setPackage("com.google.android.apps.maps")
+            //startActivity(mapIntent)
+            //Toast.makeText(this,"${locationPair!!.second.latitude},${locationPair!!.second.longitude}",Toast.LENGTH_SHORT).show()
+            //                var gmmIntentUri= Uri.parse("geo:${locationPair!!.second.latitude.toString().dropLast(locationPair!!.second.latitude.toString().length-5)},${locationPair!!.second.longitude.toString().dropLast(locationPair!!.second.latitude.toString().length-5)}")
+            //                var mapIntent=Intent(Intent.ACTION_VIEW, gmmIntentUri)
+            //                mapIntent.setPackage("com.google.android.apps.maps")
+            //                startActivity(mapIntent)
+
+
         }else{//Yer ekle kismindan gelirsen
             binding.btnKonumKaydet.setOnClickListener {
                 val intent=Intent()
@@ -126,5 +145,11 @@ class MapsActivity : PermissionActivity(), OnMapReadyCallback {
         }
 
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        locationManager?.removeUpdates(locationListener)
+    }
+
 
 }

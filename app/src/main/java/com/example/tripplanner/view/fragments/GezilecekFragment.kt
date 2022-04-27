@@ -39,8 +39,7 @@ class GezilecekFragment : Fragment() {
 
     fun itemClick(position:Int,itemView: View){
         Toast.makeText(requireContext(),yerlerListe.get(position).yerAdi + " tıklandı", Toast.LENGTH_SHORT).show()
-//        findNavController().navigate(R.id.action_gezilecekFragment2_to_detayFragment)
-//        (activity as MainActivity).fragmentDegistir(DetayFragment())
+
 
         val gezilecek2DetayNavDir = GezilecekFragmentDirections.actionGezilecekFragment2ToDetayFragment(yerlerListe[position])
         (activity as MainActivity).fragmentDegistir(gezilecek2DetayNavDir)
