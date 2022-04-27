@@ -9,19 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.ViewPager
-import androidx.viewpager2.widget.ViewPager2
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.denzcoskun.imageslider.constants.ActionTypes
-import com.denzcoskun.imageslider.constants.ScaleTypes
-import com.denzcoskun.imageslider.interfaces.ItemClickListener
-import com.denzcoskun.imageslider.interfaces.TouchListener
-import com.denzcoskun.imageslider.models.SlideModel
 import com.example.tripplanner.Controller.bll.TripPlannerLogic
 import com.example.tripplanner.R
 import com.example.tripplanner.databinding.FragmentDetayBinding
@@ -30,9 +22,6 @@ import com.example.tripplanner.model.YerEntity
 import com.example.tripplanner.model.ZiyaretEntity
 import com.example.tripplanner.view.activities.MapsActivity
 import com.example.tripplanner.view.adapters.CustomPagerAdapter
-import com.google.android.material.tabs.TabLayoutMediator
-import com.google.android.material.tabs.TabLayoutMediator.TabConfigurationStrategy
-import com.example.tripplanner.view.adapters.foto.FotoAdapter
 import com.example.tripplanner.view.adapters.ziyaret.ZiyaretAdapter
 
 /** Gezilecek Yer Detay Fragment */
@@ -175,8 +164,8 @@ class DetayFragment : Fragment(), ViewPager.OnPageChangeListener, View.OnClickLi
     }*/
 
 
-    var mResources =
-        intArrayOf(R.drawable.tempimage1, R.drawable.tempimage1, R.drawable.tempimage1)
+    //viewPagerImplements
+    var yerFotograflari = intArrayOf(R.drawable.tempimage1, R.drawable.tempimage1, R.drawable.tempimage1)
     var mViewPager: ViewPager? = null
     private var mAdapter: CustomPagerAdapter? = null
     private var pager_indicator: LinearLayout? = null
@@ -187,7 +176,7 @@ class DetayFragment : Fragment(), ViewPager.OnPageChangeListener, View.OnClickLi
 
         mViewPager = binding.viewpager
         pager_indicator = binding.viewPagerCountDots
-        mAdapter = CustomPagerAdapter(requireContext(), mResources)
+        mAdapter = CustomPagerAdapter(requireContext(), yerFotograflari)
         mViewPager!!.adapter = mAdapter
         mViewPager!!.currentItem = 0
         mViewPager!!.setOnPageChangeListener(this)
@@ -227,8 +216,7 @@ class DetayFragment : Fragment(), ViewPager.OnPageChangeListener, View.OnClickLi
         }
         dots[position]!!.setImageResource(R.drawable.selected_dot_slider)
         if (position + 1 == dotsCount) {
-        } else {
-        }
+        } else { }
     }
 
     override fun onPageScrollStateChanged(state: Int) {}
