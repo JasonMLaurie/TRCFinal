@@ -7,6 +7,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
@@ -14,7 +17,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.denzcoskun.imageslider.constants.ActionTypes
 import com.denzcoskun.imageslider.constants.ScaleTypes
+import com.denzcoskun.imageslider.interfaces.ItemClickListener
+import com.denzcoskun.imageslider.interfaces.TouchListener
 import com.denzcoskun.imageslider.models.SlideModel
 import com.example.tripplanner.Controller.bll.TripPlannerLogic
 import com.example.tripplanner.R
@@ -23,13 +29,14 @@ import com.example.tripplanner.model.ResimEntity
 import com.example.tripplanner.model.YerEntity
 import com.example.tripplanner.model.ZiyaretEntity
 import com.example.tripplanner.view.activities.MapsActivity
+import com.example.tripplanner.view.adapters.CustomPagerAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.android.material.tabs.TabLayoutMediator.TabConfigurationStrategy
 import com.example.tripplanner.view.adapters.foto.FotoAdapter
 import com.example.tripplanner.view.adapters.ziyaret.ZiyaretAdapter
 
 /** Gezilecek Yer Detay Fragment */
-class DetayFragment : Fragment() {
+class DetayFragment : Fragment(), ViewPager.OnPageChangeListener, View.OnClickListener  {
 
 
     private lateinit var binding : FragmentDetayBinding
@@ -44,7 +51,8 @@ class DetayFragment : Fragment() {
 //        tempSol()
         setInitialViews()
         clickListeners()
-        imageSlider()
+        //imageSlider()
+        viewPagerImageSlider()
 
         return binding.root
     }
@@ -138,10 +146,10 @@ class DetayFragment : Fragment() {
 
 
 
-    fun imageSlider(){
+   /* fun imageSlider(){
         val imageSlider = binding.imageSlider
         val imageList = ArrayList<SlideModel>()
-        imageList.add(SlideModel(yerResimListe.get(0).uri))
+        //imageList.add(SlideModel(yerResimListe.get(0).uri))
 
         imageList.add(SlideModel(R.drawable.tempimage1,""))
         imageList.add(SlideModel(R.drawable.tempimage1,""))
@@ -149,7 +157,85 @@ class DetayFragment : Fragment() {
         imageList.add(SlideModel(R.drawable.tempimage1,""))
 
         imageSlider.setImageList(imageList, ScaleTypes.FIT)
+
+        imageSlider.setTouchListener(object :TouchListener{
+            override fun onTouched(touched: ActionTypes) {
+                //todo tarih bigisi
+                //binding.tvSliderFotografTarih.text=
+            }
+
+        })
+        imageSlider.setItemClickListener(object : ItemClickListener {
+            override fun onItemSelected(position: Int) {
+                //todo fotoğraf tam ekran açılacak
+
+            }
+        })
+
+    }*/
+
+
+    var mResources =
+        intArrayOf(R.drawable.tempimage1, R.drawable.tempimage1, R.drawable.tempimage1)
+    var mViewPager: ViewPager? = null
+    private var mAdapter: CustomPagerAdapter? = null
+    private var pager_indicator: LinearLayout? = null
+    private var dotsCount = 0
+    private lateinit var dots: Array<ImageView?>
+
+    fun viewPagerImageSlider(){
+
+        mViewPager = binding.viewpager
+        pager_indicator = binding.viewPagerCountDots
+        mAdapter = CustomPagerAdapter(requireContext(), mResources)
+        mViewPager!!.adapter = mAdapter
+        mViewPager!!.currentItem = 0
+        mViewPager!!.setOnPageChangeListener(this)
+        setPageViewIndicator()
+
+
     }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private fun setPageViewIndicator() {
+        Log.d("###setPageViewIndicator", " : called")
+        dotsCount = mAdapter!!.count
+        dots = arrayOfNulls(dotsCount)
+        for (i in 0 until dotsCount) {
+            dots[i] = ImageView(requireContext())
+            dots[i]!!.setImageResource(R.drawable.unselected_dot_slider)
+            val params = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+            params.setMargins(4, 0, 4, 0)
+            dots[i]!!.setOnTouchListener { v, event ->
+                mViewPager!!.currentItem = i
+                true
+            }
+            pager_indicator!!.addView(dots[i], params)
+        }
+        dots[0]!!.setImageResource(R.drawable.selected_dot_slider)
+    }
+
+    override fun onClick(v: View) {}
+    override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
+    override fun onPageSelected(position: Int) {
+        Log.d("###onPageSelected, pos ", position.toString())
+        for (i in 0 until dotsCount) {
+            dots[i]!!.setImageResource(R.drawable.unselected_dot_slider)
+        }
+        dots[position]!!.setImageResource(R.drawable.selected_dot_slider)
+        if (position + 1 == dotsCount) {
+        } else {
+        }
+    }
+
+    override fun onPageScrollStateChanged(state: Int) {}
+
+
+
+
 
 /*
     var viewPager: ViewPager2? = null
@@ -167,17 +253,6 @@ class DetayFragment : Fragment() {
 
 
     }*/
-
-
-
-
-
-
-
-
-
-
-
 
 /*
     //slider implements
