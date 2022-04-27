@@ -6,12 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.navigation.Navigation
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tripplanner.Controller.bll.TripPlannerLogic
-import com.example.tripplanner.R
 import com.example.tripplanner.databinding.FragmentGezilecekBinding
 import com.example.tripplanner.model.YerEntity
 import com.example.tripplanner.view.activities.MainActivity
@@ -34,7 +30,7 @@ class GezilecekFragment : Fragment() {
 
     fun getTumGezilecekYerler(){
 
-        yerlerListe= TripPlannerLogic.tumYerleriGetir(requireContext())
+        yerlerListe= TripPlannerLogic.gezilecekleriGetir(requireContext())
         val lm = LinearLayoutManager(requireContext())
         lm.orientation= LinearLayoutManager.VERTICAL
         binding.rvGezilecekYerler.layoutManager=lm

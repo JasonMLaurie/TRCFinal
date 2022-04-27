@@ -25,6 +25,19 @@ class TripPlannerLogic {
             }
         }
 
+        fun yerGuncelle(context: Context, yerEntity: YerEntity) : Boolean{
+            val tripPlannerOperation = TripPlannerOperation(context)
+            return tripPlannerOperation.yerGuncelle(yerEntity).also {
+                if(it)
+                    Toast.makeText(context,"Yer başarıyla güncellenmiştir.", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        fun gezilecekleriGetir(context: Context) : ArrayList<YerEntity> {
+            val tripPlannerOperation = TripPlannerOperation(context)
+            return tripPlannerOperation.gezilecekleriGetir()
+        }
+
         fun gezdiklerimiGetir(context: Context) : ArrayList<YerEntity> {
             val tripPlannerOperation = TripPlannerOperation(context)
             return tripPlannerOperation.gezdiklerimiGetir()
@@ -51,9 +64,9 @@ class TripPlannerLogic {
             }
         }
 
-        fun fotoGetir(context: Context, yerId: Int) : ArrayList<ResimEntity> {
+        fun fotolarGetir(context: Context, yerId: Int) : ArrayList<ResimEntity> {
             val tripPlannerOperation = TripPlannerOperation(context)
-            return tripPlannerOperation.fotoGetir(yerId)
+            return tripPlannerOperation.fotolarGetir(yerId)
         }
 
         fun tumYerleriGetir(context: Context) : ArrayList<YerEntity>{
@@ -64,6 +77,16 @@ class TripPlannerLogic {
         fun tumZiyaretleriGetir(context: Context) : ArrayList<ZiyaretEntity>{
             val tripPlannerOperation = TripPlannerOperation(context)
             return tripPlannerOperation.tumZiyaretleriGetir()
+        }
+
+        fun fotoGetir(context: Context, uri: String) : ResimEntity{
+            val tripPlannerOperation = TripPlannerOperation(context)
+            return tripPlannerOperation.fotoGetir(uri)
+        }
+
+        fun fotoSil(context: Context, resimEntity: ResimEntity) : Boolean{
+            val tripPlannerOperation = TripPlannerOperation(context)
+            return tripPlannerOperation.fotoSil(resimEntity)
         }
 
 

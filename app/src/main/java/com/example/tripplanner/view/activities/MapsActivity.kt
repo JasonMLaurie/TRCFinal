@@ -68,7 +68,6 @@ class MapsActivity : PermissionActivity(), OnMapReadyCallback {
     private fun initializeMode(){
         mode= intent.getBooleanExtra("mode",false)
         if (!mode){//Yer Ekle kismindan gelirsen
-            println(mode)
         }else{//Detay kismindan gelirsen
             locationPair= Pair("Konum", LatLng(intent.getDoubleExtra("Latitude",40.0),intent.getDoubleExtra("Longitude",40.0)))
             Toast.makeText(this,"Lat: ${locationPair!!.second.latitude} lon: ${locationPair!!.second.longitude}",Toast.LENGTH_SHORT).show()
@@ -102,6 +101,11 @@ class MapsActivity : PermissionActivity(), OnMapReadyCallback {
 
 
     var locationListener = object : LocationListener{
+
+        override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
+            super.onStatusChanged(provider, status, extras)
+        }
+
         override fun onLocationChanged(p0: Location) {
             mMap.clear()
             Toast.makeText(this@MapsActivity,"Konum degisti",Toast.LENGTH_SHORT).show()
