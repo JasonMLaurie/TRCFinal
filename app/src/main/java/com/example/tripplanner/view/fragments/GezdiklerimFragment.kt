@@ -7,16 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.Navigation
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tripplanner.Controller.bll.TripPlannerLogic
-import com.example.tripplanner.R
 import com.example.tripplanner.databinding.FragmentGezdiklerimBinding
 import com.example.tripplanner.model.YerEntity
-import com.example.tripplanner.model.ZiyaretEntity
 import com.example.tripplanner.view.activities.MainActivity
 import com.example.tripplanner.view.adapters.yer.YerAdapter
-import java.text.FieldPosition
 
 /** Gezdiklerim Liste Fragment (bknz. GezilecekFragment) */
 class GezdiklerimFragment : Fragment() {
@@ -52,11 +49,10 @@ class GezdiklerimFragment : Fragment() {
 
     private fun itemClick(position: Int,itemView:View) {
         Toast.makeText(requireContext(),"Tiklandi",Toast.LENGTH_SHORT).show()
-        var fragment=DetayFragment()
 
-        val gezdiklerim2DetayFragment = GezdiklerimFragmentDirections.actionGezdiklerimFragmentToDetayFragment(gezdiklerimListe[position])
-        (requireActivity() as MainActivity).fragmentDegistir(gezdiklerim2DetayFragment)
-        //Navigation.findNavController(requireActivity().findViewById(R.id.fragmentContainerView)).navigate(gezdiklerim2DetayNavDir)
+        val gezdiklerim2DetayNavDir = GezdiklerimFragmentDirections.actionGezdiklerimFragmentToDetayFragment(gezdiklerimListe[position])
+//        (activity as MainActivity).fragmentDegistir(gezdiklerim2DetayNavDir)
+        findNavController().navigate(gezdiklerim2DetayNavDir)
         //itemView.findNavController().navigate(gezdiklerim2DetayNavDir)
     }
 

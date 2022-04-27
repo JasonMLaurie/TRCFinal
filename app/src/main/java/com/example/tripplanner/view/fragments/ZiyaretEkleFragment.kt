@@ -8,6 +8,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -34,16 +35,21 @@ import java.util.*
  */
 class ZiyaretEkleFragment : Fragment() {
 
+
     private lateinit var binding : FragmentZiyaretEkleBinding
+    private lateinit var adapter: FotoAdapter
+
+    /** Variables */
     private var resimUriList: ArrayList<Uri> = arrayListOf(Uri.EMPTY)
     private var addedUriList : ArrayList<Uri> = arrayListOf()
-    private lateinit var adapter: FotoAdapter
     private var gelenYerId : Int = 0
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         binding = FragmentZiyaretEkleBinding.inflate(inflater, container, false)
+
+        addedUriList = arrayListOf()
 
 
         val bundle : ZiyaretEkleFragmentArgs by navArgs()
@@ -55,22 +61,15 @@ class ZiyaretEkleFragment : Fragment() {
 
         return binding.root
     }
+
     /** Fill views with default values */
     @SuppressLint("SetTextI18n")
     fun setInitialViews(){
 
-        val resimList = TripPlannerLogic.fotoGetir(requireContext() ,gelenYerId)
-
-        resimList.forEach {
-            var uri = Uri.parse(it.uri)
-            if(!resimUriList.contains(uri)){
-                resimUriList.add(uri)
-            }
-        }
-
+        fotolarıAl()
         resimUriListCheck()
 
-        adapter = FotoAdapter(requireContext(), resimUriList, ::photoCardClickEvent)
+        adapter = FotoAdapter(requireContext(), resimUriList, ::photoCardClickEvent, ::resimSilClick)
         binding.rvZiyaretEkle.layoutManager =
             StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
         binding.rvZiyaretEkle.adapter = adapter
@@ -83,10 +82,48 @@ class ZiyaretEkleFragment : Fragment() {
         textWatchers()
     }
 
+    /** Getting all photos of current YerEntity.*/
+    private fun fotolarıAl(){
+        val resimList = TripPlannerLogic.fotolarGetir(requireContext() ,gelenYerId)
+
+        resimList.forEach {
+            Log.e("LogcatResim",it.uri.toString())
+            var uri = Uri.parse(it.uri)
+            if(!resimUriList.contains(uri)){
+                resimUriList.add(uri)
+            }
+        }
+
+    }
+
+    /** A function used for empty list situation. It is used to still show the add button */
     private fun resimUriListCheck(){
         if (resimUriList.contains(Uri.EMPTY) && resimUriList.size>1){
             resimUriList.remove(Uri.EMPTY)
         }
+    }
+
+    /** Photo deletion function.*/
+    private fun resimSilClick(uri : Uri){
+        val tempResimObject = TripPlannerLogic.fotoGetir(requireContext(), uri.toString())
+        if(tempResimObject.uri.isNullOrEmpty()){
+            if(addedUriList.contains(uri)){
+                resimUriList.remove(uri)
+                addedUriList.remove(uri).apply {
+                    Toast.makeText(requireContext(), "Fotoğraf silindi.", Toast.LENGTH_SHORT).show()
+                }
+            }else{
+                Toast.makeText(requireContext(),"Fotoğrafı silerken bir hatayla karşılaşıldı. Lütfen daha sonra tekrar deneyin"
+                    , Toast.LENGTH_SHORT).show()
+            }
+        }else{
+            TripPlannerLogic.fotoSil(requireContext(), tempResimObject).apply {
+                Toast.makeText(requireContext(), "Fotoğraf silindi.", Toast.LENGTH_SHORT).show()
+            }
+            resimUriList.remove(uri)
+        }
+        if(resimUriList.isEmpty()){ resimUriList.add(Uri.EMPTY) }
+        setInitialViews()
     }
 
 
@@ -133,6 +170,8 @@ class ZiyaretEkleFragment : Fragment() {
                 TripPlannerLogic.fotoEkle(requireContext(),resimEntity)
             }
 
+            (activity as MainActivity).binding.tabLayout.isVisible=true
+            (activity as MainActivity).binding.fabYerEkle.isVisible=true
             requireActivity().onBackPressed()
         }
 
@@ -164,16 +203,31 @@ class ZiyaretEkleFragment : Fragment() {
     // Gallery Selected PhotoResult
     val galleryResultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+
             if (result.resultCode == AppCompatActivity.RESULT_OK) {
+
                 try {
+
                     val imageUri: Uri = result.data!!.data!!
-                    resimUriList.add(imageUri)
-                    addedUriList.add(imageUri)
-                    if (resimUriList.size == 2) {
-                        // TODO a more suitable solution for empty Uri list.
+
+                    // Get resimList from DB to check if selected photo is already exits.
+                    val tempResimUriList : ArrayList<Uri> = arrayListOf()
+                        TripPlannerLogic.fotolarGetir(requireContext(),gelenYerId).forEach {
+                            var uri = Uri.parse(it.uri)
+                            tempResimUriList.add(uri)
+                    }
+
+                    if(!tempResimUriList.contains(imageUri) && !addedUriList.contains(imageUri)){
+                        resimUriList.add(imageUri)
+                        addedUriList.add(imageUri)
+                        if (resimUriList.size == 2) {
+                            // TODO a more suitable solution for empty Uri list.
                             if(resimUriList[0].equals(Uri.EMPTY)){
                                 resimUriList.removeAt(0)
                             }
+                        }
+                    }else{
+                        Toast.makeText(requireContext(),"Seçilen fotoğraf zaten görüntülerde bulunuyor.", Toast.LENGTH_SHORT).show()
                     }
                     (adapter).notifyDataSetChanged()
                 } catch (e: FileNotFoundException) {
@@ -197,7 +251,6 @@ class ZiyaretEkleFragment : Fragment() {
 
         // Made mediaPermissionControl return a boolean value for a temp. (or definite) solution
         if(PermissionLogic.mediaPermissionControl((activity as PermissionActivity),requireContext())){
-            //V1
             val intent = Intent(Intent.ACTION_PICK)
             intent.setType("image/*")
             galleryResultLauncher.launch(intent)
@@ -230,6 +283,7 @@ class ZiyaretEkleFragment : Fragment() {
         dp.show()
     }
 
+    /** Refreshing the views and hiding tablayout just in case.*/
     override fun onResume() {
         super.onResume()
         setInitialViews()

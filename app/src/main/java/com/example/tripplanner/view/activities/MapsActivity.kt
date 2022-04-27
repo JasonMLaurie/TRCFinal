@@ -102,6 +102,11 @@ class MapsActivity : PermissionActivity(), OnMapReadyCallback {
 
 
     var locationListener = object : LocationListener{
+
+        override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
+            super.onStatusChanged(provider, status, extras)
+        }
+
         override fun onLocationChanged(p0: Location) {
             mMap.clear()
             Toast.makeText(this@MapsActivity,"Konum degisti",Toast.LENGTH_SHORT).show()

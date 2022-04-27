@@ -48,12 +48,12 @@ class DetayFragment : Fragment() {
         val bundle : DetayFragmentArgs by navArgs()
         yerObject = bundle.yerObject
 
-
         binding.tvYerKisaTanimBilgi.text = yerObject.kisaTanim
         binding.tvKisaAciklamaBilgisi.text = yerObject.kisaAciklama
         // TODO Oncelik için kontrol
 
         val ziyaretList = TripPlannerLogic.ziyaretleriGetir(yerEntity = yerObject, context = requireContext())
+        ziyaretControl(ziyaretList)
         if(!ziyaretList.isNullOrEmpty()){
             val adapter = ZiyaretAdapter(requireContext(),ziyaretList)
             binding.rvZiyaretGecmisi.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
@@ -62,6 +62,13 @@ class DetayFragment : Fragment() {
 
         Log.e("Logcat", TripPlannerLogic.tumZiyaretleriGetir(requireContext()).size.toString())
         Log.e("Logcat",TripPlannerLogic.tumZiyaretleriGetir(requireContext()).toString())
+    }
+
+    private fun ziyaretControl(ziyaretList : ArrayList<ZiyaretEntity>) {
+        if(!ziyaretList.isNullOrEmpty()){
+            yerObject.ziyaretEdildi = 1
+            TripPlannerLogic.yerGuncelle(requireContext(), yerObject)
+        }
     }
 
     fun tempSol(){
@@ -101,10 +108,6 @@ class DetayFragment : Fragment() {
         setInitialViews()
     }
 
-    /*
-    val foodList2DetailNavDir = FoodListFragmentDirections.foodList2Detail(foodObject)
-    Navigation.findNavController(it).navigate(foodList2DetailNavDir)
-            */
 
 
 }

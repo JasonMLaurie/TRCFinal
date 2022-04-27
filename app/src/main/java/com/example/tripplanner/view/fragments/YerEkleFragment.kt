@@ -23,7 +23,7 @@ import com.example.tripplanner.view.adapters.foto.FotoAdapter
 class YerEkleFragment : Fragment() {
 
     private lateinit var binding: FragmentYerEkleBinding
-    private var resimListe: ArrayList<Uri> = arrayListOf()
+    private var resimListe: ArrayList<Uri> = arrayListOf(Uri.EMPTY)
     private lateinit var locationIntent:Pair<Double,Double>
 
     override fun onCreateView(
@@ -42,16 +42,20 @@ class YerEkleFragment : Fragment() {
 
 
         binding.btnYerKaydet.setOnClickListener {
-            yer=YerEntity(locationIntent.first,locationIntent.second)
-            yer.yerAdi=binding.eTvYerAdi.text.toString()
-            yer.kisaTanim=binding.eTvYerKisaTanim.text.toString()
-            yer.kisaAciklama=binding.eTvYerKisaAciklama.text.toString()
+            if(this::locationIntent.isInitialized){
+                yer=YerEntity(locationIntent.first,locationIntent.second)
+                yer.yerAdi=binding.eTvYerAdi.text.toString()
+                yer.kisaTanim=binding.eTvYerKisaTanim.text.toString()
+                yer.kisaAciklama=binding.eTvYerKisaAciklama.text.toString()
 
-            //todo öncelik ve fotoğraf bilgileri atamaı yapılacak
+                //todo öncelik ve fotoğraf bilgileri atamaı yapılacak
 
-            TripPlannerLogic.yerEkle(requireContext(),yer)
+                TripPlannerLogic.yerEkle(requireContext(),yer)
 
-            requireActivity().onBackPressed()
+                requireActivity().onBackPressed()
+            }else {
+                Toast.makeText(requireContext(), "Konum girilmesi zorunludur.", Toast.LENGTH_SHORT).show()
+            }
         }
 
 
@@ -78,7 +82,9 @@ class YerEkleFragment : Fragment() {
 
     fun setAdapters() {
 
-        val rvAdapter = FotoAdapter(requireContext(), resimListe, ::photoCardClickEvent)
+        resimUriListCheck()
+
+        val rvAdapter = FotoAdapter(requireContext(), resimListe, ::photoCardClickEvent, ::silmeClickEvent)
         binding.rvYerEkle.layoutManager =
             StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
         binding.rvYerEkle.adapter = rvAdapter
@@ -87,7 +93,39 @@ class YerEkleFragment : Fragment() {
 
     }
 
-    fun photoCardClickEvent(){}
+    fun photoCardClickEvent(){
+        //TODO
+    }
+
+    /** Photo deletion function.*/
+    fun silmeClickEvent(uri : Uri){
+/*            val tempResimObject = TripPlannerLogic.fotoGetir(requireContext(), uri.toString())
+            if(tempResimObject.uri.isNullOrEmpty()){
+                if(resimListe.contains(uri)){
+                    resimListe.remove(uri).apply {
+                        Toast.makeText(requireContext(), "Fotoğraf silindi.", Toast.LENGTH_SHORT).show()
+                    }
+                }else{
+                    Toast.makeText(requireContext(),"Fotoğrafı silerken bir hatayla karşılaşıldı. Lütfen daha sonra tekrar deneyin"
+                        , Toast.LENGTH_SHORT).show()
+                }
+            }else{
+                TripPlannerLogic.fotoSil(requireContext(), tempResimObject).apply {
+                    Toast.makeText(requireContext(), "Fotoğraf silindi.", Toast.LENGTH_SHORT).show()
+                }
+                resimListe.remove(uri)
+            }
+            if(resimListe.isEmpty()){ resimListe.add(Uri.EMPTY) }
+            setAdapters()*/
+        }
+
+
+    /** A function used for empty list situation. It is used to still show the add button */
+    private fun resimUriListCheck(){
+        if (resimListe.contains(Uri.EMPTY) && resimListe.size>1){
+            resimListe.remove(Uri.EMPTY)
+        }
+    }
 
     /** Test Case */
     fun createTempList() {
@@ -147,11 +185,12 @@ class YerEkleFragment : Fragment() {
 
     }
 
-//    override fun onResume() {
-//        super.onResume()
-//        (activity as MainActivity).binding.tabLayout.isVisible=false
-//        (activity as MainActivity).binding.fabYerEkle.isVisible=false
-//    }
+    override fun onResume() {
+        (activity as MainActivity).binding.tabLayout.isVisible=false
+        (activity as MainActivity).binding.fabYerEkle.isVisible=false
+        super.onResume()
+    }
+
 
 
 

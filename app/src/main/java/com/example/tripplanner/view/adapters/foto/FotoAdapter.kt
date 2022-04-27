@@ -6,13 +6,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tripplanner.R
+import com.example.tripplanner.model.ResimEntity
 
-class FotoAdapter(var mContext : Context, var resimUriList : ArrayList<Uri>,var cardClick : () -> Unit) : RecyclerView.Adapter<FotoViewHolder>() {
+class FotoAdapter(var mContext : Context, var resimUriList : ArrayList<Uri>,var cardClick : () -> Unit, var silClick : (uri : Uri) -> Unit) : RecyclerView.Adapter<FotoViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FotoViewHolder {
         val layoutInflater = LayoutInflater.from(mContext)
         val cardView = layoutInflater.inflate(R.layout.ziyaret_fotograf_card, parent, false)
-        return FotoViewHolder(cardView, cardClick)
+        return FotoViewHolder(cardView, cardClick, silClick)
     }
 
     override fun onBindViewHolder(holder: FotoViewHolder, position: Int) {
