@@ -270,6 +270,7 @@ class TripPlannerOperation(context: Context) {
         val cv = ContentValues()
         cv.put(resimBaseStr, resimEntity.base64)
         cv.put(yerStr, resimEntity.yerId)
+        cv.put(ziyaretTarihStr,resimEntity.tarih)
 
         // TODO any condition-ensurement
 
@@ -296,6 +297,7 @@ class TripPlannerOperation(context: Context) {
                 resimEntity.id = dbObject.getInt(0)
                 resimEntity.base64 = dbObject.getString(dbObject.getColumnIndex(resimBaseStr))
                 resimEntity.yerId = dbObject.getInt(dbObject.getColumnIndex(yerStr))
+                resimEntity.tarih=dbObject.getString(dbObject.getColumnIndex(ziyaretTarihStr))
                 resimList2Return.add(resimEntity)
             } while (dbObject.moveToNext())
         }
@@ -319,6 +321,8 @@ class TripPlannerOperation(context: Context) {
                 resimEntity.id = dbObject.getInt(0)
                 resimEntity.base64 = dbObject.getString(dbObject.getColumnIndex(resimBaseStr))
                 resimEntity.yerId = dbObject.getInt(dbObject.getColumnIndex(yerStr))
+                resimEntity.tarih=dbObject.getString(dbObject.getColumnIndex(ziyaretTarihStr))
+
             } while (dbObject.moveToNext())
         }
         dbObject.close()

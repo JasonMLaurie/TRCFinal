@@ -173,6 +173,7 @@ class ZiyaretEkleFragment : PermissionHandlingFragment() {
                 val resimEntity = ResimEntity().apply {
                     base64 = it
                     yerId = gelenYerId
+                    tarih=binding.tvTarihEkle.text.toString()
                 }
                 TripPlannerLogic.fotoEkle(requireContext(),resimEntity)
             }

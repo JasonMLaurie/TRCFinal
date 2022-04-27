@@ -11,7 +11,7 @@ class DatabaseOpenHelper(context: Context, name: String, factory: SQLiteDatabase
         val ziyaretSorgu =
             "CREATE TABLE ZiyaretTable(Id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, Tarih TEXT, Aciklama TEXT, Yer INTEGER NOT NULL, FOREIGN KEY(Yer) REFERENCES Yer(Id))"
 //        val bileşikResimSorgu = "CREATE TABLE Resim(Id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, Uri TEXT, Yer INTEGER NOT NULL, FOREIGN KEY(Yer) REFERENCES Yer(Id))"
-        val base64ResimSorgu = "CREATE TABLE Resim(Id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, Base64 TEXT, Yer INTEGER NOT NULL, FOREIGN KEY(Yer) REFERENCES Yer(Id))"
+        val base64ResimSorgu = "CREATE TABLE Resim(Id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, Base64 TEXT,Tarih TEXT, Yer INTEGER NOT NULL, FOREIGN KEY(Yer) REFERENCES Yer(Id))"
 
         // TODO Use cursor.getLong() when receiving the date.
 
