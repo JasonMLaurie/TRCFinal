@@ -1,10 +1,13 @@
 package com.example.tripplanner.view.adapters.yer
 
+import android.Manifest
 import android.content.Context
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tripplanner.Controller.bll.TripPlannerLogic
 import com.example.tripplanner.R
@@ -32,17 +35,20 @@ class YerViewHolder(itemView: View, glist:ArrayList<YerEntity>, itemClick:(posit
 
 
 
-    fun bindDataToViews(context: Context, item: YerEntity){
+    fun bindDataToViews(context: Context, item: YerEntity) {
 
-        tvYerAdı.text=item.yerAdi
-        tvYerKisaTanim.text=item.kisaTanim
-        tvYerKisaAciklama.text=item.kisaAciklama
-        val tempResimList = TripPlannerLogic.fotolarGetir(context, item.id)
-        if(tempResimList.isNullOrEmpty()){
-            ivYerFotograf.setImageResource(R.drawable.tempimage1)
-        }else{
-            ivYerFotograf.setImageURI(Uri.parse(TripPlannerLogic.fotolarGetir(context, item.id)[0].uri))
-        }
+        tvYerAdı.text = item.yerAdi
+        tvYerKisaTanim.text = item.kisaTanim
+        tvYerKisaAciklama.text = item.kisaAciklama
+
+/*            val tempResimList = TripPlannerLogic.fotolarGetir(context, item.id)
+            if(tempResimList.isNullOrEmpty()){
+                ivYerFotograf.setImageResource(R.drawable.tempimage1)
+            }else{
+                ivYerFotograf.setImageURI(Uri.parse(TripPlannerLogic.fotolarGetir(context, item.id)[0].uri))
+            }
+        }*/
+
 
         //TODO setting image to ivYerFotograf
 
@@ -53,9 +59,5 @@ class YerViewHolder(itemView: View, glist:ArrayList<YerEntity>, itemClick:(posit
         else if (item.oncelik.equals("oncelik3"))//gri
         { ivOncelik.setImageResource(R.drawable.oncelik3_sekil)}
 
-
-
-
-
     }
-}
+    }

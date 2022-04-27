@@ -6,17 +6,19 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
+import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.FileProvider
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.tripplanner.Controller.bll.PermissionLogic
@@ -27,29 +29,32 @@ import com.example.tripplanner.model.ZiyaretEntity
 import com.example.tripplanner.view.activities.MainActivity
 import com.example.tripplanner.view.activities.PermissionActivity
 import com.example.tripplanner.view.adapters.foto.FotoAdapter
+import java.io.File
 import java.io.FileNotFoundException
 import java.util.*
 
 
 /** Ziyaret Ekleme Fragment
  */
-class ZiyaretEkleFragment : Fragment() {
+class ZiyaretEkleFragment : PermissionHandlingFragment() {
 
 
     private lateinit var binding : FragmentZiyaretEkleBinding
     private lateinit var adapter: FotoAdapter
 
     /** Variables */
-    private var resimUriList: ArrayList<Uri> = arrayListOf(Uri.EMPTY)
-    private var addedUriList : ArrayList<Uri> = arrayListOf()
+    private var resimBase64List: ArrayList<String> = arrayListOf("")
+    private var addedBase64List : ArrayList<String> = arrayListOf()
     private var gelenYerId : Int = 0
 
+
+    private lateinit var resimUri : Uri
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         binding = FragmentZiyaretEkleBinding.inflate(inflater, container, false)
 
-        addedUriList = arrayListOf()
+        addedBase64List = arrayListOf()
 
 
         val bundle : ZiyaretEkleFragmentArgs by navArgs()
@@ -69,7 +74,7 @@ class ZiyaretEkleFragment : Fragment() {
         fotolarıAl()
         resimUriListCheck()
 
-        adapter = FotoAdapter(requireContext(), resimUriList, ::photoCardClickEvent, ::resimSilClick)
+        adapter = FotoAdapter(requireContext(), resimBase64List, ::photoCardClickEvent, ::resimSilClick)
         binding.rvZiyaretEkle.layoutManager =
             StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
         binding.rvZiyaretEkle.adapter = adapter
@@ -84,13 +89,12 @@ class ZiyaretEkleFragment : Fragment() {
 
     /** Getting all photos of current YerEntity.*/
     private fun fotolarıAl(){
+
         val resimList = TripPlannerLogic.fotolarGetir(requireContext() ,gelenYerId)
 
         resimList.forEach {
-            Log.e("LogcatResim",it.uri.toString())
-            var uri = Uri.parse(it.uri)
-            if(!resimUriList.contains(uri)){
-                resimUriList.add(uri)
+            if(!resimBase64List.contains(it.base64)){
+                resimBase64List.add(it.base64!!)
             }
         }
 
@@ -98,18 +102,18 @@ class ZiyaretEkleFragment : Fragment() {
 
     /** A function used for empty list situation. It is used to still show the add button */
     private fun resimUriListCheck(){
-        if (resimUriList.contains(Uri.EMPTY) && resimUriList.size>1){
-            resimUriList.remove(Uri.EMPTY)
+        if (resimBase64List.contains("") && resimBase64List.size>1){
+            resimBase64List.remove("")
         }
     }
 
     /** Photo deletion function.*/
-    private fun resimSilClick(uri : Uri){
-        val tempResimObject = TripPlannerLogic.fotoGetir(requireContext(), uri.toString())
-        if(tempResimObject.uri.isNullOrEmpty()){
-            if(addedUriList.contains(uri)){
-                resimUriList.remove(uri)
-                addedUriList.remove(uri).apply {
+    private fun resimSilClick(encodedImage : String){
+        val tempResimObject = TripPlannerLogic.fotoGetir(requireContext(), encodedImage)
+        if(tempResimObject.base64.isNullOrEmpty()){
+            if(addedBase64List.contains(encodedImage)){
+                resimBase64List.remove(encodedImage)
+                addedBase64List.remove(encodedImage).apply {
                     Toast.makeText(requireContext(), "Fotoğraf silindi.", Toast.LENGTH_SHORT).show()
                 }
             }else{
@@ -120,9 +124,9 @@ class ZiyaretEkleFragment : Fragment() {
             TripPlannerLogic.fotoSil(requireContext(), tempResimObject).apply {
                 Toast.makeText(requireContext(), "Fotoğraf silindi.", Toast.LENGTH_SHORT).show()
             }
-            resimUriList.remove(uri)
+            resimBase64List.remove(encodedImage)
         }
-        if(resimUriList.isEmpty()){ resimUriList.add(Uri.EMPTY) }
+        if(resimBase64List.isEmpty()){ resimBase64List.add("") }
         setInitialViews()
     }
 
@@ -134,7 +138,8 @@ class ZiyaretEkleFragment : Fragment() {
         while (i <= 3) {
             val uri: Uri =
                 Uri.parse("android.resource://" + requireActivity().packageName + "/drawable/tempimage1")
-            resimUriList.add(uri)
+                val encodedImage = TripPlannerLogic.encodeBase64(uri,(activity as MainActivity).contentResolver)
+            resimBase64List.add(encodedImage)
             i++
         }
 
@@ -142,8 +147,9 @@ class ZiyaretEkleFragment : Fragment() {
 
     /** Click Event for Adapter */
     fun photoCardClickEvent(){
-        if(resimUriList.size<10){
-            openGallery()
+        if(resimBase64List.size<10){
+            //openGallery()
+            PermissionLogic.mediaPermissionControl(this,requireContext())
         }else{
             Toast.makeText(requireContext(),"10 adetten fazla fotoğraf eklenemez", Toast.LENGTH_SHORT).show()
         }
@@ -159,12 +165,13 @@ class ZiyaretEkleFragment : Fragment() {
                 aciklama = binding.etZiyaretEkleAciklama.text.toString()
                 yerId = gelenYerId
             }
+
             // TODO restriction to make Ziyaret Yer field non-null-0
             TripPlannerLogic.ziyaretEkle(requireContext(),ziyaretEntity)
 
-            addedUriList.forEach {
+            addedBase64List.forEach {
                 val resimEntity = ResimEntity().apply {
-                    uri = it.toString()
+                    base64 = it
                     yerId = gelenYerId
                 }
                 TripPlannerLogic.fotoEkle(requireContext(),resimEntity)
@@ -210,20 +217,25 @@ class ZiyaretEkleFragment : Fragment() {
 
                     val imageUri: Uri = result.data!!.data!!
 
+                    /** Base64 Usage */
+                    val encodedImage = TripPlannerLogic.encodeBase64(imageUri, (activity as MainActivity).contentResolver)
+
+                    /////////////////
+
                     // Get resimList from DB to check if selected photo is already exits.
-                    val tempResimUriList : ArrayList<Uri> = arrayListOf()
+                    val tempResimUriList : ArrayList<String> = arrayListOf()
                         TripPlannerLogic.fotolarGetir(requireContext(),gelenYerId).forEach {
-                            var uri = Uri.parse(it.uri)
-                            tempResimUriList.add(uri)
+                            var base64 = it.base64!!
+                            tempResimUriList.add(base64)
                     }
 
-                    if(!tempResimUriList.contains(imageUri) && !addedUriList.contains(imageUri)){
-                        resimUriList.add(imageUri)
-                        addedUriList.add(imageUri)
-                        if (resimUriList.size == 2) {
+                    if(!tempResimUriList.contains(encodedImage) && !addedBase64List.contains(encodedImage)){
+                        resimBase64List.add(encodedImage)
+                        addedBase64List.add(encodedImage)
+                        if (resimBase64List.size == 2) {
                             // TODO a more suitable solution for empty Uri list.
-                            if(resimUriList[0].equals(Uri.EMPTY)){
-                                resimUriList.removeAt(0)
+                            if(resimBase64List[0].equals("")){
+                                resimBase64List.removeAt(0)
                             }
                         }
                     }else{
@@ -238,26 +250,90 @@ class ZiyaretEkleFragment : Fragment() {
         }
 
     /** Open Gallery Func */
-    fun openGallery() {
 
-        // TODO Permission problem here. Maybe about SDK.
-        /** Notes From ARAS: PermissionLogic requires an activity specifically derived from PermissionActivity. Since this is a fragment it will not work as intended.
-         * For now it might be better of with manual permission requests. After the project is done, Permission Activity should be changed into an interface */
-        // It asks for permission but opens gallery before it. If a photo is selected then it returns
-        // to the source page where the permission pop up still up, and if you permit it, it works as
-        // intended, but if you deny the permission it still adds the selected photo from gallery,
-        // and this process is doable indefinitely.
-        // Remove condition check to reproduce it.
+    override fun grantedFunc() {
+        val intent = Intent(Intent.ACTION_PICK)
+                    intent.setType("image/*")
+                    galleryResultLauncher.launch(intent)
+    }
 
-        // Made mediaPermissionControl return a boolean value for a temp. (or definite) solution
-        if(PermissionLogic.mediaPermissionControl((activity as PermissionActivity),requireContext())){
-            val intent = Intent(Intent.ACTION_PICK)
-            intent.setType("image/*")
-            galleryResultLauncher.launch(intent)
-        }else{
-            Toast.makeText(requireContext(),"This app needs specified permissions", Toast.LENGTH_SHORT).show()
+    //fun openGallery() {
+    //
+    //            // TODO Permission problem here. Maybe about SDK.
+    //            /** Notes From ARAS: PermissionLogic requires an activity specifically derived from PermissionActivity. Since this is a fragment it will not work as intended.
+    //             * For now it might be better of with manual permission requests. After the project is done, Permission Activity should be changed into an interface */
+    //            // It asks for permission but opens gallery before it. If a photo is selected then it returns
+    //            // to the source page where the permission pop up still up, and if you permit it, it works as
+    //            // intended, but if you deny the permission it still adds the selected photo from gallery,
+    //            // and this process is doable indefinitely.
+    //            // Remove condition check to reproduce it.
+    //
+    //            // Made mediaPermissionControl return a boolean value for a temp. (or definite) solution
+    //            if(PermissionLogic.mediaPermissionControl((activity as PermissionActivity),requireContext())){
+    //                val intent = Intent(Intent.ACTION_PICK)
+    //                intent.setType("image/*")
+    //                galleryResultLauncher.launch(intent)
+    //            }else{
+    //                Toast.makeText(requireContext(),"This app needs specified permissions", Toast.LENGTH_SHORT).show()
+    //            }
+    //
+    //        }
+
+    /** Camera Shot Result */
+    val cameraResultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == AppCompatActivity.RESULT_OK) {
+                try {
+                    val encodedImage = TripPlannerLogic.encodeBase64(resimUri, (activity as MainActivity).contentResolver)
+
+                    // Get resimList from DB to check if selected photo is already exits.
+                    val tempResimUriList : ArrayList<String> = arrayListOf()
+                    TripPlannerLogic.fotolarGetir(requireContext(),gelenYerId).forEach {
+                        var base64 = it.base64!!
+                        tempResimUriList.add(base64)
+                    }
+
+                    if(!tempResimUriList.contains(encodedImage) && !addedBase64List.contains(encodedImage)){
+                        resimBase64List.add(encodedImage)
+                        addedBase64List.add(encodedImage)
+                        if (resimBase64List.size == 2) {
+                            // TODO a more suitable solution for empty Uri list.
+                            if(resimBase64List[0].equals("")){
+                                resimBase64List.removeAt(0)
+                            }
+                        }
+                    }else{
+                        Toast.makeText(requireContext(),"Seçilen fotoğraf zaten görüntülerde bulunuyor.", Toast.LENGTH_SHORT).show()
+                    }
+                    (adapter).notifyDataSetChanged()
+                } catch (e: FileNotFoundException) {
+                    e.printStackTrace()
+                    Toast.makeText(requireContext(), "Dosya bulunamadı.", Toast.LENGTH_LONG).show()
+                }
+
+            }
         }
 
+
+    /** Open Camera Func */
+    fun openCamera() {
+
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        createTempFile()
+//        val tempFile = createTempFile()
+//        resimUri = FileProvider.getUriForFile(this, packageName, tempFile)
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, resimUri)
+        cameraResultLauncher.launch(intent)
+    }
+
+    /** Temp File to hold the Photo*/
+    fun createTempFile(): File {
+        val dir = (activity as MainActivity).getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+
+        return File.createTempFile("camPic", ".jpg", dir).apply {
+            resimUri = FileProvider.getUriForFile(requireContext(),(activity as MainActivity).packageName,this)
+//            resimYolu = absolutePath
+        }
     }
 
     /** Get Current Date from Calender */

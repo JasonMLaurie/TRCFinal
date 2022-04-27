@@ -27,7 +27,7 @@ class TripPlannerOperation(context: Context) {
     val yerLongitudeStr = "Longitude"
     val yerLatitudeStr = "Latitude"
     val resimTableStr = "Resim"
-    val resimUriStr = "Uri"
+    val resimBaseStr = "Base64"
 
     init {
         dbOpenHelper = DatabaseOpenHelper(context, "TripPlannerDB", null, 1)
@@ -57,9 +57,7 @@ class TripPlannerOperation(context: Context) {
         if (dbObject.moveToFirst()) {
             do {
                 yerEntity = YerEntity(0.0,0.0)
-                // Get data from 0th column of selected row(outer).
                 yerEntity.id = dbObject.getInt(0)
-                // Preferred method over getting data from index. Indexes may shift.
                 yerEntity.yerAdi = dbObject.getString(dbObject.getColumnIndex(yerAdiStr))
                 yerEntity.kisaTanim = dbObject.getString(dbObject.getColumnIndex(yerTanimStr))
                 yerEntity.kisaAciklama = dbObject.getString(dbObject.getColumnIndex(yerAciklamaStr))
@@ -86,9 +84,7 @@ class TripPlannerOperation(context: Context) {
         if (dbObject.moveToFirst()) {
             do {
                 yerEntity = YerEntity(0.0,0.0)
-                // Get data from 0th column of selected row(outer).
                 yerEntity.id = dbObject.getInt(0)
-                // Preferred method over getting data from index. Indexes may shift.
                 yerEntity.yerAdi = dbObject.getString(dbObject.getColumnIndex(yerAdiStr))
                 yerEntity.kisaTanim = dbObject.getString(dbObject.getColumnIndex(yerTanimStr))
                 yerEntity.kisaAciklama = dbObject.getString(dbObject.getColumnIndex(yerAciklamaStr))
@@ -114,9 +110,7 @@ class TripPlannerOperation(context: Context) {
 
         if (dbObject.moveToFirst()) {
             do {
-                // Get data from 0th column of selected row(outer).
                 yerEntity.id = yerId
-                // Preferred method over getting data from index. Indexes may shift.
                 yerEntity.yerAdi = dbObject.getString(dbObject.getColumnIndex(yerAdiStr))
                 yerEntity.kisaTanim = dbObject.getString(dbObject.getColumnIndex(yerTanimStr))
                 yerEntity.kisaAciklama = dbObject.getString(dbObject.getColumnIndex(yerAciklamaStr))
@@ -183,9 +177,7 @@ class TripPlannerOperation(context: Context) {
         if (dbObject.moveToFirst()) {
             do {
                 ziyaretEntity = ZiyaretEntity()
-                // Get data from 0th column of selected row(outer).
                 ziyaretEntity.id = dbObject.getInt(0)
-                // Preferred method over getting data from index. Indexes may shift.
                 ziyaretEntity.tarih =
                     dbObject.getString(dbObject.getColumnIndex(ziyaretTarihStr))
                 ziyaretEntity.aciklama =
@@ -212,9 +204,7 @@ class TripPlannerOperation(context: Context) {
         if (dbObject.moveToFirst()) {
             do {
                 yerEntity = YerEntity(0.0,0.0)
-                // Get data from 0th column of selected row(outer).
                 yerEntity.id = dbObject.getInt(0)
-                // Preferred method over getting data from index. Indexes may shift.
                 yerEntity.yerAdi = dbObject.getString(dbObject.getColumnIndex(yerAdiStr))
                 yerEntity.kisaTanim = dbObject.getString(dbObject.getColumnIndex(yerTanimStr))
                 yerEntity.kisaAciklama = dbObject.getString(dbObject.getColumnIndex(yerAciklamaStr))
@@ -228,31 +218,6 @@ class TripPlannerOperation(context: Context) {
 
         return yerList2Return
     }
-/*    @SuppressLint("Range")
-    fun gezdiklerimiGetir(): ArrayList<YerEntity> {
-
-        val gezdiklerimList2Return: ArrayList<YerEntity> = arrayListOf()
-        val gezdiklerimIDList: ArrayList<Int> = arrayListOf()
-
-        openDB()
-        val dbObject = tripPlannerDatabase!!.rawQuery("SELECT * FROM $ziyaretTableStr", null)
-
-        if (dbObject.moveToFirst()) {
-            do {
-                if (!gezdiklerimIDList.contains(dbObject.getInt(dbObject.getColumnIndex(yerStr)))) {
-                    gezdiklerimIDList.add(dbObject.getInt(dbObject.getColumnIndex(yerStr)))
-                }
-            } while (dbObject.moveToNext())
-        }
-        dbObject.close()
-        closeDB()
-
-        gezdiklerimIDList.forEach {
-            gezdiklerimList2Return.add(yerGetir(it))
-        }
-
-        return gezdiklerimList2Return
-    }*/
 
     fun ziyaretEkle(ziyaretEntity: ZiyaretEntity): Boolean {
 
@@ -303,7 +268,7 @@ class TripPlannerOperation(context: Context) {
     fun fotoEkle(resimEntity: ResimEntity) : Boolean {
 
         val cv = ContentValues()
-        cv.put(resimUriStr, resimEntity.uri)
+        cv.put(resimBaseStr, resimEntity.base64)
         cv.put(yerStr, resimEntity.yerId)
 
         // TODO any condition-ensurement
@@ -328,10 +293,8 @@ class TripPlannerOperation(context: Context) {
         if (dbObject.moveToFirst()) {
             do {
                 resimEntity = ResimEntity()
-                // Get data from 0th column of selected row(outer).
                 resimEntity.id = dbObject.getInt(0)
-                // Preferred method over getting data from index. Indexes may shift.
-                resimEntity.uri = dbObject.getString(dbObject.getColumnIndex(resimUriStr))
+                resimEntity.base64 = dbObject.getString(dbObject.getColumnIndex(resimBaseStr))
                 resimEntity.yerId = dbObject.getInt(dbObject.getColumnIndex(yerStr))
                 resimList2Return.add(resimEntity)
             } while (dbObject.moveToNext())
@@ -348,15 +311,13 @@ class TripPlannerOperation(context: Context) {
         var resimEntity = ResimEntity()
 
         openDB()
-        val dbObject = tripPlannerDatabase!!.rawQuery("SELECT * FROM $resimTableStr WHERE Uri = ?", arrayOf(uri))
+        val dbObject = tripPlannerDatabase!!.rawQuery("SELECT * FROM $resimTableStr WHERE Base64 = ?", arrayOf(uri))
 
         if (dbObject.moveToFirst()) {
             do {
                 resimEntity = ResimEntity()
-                // Get data from 0th column of selected row(outer).
                 resimEntity.id = dbObject.getInt(0)
-                // Preferred method over getting data from index. Indexes may shift.
-                resimEntity.uri = dbObject.getString(dbObject.getColumnIndex(resimUriStr))
+                resimEntity.base64 = dbObject.getString(dbObject.getColumnIndex(resimBaseStr))
                 resimEntity.yerId = dbObject.getInt(dbObject.getColumnIndex(yerStr))
             } while (dbObject.moveToNext())
         }
@@ -375,4 +336,5 @@ class TripPlannerOperation(context: Context) {
 
         return effectedRowCount>0
     }
+
 }

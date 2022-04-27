@@ -14,6 +14,7 @@ class PermissionLogic {
     companion object{
         private val reqCodeLocations=0
 
+
         fun mediaPermissionControl(
             fragment:PermissionHandlingFragment,
             context: Context) {
@@ -24,14 +25,13 @@ class PermissionLogic {
                 requestList.add(Manifest.permission.READ_EXTERNAL_STORAGE)
             }
             permStatus=ContextCompat.checkSelfPermission(context,Manifest.permission.WRITE_EXTERNAL_STORAGE)==PackageManager.PERMISSION_GRANTED
-
             if (!permStatus){
                 requestList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
             }
             if (requestList.size==0){
                 fragment.grantedFunc()
             }else{
-                fragment.activityResultLauncher?.launch(requestList.toTypedArray())
+                fragment.activityResultLauncher!!.launch(requestList.toTypedArray())
             }
         }
 

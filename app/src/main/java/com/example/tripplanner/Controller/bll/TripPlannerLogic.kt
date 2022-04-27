@@ -1,16 +1,22 @@
 package com.example.tripplanner.Controller.bll
 
+import android.content.ContentResolver
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.net.Uri
+import android.util.Base64
 import android.util.Base64.encodeToString
+import android.util.Log
 import android.widget.Toast
 import com.example.tripplanner.Controller.dal.TripPlannerOperation
 import com.example.tripplanner.model.ResimEntity
 import com.example.tripplanner.model.ZiyaretEntity
 import com.example.tripplanner.model.YerEntity
+import com.example.tripplanner.view.activities.MainActivity
 import java.io.ByteArrayOutputStream
 import java.io.FileOutputStream
+import java.io.InputStream
 import java.lang.Exception
 
 class TripPlannerLogic {
@@ -79,9 +85,9 @@ class TripPlannerLogic {
             return tripPlannerOperation.tumZiyaretleriGetir()
         }
 
-        fun fotoGetir(context: Context, uri: String) : ResimEntity{
+        fun fotoGetir(context: Context, encodedImage : String) : ResimEntity{
             val tripPlannerOperation = TripPlannerOperation(context)
-            return tripPlannerOperation.fotoGetir(uri)
+            return tripPlannerOperation.fotoGetir(encodedImage)
         }
 
         fun fotoSil(context: Context, resimEntity: ResimEntity) : Boolean{
@@ -89,46 +95,26 @@ class TripPlannerLogic {
             return tripPlannerOperation.fotoSil(resimEntity)
         }
 
-
-
-        // To Be Used Later.
-/*        fun persistDate(date: Date?): Long? {
-            return if (date != null) {
-                date.getTime()
-            } else null
-        }*/
-
         // TODO Base64 in DB or a local png and URI in DB as str.
 
         // May need additional libraries for pre API 8, v 2.2
-        fun decodeBase64(context:Context, base64ImageData : ByteArray?){
-            var fos : FileOutputStream? = null;
-            try {
-                if (base64ImageData != null) {
-                    fos = context.openFileOutput("imageName.png", Context.MODE_PRIVATE);
-                    val decodedString : ByteArray = android.util.Base64.decode(base64ImageData, android.util.Base64.DEFAULT);
-                    fos.write(decodedString);
-                    fos.flush();
-                    fos.close();
-                }
 
-            } catch (e : Exception) {
-
-            } finally {
-                if (fos != null) {
-                    fos = null;
-                }
-            }
+        fun decodeBase64(encodedImage: String) : Bitmap{
+            var base64img = Base64.decode(encodedImage, Base64.DEFAULT)
+            return BitmapFactory.decodeByteArray(base64img!!,0,base64img.size)
         }
 
-        fun encodeBase64(imagePath : String){
+        fun encodeBase64(imageUri : Uri, contentResolver: ContentResolver) : String{
 
-            val bm : Bitmap = BitmapFactory.decodeFile("/path/to/image.jpg");
-            var baos = ByteArrayOutputStream();
-            bm.compress(Bitmap.CompressFormat.JPEG, 100, baos); // bm is the bitmap object
-            var byteArrayImage : ByteArray = baos.toByteArray();
+            val inputStream: InputStream? = contentResolver.openInputStream(imageUri)
 
-            var encodedImage = encodeToString(byteArrayImage, android.util.Base64.DEFAULT);
+            inputStream?.let {
+                val byteArray = it.readBytes()
+                var encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                return encodedImage
+            }
+
+            return ""
 
         }
     }
