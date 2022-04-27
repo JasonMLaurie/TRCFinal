@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.tripplanner.Controller.bll.PermissionLogic
 import com.example.tripplanner.Controller.bll.TripPlannerLogic
 import com.example.tripplanner.databinding.FragmentYerEkleBinding
 import com.example.tripplanner.model.YerEntity
@@ -20,11 +21,18 @@ import com.example.tripplanner.view.activities.MapsActivity
 import com.example.tripplanner.view.adapters.foto.FotoAdapter
 
 /** Gezilecek Yer Ekleme Fragment*/
-class YerEkleFragment : Fragment() {
+class YerEkleFragment : PermissionHandlingFragment() {
+
+
+
 
     private lateinit var binding: FragmentYerEkleBinding
     private var resimListe: ArrayList<Uri> = arrayListOf(Uri.EMPTY)
     private lateinit var locationIntent:Pair<Double,Double>
+
+    override fun grantedFunc(){
+        Toast.makeText(requireContext(),"toast",Toast.LENGTH_SHORT).show()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -94,8 +102,9 @@ class YerEkleFragment : Fragment() {
     }
 
     fun photoCardClickEvent(){
-        //TODO
+        PermissionLogic.mediaPermissionControl(this,requireContext())
     }
+
 
     /** Photo deletion function.*/
     fun silmeClickEvent(uri : Uri){

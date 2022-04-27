@@ -7,11 +7,33 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import com.example.tripplanner.view.activities.PermissionActivity
+import com.example.tripplanner.view.fragments.PermissionHandlingFragment
 
 class PermissionLogic {
 
     companion object{
         private val reqCodeLocations=0
+
+        fun mediaPermissionControl(
+            fragment:PermissionHandlingFragment,
+            context: Context) {
+            val requestList= ArrayList<String>()
+            var permStatus=
+                ContextCompat.checkSelfPermission(context,Manifest.permission.READ_EXTERNAL_STORAGE)==PackageManager.PERMISSION_GRANTED
+            if (!permStatus){
+                requestList.add(Manifest.permission.READ_EXTERNAL_STORAGE)
+            }
+            permStatus=ContextCompat.checkSelfPermission(context,Manifest.permission.WRITE_EXTERNAL_STORAGE)==PackageManager.PERMISSION_GRANTED
+
+            if (!permStatus){
+                requestList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            }
+            if (requestList.size==0){
+                fragment.grantedFunc()
+            }else{
+                fragment.activityResultLauncher?.launch(requestList.toTypedArray())
+            }
+        }
 
         @RequiresApi(Build.VERSION_CODES.M)
         fun locationPermissionControl(
@@ -41,27 +63,27 @@ class PermissionLogic {
         }
 
         @RequiresApi(Build.VERSION_CODES.M)
-        fun mediaPermissionControl(
-            activity: PermissionActivity,
-            context: Context) : Boolean{
-            val requestList= ArrayList<String>()
-            var permStatus=
-                ContextCompat.checkSelfPermission(context,Manifest.permission.READ_EXTERNAL_STORAGE)==PackageManager.PERMISSION_GRANTED
-            if (!permStatus){
-                requestList.add(Manifest.permission.READ_EXTERNAL_STORAGE)
-            }
-            permStatus=ContextCompat.checkSelfPermission(context,Manifest.permission.WRITE_EXTERNAL_STORAGE)==PackageManager.PERMISSION_GRANTED
+                fun mediaPermissionControl(
+                    activity: PermissionActivity,
+                    context: Context) : Boolean{
+                    val requestList= ArrayList<String>()
+                    var permStatus=
+                        ContextCompat.checkSelfPermission(context,Manifest.permission.READ_EXTERNAL_STORAGE)==PackageManager.PERMISSION_GRANTED
+                    if (!permStatus){
+                        requestList.add(Manifest.permission.READ_EXTERNAL_STORAGE)
+                    }
+                    permStatus=ContextCompat.checkSelfPermission(context,Manifest.permission.WRITE_EXTERNAL_STORAGE)==PackageManager.PERMISSION_GRANTED
 
-            if (!permStatus){
-                requestList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-            }
-            if (requestList.size==0){
-                activity.grantedFunc()
-                return true
-            }else{
-                activity.requestPermissions(requestList.toTypedArray(), reqCodeLocations)
-                return false
-            }
-        }
+                    if (!permStatus){
+                        requestList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    }
+                    if (requestList.size==0){
+                        activity.grantedFunc()
+                        return true
+                    }else{
+                        activity.requestPermissions(requestList.toTypedArray(), reqCodeLocations)
+                        return false
+                    }
+                }
     }
 }
