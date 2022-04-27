@@ -8,7 +8,7 @@ class YerEntity(
     var longitude : Double
 ) : Serializable{
 
-    var id by Delegates.notNull<Int>()
+    var id =0
     var yerAdi: String? = null
     var kisaTanim: String? = null
     var kisaAciklama: String? = null
