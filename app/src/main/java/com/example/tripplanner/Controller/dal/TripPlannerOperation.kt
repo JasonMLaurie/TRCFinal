@@ -322,7 +322,6 @@ class TripPlannerOperation(context: Context) {
                 resimEntity.base64 = dbObject.getString(dbObject.getColumnIndex(resimBaseStr))
                 resimEntity.yerId = dbObject.getInt(dbObject.getColumnIndex(yerStr))
                 resimEntity.tarih=dbObject.getString(dbObject.getColumnIndex(ziyaretTarihStr))
-
             } while (dbObject.moveToNext())
         }
         dbObject.close()
