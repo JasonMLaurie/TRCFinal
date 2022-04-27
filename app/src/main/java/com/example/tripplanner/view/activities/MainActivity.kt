@@ -1,15 +1,10 @@
 package com.example.tripplanner.view.activities
 
 import android.annotation.SuppressLint
-import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.view.View
-import android.view.WindowManager
 import androidx.core.view.isVisible
 import androidx.navigation.NavDirections
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
 import com.example.tripplanner.R
 import com.example.tripplanner.databinding.ActivityMainBinding
 import com.example.tripplanner.databinding.TabLayoutBinding
@@ -21,6 +16,7 @@ class MainActivity : PermissionActivity() {
     lateinit var binding : ActivityMainBinding
     lateinit var navHostFragment : NavHostFragment
 
+    lateinit var tab:TabLayoutBinding
 
     override fun grantedFunc() {
     }
@@ -40,6 +36,7 @@ class MainActivity : PermissionActivity() {
         binding.tabLayout.addTab(binding.tabLayout.newTab())
         binding.tabLayout.addTab(binding.tabLayout.newTab())
 
+
         tabOlustur()
 
         clickListeners()
@@ -52,15 +49,20 @@ class MainActivity : PermissionActivity() {
 
     @SuppressLint("SetTextI18n")
     fun tabOlustur(){
-        var tab= TabLayoutBinding.inflate(layoutInflater)
+        tab= TabLayoutBinding.inflate(layoutInflater)
+
         tab.tvbaslik.text="Gezilecek"
-        tab.ivTabIcon.setImageResource(R.drawable.gezilecekler_icon)
+
+        tab.ivTabIcon.setImageResource(R.drawable.tab_select_gezilecek)
+        //tab.ivTabIcon.setColorFilter(R.drawable.tab_select)
         binding.tabLayout.getTabAt(0)!!.setCustomView(tab.root)
 
         tab = TabLayoutBinding.inflate(layoutInflater)
         tab.tvbaslik.text="Gezdiklerim"
-        tab.ivTabIcon.setImageResource(R.drawable.gezdiklerim_icon)
+        tab.ivTabIcon.setImageResource(R.drawable.tab_select_gediklerim)
         binding.tabLayout.getTabAt(1)!!.setCustomView(tab.root)
+
+
     }
 
     fun tabSec(index:Int){
@@ -131,8 +133,11 @@ class MainActivity : PermissionActivity() {
 
     private fun tabListener(){
         binding.tabLayout.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
+            @SuppressLint("ResourceAsColor")
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 tabSec(tab!!.position)
+
+
             }
             override fun onTabUnselected(tab: TabLayout.Tab?) {
 
