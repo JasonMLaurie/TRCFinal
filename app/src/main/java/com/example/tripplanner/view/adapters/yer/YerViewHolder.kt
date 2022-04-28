@@ -43,7 +43,7 @@ class YerViewHolder(itemView: View, glist:ArrayList<YerEntity>, itemClick:(posit
 
         val tempResimList = TripPlannerLogic.fotolarGetir(context, item.id)
         if(tempResimList.isNullOrEmpty()){
-            ivYerFotograf.setImageResource(R.drawable.tempimage1)
+            ivYerFotograf.setImageResource(R.drawable.no_photo_img)
         }else{
             ivYerFotograf.setImageBitmap(TripPlannerLogic.decodeBase64(tempResimList[0].base64!!))
         }
