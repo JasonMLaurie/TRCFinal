@@ -116,6 +116,7 @@ class DetayFragment : Fragment(), ViewPager.OnPageChangeListener, View.OnClickLi
             intent.putExtra("Latitude",yerObject.latitude)
             intent.putExtra("Longitude",yerObject.longitude)
             intent.putExtra("mode",true)
+            intent.putExtra("yer_adi",yerObject.yerAdi)
             startActivity(intent)
         }
 
