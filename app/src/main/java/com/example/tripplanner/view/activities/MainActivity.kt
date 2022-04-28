@@ -33,7 +33,6 @@ class MainActivity : PermissionActivity() {
             onBackPressed()
         }
 
-
         //adding tabs
         binding.tabLayout.addTab(binding.tabLayout.newTab())
         binding.tabLayout.addTab(binding.tabLayout.newTab())
@@ -54,7 +53,6 @@ class MainActivity : PermissionActivity() {
 
         tab.tvbaslik.text="Gezilecek"
         tab.ivTabIcon.setImageResource(R.drawable.tab_select_gezilecek)
-        //tab.ivTabIcon.setColorFilter(R.drawable.tab_select)
         binding.tabLayout.getTabAt(0)!!.setCustomView(tab.root)
 
         tab = TabLayoutBinding.inflate(layoutInflater)
@@ -102,8 +100,8 @@ class MainActivity : PermissionActivity() {
                 tabSec(tab!!.position)
             }
             override fun onTabUnselected(tab: TabLayout.Tab?) {
-                Toast.makeText(this@MainActivity, fragmentManager.backStackEntryCount.toString(), Toast.LENGTH_SHORT).show()
-                Toast.makeText(this@MainActivity, supportFragmentManager.backStackEntryCount.toString(), Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this@MainActivity, fragmentManager.backStackEntryCount.toString(), Toast.LENGTH_SHORT).show()
+               // Toast.makeText(this@MainActivity, supportFragmentManager.backStackEntryCount.toString(), Toast.LENGTH_SHORT).show()
             }
             override fun onTabReselected(tab: TabLayout.Tab?) {
                 tabSec(tab!!.position)
@@ -132,8 +130,8 @@ class MainActivity : PermissionActivity() {
     }
 
     override fun onResume() {
-        binding.tabLayout.isVisible=true
-        binding.fabYerEkle.isVisible=true
+        //binding.tabLayout.isVisible=true
+        //binding.fabYerEkle.isVisible=true
         super.onResume()
     }
 

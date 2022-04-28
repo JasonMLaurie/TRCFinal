@@ -59,6 +59,8 @@ class DetayFragment : Fragment(), ViewPager.OnPageChangeListener, View.OnClickLi
         binding.apply {
             tvYerKisaTanimBilgi.text = yerObject.kisaTanim
             tvKisaAciklamaBilgisi.text = yerObject.kisaAciklama
+            textZiyaretGecmisi.isVisible=false
+
 
             //Oncelik için kontrol
             if (yerObject.oncelik.equals("oncelik1"))//yeşil
@@ -77,6 +79,7 @@ class DetayFragment : Fragment(), ViewPager.OnPageChangeListener, View.OnClickLi
             val adapter = ZiyaretAdapter(requireContext(),ziyaretList)
             binding.rvZiyaretGecmisi.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
             binding.rvZiyaretGecmisi.adapter = adapter
+            binding.textZiyaretGecmisi.isVisible=true
         }
 
         Log.e("Logcat", TripPlannerLogic.tumZiyaretleriGetir(requireContext()).size.toString())

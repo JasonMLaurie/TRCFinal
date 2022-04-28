@@ -53,6 +53,8 @@ class YerEkleFragment : PermissionHandlingFragment() {
 
         resimListe = arrayListOf("")
         (activity as MainActivity).binding.tvToolText.setText(R.string.yer_ekle_bar_text)
+        (activity as MainActivity).binding.btnBack.isVisible=true
+
 
         setAdapters()
         clickListeners()
@@ -103,15 +105,11 @@ class YerEkleFragment : PermissionHandlingFragment() {
             spinner.adapter=adapter
             spinner.onItemSelectedListener = object :AdapterView.OnItemSelectedListener{
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                    //var secilenOncelik = parent!!.getItemAtPosition(position)
                     secilenOncelik = Oncelikler.list!!.get(position)
-                    Toast.makeText(requireContext(),"${secilenOncelik.oncelikDurumu}",Toast.LENGTH_SHORT).show()
-
                 }
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
         }
-
     }
 
     /** Click Listener Functions */
