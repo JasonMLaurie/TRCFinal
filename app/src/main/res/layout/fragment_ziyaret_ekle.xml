@@ -7,7 +7,6 @@
     android:background="@color/bg_gray"
     tools:context=".view.fragments.ZiyaretEkleFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout4"
         android:layout_width="0dp"
@@ -111,7 +110,7 @@
             android:background="@android:color/transparent"
             android:ems="10"
             android:gravity="start"
-            android:hint="Açıklama"
+            android:hint="@string/aciklama"
             android:inputType="textMultiLine"
             android:maxLines="3"
             android:textColor="@color/gray"

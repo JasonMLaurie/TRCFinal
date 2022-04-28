@@ -1,4 +1,4 @@
-package com.example.tripplanner.Controller.bll
+package com.example.tripplanner.controller.bll
 
 import android.Manifest
 import android.content.Context
@@ -42,7 +42,7 @@ class PermissionLogic {
         @RequiresApi(Build.VERSION_CODES.M)
         fun locationPermissionControl(
             activity:PermissionActivity,
-            context: Context) {//TODO:
+            context: Context) {
             val requestList = ArrayList<String>()
             var permStatus =
                 ContextCompat.checkSelfPermission(

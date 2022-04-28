@@ -1,19 +1,13 @@
 package com.example.tripplanner.view.adapters.foto
 
-import android.net.Uri
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
-import com.example.tripplanner.Controller.bll.TripPlannerLogic
+import com.example.tripplanner.controller.bll.TripPlannerLogic
 import com.example.tripplanner.R
-import com.example.tripplanner.model.ResimEntity
-import com.example.tripplanner.model.YerEntity
-import java.util.*
 
 class FotoViewHolder(itemView: View,var cardClick : () -> Unit, var silClick : (encodedImage : String) -> Unit) : RecyclerView.ViewHolder(itemView) {
 
@@ -34,7 +28,7 @@ class FotoViewHolder(itemView: View,var cardClick : () -> Unit, var silClick : (
 
     fun bindDataToViews(encodedImage: String, isLastItem: Boolean){
 
-        if (encodedImage != null && !encodedImage.equals("")) {
+        if (encodedImage != "") {
             ekliFotoConstraintLayout.visibility = View.VISIBLE
 
             imageView.setImageBitmap(TripPlannerLogic.decodeBase64(encodedImage))

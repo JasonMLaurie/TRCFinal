@@ -1,4 +1,4 @@
-package com.example.tripplanner.Controller.dal
+package com.example.tripplanner.controller.dal
 
 import android.annotation.SuppressLint
 import android.content.ContentValues
@@ -45,6 +45,9 @@ class TripPlannerOperation(context: Context) {
         }
     }
 
+    // TumYerleriGetir Func
+    /*
+
     @SuppressLint("Range")
     fun tumYerleriGetir(): ArrayList<YerEntity> {
 
@@ -73,6 +76,7 @@ class TripPlannerOperation(context: Context) {
 
         return yerList2Return
     }
+*/
 
     @SuppressLint("Range")
     fun gezilecekleriGetir() : ArrayList<YerEntity>{
@@ -105,7 +109,7 @@ class TripPlannerOperation(context: Context) {
 
     @SuppressLint("Range")
     fun yerGetir(locationPair : Pair<Double, Double>): YerEntity {
-        var yerEntity = YerEntity(0.0,0.0)
+        val yerEntity = YerEntity(0.0,0.0)
 
         openDB()
         val dbObject =

@@ -11,7 +11,6 @@ import android.view.ViewGroup
 import android.view.Window
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -19,7 +18,7 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.ViewPager
-import com.example.tripplanner.Controller.bll.TripPlannerLogic
+import com.example.tripplanner.controller.bll.TripPlannerLogic
 import com.example.tripplanner.R
 import com.example.tripplanner.databinding.FragmentDetayBinding
 import com.example.tripplanner.model.ResimEntity
@@ -40,7 +39,7 @@ class DetayFragment : Fragment(), ViewPager.OnPageChangeListener, View.OnClickLi
 
     val bundle : DetayFragmentArgs by navArgs()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentDetayBinding.inflate(inflater, container, false)
         yerObject = bundle.yerObject
 
@@ -186,14 +185,11 @@ class DetayFragment : Fragment(), ViewPager.OnPageChangeListener, View.OnClickLi
             dots[i]!!.setImageResource(R.drawable.unselected_dot_slider)
         }
         dots[position]!!.setImageResource(R.drawable.selected_dot_slider)
-        if (position + 1 == dotsCount) {
-        } else { }
+        if (position + 1 == dotsCount) {} else {}
     }
 
 
-    override fun onClick(v: View) {
-
-    }
+    override fun onClick(v: View) {}
     override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
     override fun onPageScrollStateChanged(state: Int) {}
 

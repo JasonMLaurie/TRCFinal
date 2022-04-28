@@ -1,20 +1,18 @@
 package com.example.tripplanner.view.adapters
 
 import android.content.Context
-import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.viewpager.widget.PagerAdapter
-import com.example.tripplanner.Controller.bll.TripPlannerLogic
+import com.example.tripplanner.controller.bll.TripPlannerLogic
 import com.example.tripplanner.R
 import com.example.tripplanner.model.ResimEntity
 
 
-class CustomPagerAdapter(private val context: Context, fotograflar: ArrayList<ResimEntity>,resimClick:(position:Int)->Unit) :
+class CustomPagerAdapter(context: Context, fotograflar: ArrayList<ResimEntity>, resimClick:(position:Int)->Unit) :
     PagerAdapter() {
     var mLayoutInflater: LayoutInflater
     private val vpFotografListe: ArrayList<ResimEntity>
@@ -35,7 +33,7 @@ class CustomPagerAdapter(private val context: Context, fotograflar: ArrayList<Re
         val tvTarih = itemView.findViewById<View>(R.id.tvSliderTarih) as TextView
 
         ivFotograf.setImageBitmap(TripPlannerLogic.decodeBase64(vpFotografListe[position].base64!!))
-        tvTarih.setText(vpFotografListe[position].tarih)
+        tvTarih.text = vpFotografListe[position].tarih
 
         itemView.setOnClickListener {
             resimaClick(position)

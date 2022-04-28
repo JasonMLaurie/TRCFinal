@@ -1,9 +1,7 @@
-package com.example.tripplanner.Controller.bll
+package com.example.tripplanner.controller.bll
 
 import androidx.core.view.isVisible
 import com.example.tripplanner.databinding.ActivityMainBinding
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.tabs.TabLayout
 
 class UILogic {
     companion object{

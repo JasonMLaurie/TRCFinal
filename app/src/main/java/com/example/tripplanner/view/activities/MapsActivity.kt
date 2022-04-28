@@ -8,10 +8,9 @@ import android.location.LocationManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.example.tripplanner.R
-import com.example.tripplanner.Controller.bll.PermissionLogic
+import com.example.tripplanner.controller.bll.PermissionLogic
 import com.example.tripplanner.databinding.ActivityMapsBinding
 
 
@@ -84,12 +83,13 @@ class MapsActivity : PermissionActivity(), OnMapReadyCallback {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun configureButton() {
         if (mode) {//Detay kismindan gelirsen
             //Konuma gidis
             binding.btnKonumKaydet.text = "Git"
             binding.btnKonumKaydet.setOnClickListener {
-                var gmmIntentUri = Uri.parse(
+                val gmmIntentUri = Uri.parse(
                     "google.navigation:q=${
                         locationPair!!.second.latitude.toString()
                             .dropLast(locationPair!!.second.latitude.toString().length - 5)
@@ -98,7 +98,7 @@ class MapsActivity : PermissionActivity(), OnMapReadyCallback {
                             .dropLast(locationPair!!.second.latitude.toString().length - 5)
                     }"
                 )
-                var mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+                val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
                 mapIntent.setPackage("com.google.android.apps.maps")
                 startActivity(mapIntent)
             }

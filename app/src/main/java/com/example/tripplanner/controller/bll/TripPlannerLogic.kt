@@ -1,25 +1,18 @@
-package com.example.tripplanner.Controller.bll
+package com.example.tripplanner.controller.bll
 
 import android.app.AlertDialog
 import android.content.ContentResolver
 import android.content.Context
-import android.content.DialogInterface
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.util.Base64
-import android.util.Base64.encodeToString
-import android.util.Log
 import android.widget.Toast
-import com.example.tripplanner.Controller.dal.TripPlannerOperation
+import com.example.tripplanner.controller.dal.TripPlannerOperation
 import com.example.tripplanner.model.ResimEntity
 import com.example.tripplanner.model.ZiyaretEntity
 import com.example.tripplanner.model.YerEntity
-import com.example.tripplanner.view.activities.MainActivity
-import java.io.ByteArrayOutputStream
-import java.io.FileOutputStream
 import java.io.InputStream
-import java.lang.Exception
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -84,10 +77,11 @@ class TripPlannerLogic {
             return tripPlannerOperation.fotolarGetir(yerId)
         }
 
+        /*      // Func to Bring All
         fun tumYerleriGetir(context: Context) : ArrayList<YerEntity>{
             val tripPlannerOperation = TripPlannerOperation(context)
             return tripPlannerOperation.tumYerleriGetir()
-        }
+        }*/
 
         fun tumZiyaretleriGetir(context: Context) : ArrayList<ZiyaretEntity>{
             val tripPlannerOperation = TripPlannerOperation(context)
@@ -106,7 +100,7 @@ class TripPlannerLogic {
 
         // May need additional libraries for pre API 8, v 2.2
         fun decodeBase64(encodedImage: String) : Bitmap{
-            var base64img = Base64.decode(encodedImage, Base64.DEFAULT)
+            val base64img = Base64.decode(encodedImage, Base64.DEFAULT)
             return BitmapFactory.decodeByteArray(base64img!!,0,base64img.size)
         }
 
@@ -116,8 +110,7 @@ class TripPlannerLogic {
 
             inputStream?.let {
                 val byteArray = it.readBytes()
-                var encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
-                return encodedImage
+                return Base64.encodeToString(byteArray, Base64.DEFAULT)
             }
             return ""
         }
@@ -135,12 +128,12 @@ class TripPlannerLogic {
             adb.setTitle(title)
             adb.setMessage(message)
 
-            adb.setPositiveButton(positiveString, DialogInterface.OnClickListener { dialogInterface, i ->
+            adb.setPositiveButton(positiveString) { _, _ ->
                 positiveFunc()
-            })
-            adb.setNegativeButton(negativeString, DialogInterface.OnClickListener { dialogInterface, i ->
+            }
+            adb.setNegativeButton(negativeString) { _, _ ->
                 negativeFunc()
-            })
+            }
 
             adb.show()
         }

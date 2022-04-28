@@ -5,12 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.isVisible
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.tripplanner.Controller.bll.TripPlannerLogic
+import com.example.tripplanner.controller.bll.TripPlannerLogic
 import com.example.tripplanner.R
 import com.example.tripplanner.databinding.FragmentGezdiklerimBinding
 import com.example.tripplanner.model.YerEntity
@@ -23,7 +21,7 @@ class GezdiklerimFragment : Fragment() {
     lateinit var binding: FragmentGezdiklerimBinding
     lateinit var gezdiklerimListe: ArrayList<YerEntity>
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding= FragmentGezdiklerimBinding.inflate(inflater)
 
         getGezdiklerim()
@@ -47,10 +45,13 @@ class GezdiklerimFragment : Fragment() {
         binding.frgGezdiklerimRv.adapter=YerAdapter(requireContext(),gezdiklerimListe,::itemClick)
     }
 
-    private fun itemClick(position: Int,itemView:View) {
+    private fun itemClick(position: Int) {
         val gezdiklerim2DetayNavDir = GezdiklerimFragmentDirections.actionGezdiklerimFragmentToDetayFragment(gezdiklerimListe[position])
         findNavController().navigate(gezdiklerim2DetayNavDir)
     }
+
+    // Mock Data
+    /*
 
     private fun ArrayList<YerEntity>.mockData(){
         var tempEntity=YerEntity(40.0,40.0)
@@ -66,5 +67,6 @@ class GezdiklerimFragment : Fragment() {
         this.add(tempEntity)
     }
 
+*/
 
 }
