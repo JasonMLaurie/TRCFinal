@@ -13,6 +13,7 @@ import com.example.tripplanner.Controller.bll.TripPlannerLogic
 import com.example.tripplanner.R
 import com.example.tripplanner.databinding.FragmentGezilecekBinding
 import com.example.tripplanner.model.YerEntity
+import com.example.tripplanner.view.activities.MainActivity
 import com.example.tripplanner.view.adapters.yer.YerAdapter
 
 

@@ -27,6 +27,7 @@ class MainActivity : PermissionActivity() {
         binding= ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
         navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         binding.btnBack.setOnClickListener {
             onBackPressed()

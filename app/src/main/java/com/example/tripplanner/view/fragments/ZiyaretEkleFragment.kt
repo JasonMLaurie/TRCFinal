@@ -22,6 +22,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.tripplanner.Controller.bll.PermissionLogic
 import com.example.tripplanner.Controller.bll.TripPlannerLogic
+import com.example.tripplanner.R
 import com.example.tripplanner.databinding.FragmentZiyaretEkleBinding
 import com.example.tripplanner.model.ResimEntity
 import com.example.tripplanner.model.ZiyaretEntity
@@ -52,9 +53,6 @@ class ZiyaretEkleFragment : PermissionHandlingFragment() {
         // Inflate the layout for this fragment
         binding = FragmentZiyaretEkleBinding.inflate(inflater, container, false)
 
-
-
-//        createTempList()
         onceOnCreate()
         setInitialViews()
         clickListeners()

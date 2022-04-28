@@ -19,6 +19,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.tripplanner.Controller.bll.PermissionLogic
 import com.example.tripplanner.Controller.bll.TripPlannerLogic
+import com.example.tripplanner.R
 import com.example.tripplanner.databinding.FragmentYerEkleBinding
 import com.example.tripplanner.model.Oncelik
 import com.example.tripplanner.model.Oncelikler
@@ -51,8 +52,8 @@ class YerEkleFragment : PermissionHandlingFragment() {
         binding = FragmentYerEkleBinding.inflate(inflater, container, false)
 
         resimListe = arrayListOf("")
+        (activity as MainActivity).binding.tvToolText.setText(R.string.yer_ekle_bar_text)
 
-//        createTempList()
         setAdapters()
         clickListeners()
         setupSpinner()
