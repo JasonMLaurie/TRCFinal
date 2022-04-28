@@ -171,7 +171,7 @@ class YerEkleFragment : PermissionHandlingFragment() {
         val tempYerEntity = TripPlannerLogic.yerGetir(requireContext(), Pair(locationIntent.first, locationIntent.second))
         if(resimListe.isNullOrEmpty() || (resimListe.size == 1 && resimListe.contains(""))){
 
-            val defaultImageUri = Uri.parse("android.resource://" + requireActivity().packageName +"/drawable/tempimage1")
+            val defaultImageUri = Uri.parse("android.resource://" + requireActivity().packageName +"/drawable/no_photo_img")
 
             val resimObject = ResimEntity().apply {
                 tarih = "$dom.${month+1}.$year"
