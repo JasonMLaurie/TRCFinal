@@ -12,9 +12,9 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.example.tripplanner.Controller.bll.CamMediaAccessLogic
-import com.example.tripplanner.Controller.bll.PermissionLogic
-import com.example.tripplanner.Controller.bll.TripPlannerLogic
+import com.example.tripplanner.controller.bll.CamMediaAccessLogic
+import com.example.tripplanner.controller.bll.PermissionLogic
+import com.example.tripplanner.controller.bll.TripPlannerLogic
 import com.example.tripplanner.R
 import com.example.tripplanner.databinding.FragmentYerEkleBinding
 import com.example.tripplanner.model.Oncelik
@@ -48,7 +48,7 @@ class YerEkleFragment : PermissionHandlingFragment() {
         CamMediaAccessLogic.initializeGalleryResultLauncher(this,-1)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentYerEkleBinding.inflate(inflater, container, false)
 
         resimListe = arrayListOf("")
@@ -143,7 +143,7 @@ class YerEkleFragment : PermissionHandlingFragment() {
 
     /** Open Gallery Func*/
     private fun openGallery(){
-        CamMediaAccessLogic.getPhotoFromGallery(this,-1)
+        CamMediaAccessLogic.getPhotoFromGallery()
     }
 
     /** Open Camera Func */

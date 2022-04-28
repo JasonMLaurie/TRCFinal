@@ -2,14 +2,9 @@ package com.example.tripplanner.view.activities
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.widget.Toast
-import androidx.core.view.isVisible
-import androidx.navigation.NavDirections
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
-import com.example.tripplanner.Controller.bll.CamMediaAccessLogic
-import com.example.tripplanner.Controller.bll.UILogic
-import com.example.tripplanner.Controller.bll.UILogic.Companion.hideTabLayout
+import com.example.tripplanner.controller.bll.UILogic.Companion.hideTabLayout
 import com.example.tripplanner.R
 import com.example.tripplanner.databinding.ActivityMainBinding
 import com.example.tripplanner.databinding.TabLayoutBinding
@@ -53,12 +48,12 @@ class MainActivity : PermissionActivity() {
 
         tab.tvbaslik.text="Gezilecek"
         tab.ivTabIcon.setImageResource(R.drawable.tab_select_gezilecek)
-        binding.tabLayout.getTabAt(0)!!.setCustomView(tab.root)
+        binding.tabLayout.getTabAt(0)!!.customView = tab.root
 
         tab = TabLayoutBinding.inflate(layoutInflater)
         tab.tvbaslik.text="Gezdiklerim"
         tab.ivTabIcon.setImageResource(R.drawable.tab_select_gediklerim)
-        binding.tabLayout.getTabAt(1)!!.setCustomView(tab.root)
+        binding.tabLayout.getTabAt(1)!!.customView = tab.root
     }
 
     fun tabSec(index:Int){

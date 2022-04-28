@@ -6,10 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.tripplanner.Controller.bll.TripPlannerLogic
+import com.example.tripplanner.controller.bll.TripPlannerLogic
 import com.example.tripplanner.R
 import com.example.tripplanner.databinding.FragmentGezilecekBinding
 import com.example.tripplanner.model.YerEntity
@@ -22,7 +21,7 @@ class GezilecekFragment : Fragment() {
     lateinit var binding:FragmentGezilecekBinding
     lateinit var yerlerListe:ArrayList<YerEntity>
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding= FragmentGezilecekBinding.inflate(inflater)
 
        // binding.toolbar.setTitle("Gezilecekler")
@@ -48,7 +47,7 @@ class GezilecekFragment : Fragment() {
         yerlerListe= TripPlannerLogic.gezilecekleriGetir(requireContext())
     }
 
-    fun itemClick(position:Int,itemView: View){
+    fun itemClick(position:Int){
         val gezilecek2DetayNavDir = GezilecekFragmentDirections.actionGezilecekFragmentToDetayFragment(yerlerListe[position])
         findNavController().navigate(gezilecek2DetayNavDir)
     }

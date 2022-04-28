@@ -10,8 +10,8 @@ import com.example.tripplanner.model.ZiyaretEntity
 class ZiyaretAdapter(var mContext: Context, var ziyaretList: ArrayList<ZiyaretEntity>) : RecyclerView.Adapter<ZiyaretViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ZiyaretViewHolder {
-        var layoutInflater = LayoutInflater.from(mContext)
-        var cardView = layoutInflater.inflate(R.layout.ziyaret_gecmisi_card,parent,false)
+        val layoutInflater = LayoutInflater.from(mContext)
+        val cardView = layoutInflater.inflate(R.layout.ziyaret_gecmisi_card,parent,false)
         return ZiyaretViewHolder(cardView)
     }
 

@@ -1,12 +1,10 @@
 package com.example.tripplanner.view.adapters.foto
 
 import android.content.Context
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tripplanner.R
-import com.example.tripplanner.model.ResimEntity
 
 class FotoAdapter(var mContext : Context, var resimUriList : ArrayList<String>,var cardClick : () -> Unit, var silClick : (encodedImage : String) -> Unit) : RecyclerView.Adapter<FotoViewHolder>() {
 
@@ -24,8 +22,4 @@ class FotoAdapter(var mContext : Context, var resimUriList : ArrayList<String>,v
         return resimUriList.size
     }
 
-    fun updateResimUri(newResimUriList:ArrayList<String>){
-        resimUriList=newResimUriList
-        notifyDataSetChanged()
-    }
 }

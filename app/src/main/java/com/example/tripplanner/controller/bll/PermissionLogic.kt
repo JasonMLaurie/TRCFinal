@@ -1,4 +1,4 @@
-package com.example.tripplanner.Controller.bll
+package com.example.tripplanner.controller.bll
 
 import android.Manifest
 import android.content.Context

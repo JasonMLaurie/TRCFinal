@@ -1,6 +1,6 @@
-package com.example.tripplanner.Controller.bll
+package com.example.tripplanner.controller.bll
 
-import android.content.Context
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Environment
@@ -29,7 +29,8 @@ class CamMediaAccessLogic {
 
 
 
-        fun initializeGalleryResultLauncher(fragment: Fragment,yerId: Int){
+        @SuppressLint("NotifyDataSetChanged")
+        fun initializeGalleryResultLauncher(fragment: Fragment, yerId: Int){
             galleryResultLauncher=fragment.registerForActivityResult(ActivityResultContracts.StartActivityForResult()){result->
                 if (result.resultCode==AppCompatActivity.RESULT_OK){
                     try {
@@ -38,13 +39,13 @@ class CamMediaAccessLogic {
 
                         if (!checkIfDuplicate(fragment,yerId)){
                             if (fragment is ZiyaretEkleFragment){
-                                (fragment as ZiyaretEkleFragment).addedBase64List.add(retString)
-                                (fragment as ZiyaretEkleFragment).resimBase64List.add(retString)
-                                (fragment as ZiyaretEkleFragment).adapter.notifyDataSetChanged()
+                                fragment.addedBase64List.add(retString)
+                                fragment.resimBase64List.add(retString)
+                                fragment.adapter.notifyDataSetChanged()
                             }
                             else if (fragment is YerEkleFragment){
-                                (fragment as YerEkleFragment).resimListe.add(retString)
-                                (fragment as YerEkleFragment).setAdapters()
+                                fragment.resimListe.add(retString)
+                                fragment.setAdapters()
                             }
                         }else{
                             Toast.makeText(fragment.requireContext(),"Sectiginiz fotograf zaten eklenmis.",Toast.LENGTH_SHORT).show()
@@ -63,18 +64,18 @@ class CamMediaAccessLogic {
         private fun checkIfDuplicate(fragment: Fragment,yerId: Int):Boolean{
             val tempResimUriList : ArrayList<String> = arrayListOf()
             TripPlannerLogic.fotolarGetir(fragment.requireContext(),yerId).forEach {
-                var base64 = it.base64!!
+                val base64 = it.base64!!
                 tempResimUriList.add(base64)
             }
             if (tempResimUriList.contains(retString)){
                 return true
                 }
             if (fragment is ZiyaretEkleFragment){
-                if ((fragment as ZiyaretEkleFragment).addedBase64List.contains(retString)){
+                if (fragment.addedBase64List.contains(retString)){
                     return true
                 }
             }else if ((fragment is YerEkleFragment)){
-                if ((fragment as YerEkleFragment).resimListe.contains(retString)){
+                if (fragment.resimListe.contains(retString)){
                     return true
                 }
             }
@@ -82,32 +83,27 @@ class CamMediaAccessLogic {
         }
 
         /**A function to standardize fragment access to gallery. Checks for duplicates.**/
-        fun getPhotoFromGallery(fragment: Fragment,yerId:Int):Pair<Boolean,String?>{
-            //initializeGalleryResultLauncher(fragment)//TODO: Check if it works when this line is here-->If not, call initializeGalleryResultLauncher First
+        fun getPhotoFromGallery() {
             val intent= Intent(Intent.ACTION_PICK)
-            intent.setType("image/*")
+            intent.type = "image/*"
             galleryResultLauncher?.launch(intent) ?: Log.e("getPhotoFromGallery","Initialize Gallery Result Launcher First")
-            if (checkIfDuplicate(fragment,yerId)){
-                return Pair(false,null)
-            }else{
-                return Pair(true, retString)
-            }
+
         }
         /**Inititalizes cameraResutLauncher for given fragment.**/
+        @SuppressLint("NotifyDataSetChanged")
         fun initializeCameraResultLauncher(fragment: Fragment){
             cameraResultLauncher=fragment.registerForActivityResult(ActivityResultContracts.StartActivityForResult()){result->
                 if (result.resultCode==AppCompatActivity.RESULT_OK){
                     try {
                         retString=TripPlannerLogic.encodeBase64(resimUri,(fragment.requireActivity() as MainActivity).contentResolver)
                         if (fragment is ZiyaretEkleFragment){
-                            (fragment as ZiyaretEkleFragment).addedBase64List.add(retString)
-                            (fragment as ZiyaretEkleFragment).resimBase64List.add(retString)
-                            (fragment as ZiyaretEkleFragment).adapter.notifyDataSetChanged()
+                            fragment.addedBase64List.add(retString)
+                            fragment.resimBase64List.add(retString)
+                            fragment.adapter.notifyDataSetChanged()
                         }
                         else if (fragment is YerEkleFragment){
-                            (fragment as YerEkleFragment).resimListe.add(retString)
-                            //(fragment as YerEkleFragment).fotoAdapter.notifyDataSetChanged()
-                            (fragment as YerEkleFragment).setAdapters()
+                            fragment.resimListe.add(retString)
+                            fragment.setAdapters()
                         }
                     }catch (e: FileNotFoundException){
                         e.printStackTrace()
