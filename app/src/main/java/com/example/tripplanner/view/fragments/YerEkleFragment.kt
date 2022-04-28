@@ -16,6 +16,7 @@ import com.example.tripplanner.controller.bll.CamMediaAccessLogic
 import com.example.tripplanner.controller.bll.PermissionLogic
 import com.example.tripplanner.controller.bll.TripPlannerLogic
 import com.example.tripplanner.R
+import com.example.tripplanner.controller.bll.UILogic.Companion.hideTabLayout
 import com.example.tripplanner.databinding.FragmentYerEkleBinding
 import com.example.tripplanner.model.Oncelik
 import com.example.tripplanner.model.Oncelikler
@@ -205,8 +206,7 @@ class YerEkleFragment : PermissionHandlingFragment() {
 
 
     override fun onResume() {
-        (activity as MainActivity).binding.tabLayout.isVisible=false
-        (activity as MainActivity).binding.fabYerEkle.isVisible=false
+        (activity as MainActivity).binding.hideTabLayout(true)
         super.onResume()
     }
 
