@@ -130,7 +130,6 @@ class MapsActivity : PermissionActivity(), OnMapReadyCallback {
 
         override fun onLocationChanged(p0: Location) {
             mMap.clear()
-            Toast.makeText(this@MapsActivity,"Konum degisti",Toast.LENGTH_SHORT).show()
             locationPair= Pair("Konum", LatLng(p0.latitude,p0.longitude))
             mMap.addMarker(MarkerOptions().position(locationPair!!.second))
             mMap.moveCamera(CameraUpdateFactory.newLatLng(locationPair!!.second))

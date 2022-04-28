@@ -178,8 +178,6 @@ class YerEkleFragment : PermissionHandlingFragment() {
         yer.kisaAciklama=binding.eTvYerKisaAciklama.text.toString()
         yer.oncelik=secilenOncelik.oncelikDurumu
 
-        //todo fotoğraf bilgileri atamaı yapılacak
-
         requireActivity().onBackPressed()
     }
 
@@ -229,13 +227,9 @@ class YerEkleFragment : PermissionHandlingFragment() {
     // Gallery Selected PhotoResult
     val galleryResultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-
             if (result.resultCode == AppCompatActivity.RESULT_OK) {
-
                 try {
-
                     val imageUri: Uri = result.data!!.data!!
-
                     /** Base64 Usage */
                     val encodedImage = TripPlannerLogic.encodeBase64(imageUri, (activity as MainActivity).contentResolver)
 
