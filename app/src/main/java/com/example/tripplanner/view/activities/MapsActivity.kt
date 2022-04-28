@@ -42,7 +42,8 @@ class MapsActivity : PermissionActivity(), OnMapReadyCallback {
         binding.btnBackM.setOnClickListener {
             onBackPressed()
         }
-        binding.tvToolText2.setText(intent.getStringExtra("yer_adi"))
+
+
 
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.MapsActivity_map) as SupportMapFragment
@@ -73,7 +74,11 @@ class MapsActivity : PermissionActivity(), OnMapReadyCallback {
     private fun initializeMode() {
         mode = intent.getBooleanExtra("mode", false)
         if (!mode) {//Yer Ekle kismindan gelirsen
+            binding.tvToolText2.setText(intent.getStringExtra("yer_adi"))
+
         } else {//Detay kismindan gelirsen
+            binding.tvToolText2.setText(intent.getStringExtra("yer_adi"))
+
             locationPair = Pair(
                 "Konum",
                 LatLng(

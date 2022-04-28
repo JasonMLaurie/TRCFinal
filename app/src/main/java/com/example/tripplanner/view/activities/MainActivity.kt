@@ -87,7 +87,7 @@ class MainActivity : PermissionActivity() {
             override fun onTabUnselected(tab: TabLayout.Tab?) {
             }
             override fun onTabReselected(tab: TabLayout.Tab?) {
-                tabSec(tab!!.position)
+                tabSec(0)
             }
         })
     }

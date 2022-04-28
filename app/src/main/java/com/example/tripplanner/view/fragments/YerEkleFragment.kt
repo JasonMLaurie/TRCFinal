@@ -129,6 +129,7 @@ class YerEkleFragment : PermissionHandlingFragment() {
         binding.btnKonumEkle.setOnClickListener{
             val intent= Intent(requireActivity(),MapsActivity::class.java)
             intent.putExtra("mode",false)
+            intent.putExtra("yer_adi","Konum Seç")
             resLauncher.launch(intent)
         }
     }
