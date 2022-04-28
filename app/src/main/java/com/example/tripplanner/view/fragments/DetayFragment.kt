@@ -1,14 +1,18 @@
 package com.example.tripplanner.view.fragments
 
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.RelativeLayout
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
@@ -25,6 +29,7 @@ import com.example.tripplanner.view.activities.MainActivity
 import com.example.tripplanner.view.activities.MapsActivity
 import com.example.tripplanner.view.adapters.CustomPagerAdapter
 import com.example.tripplanner.view.adapters.ziyaret.ZiyaretAdapter
+
 
 /** Gezilecek Yer Detay Fragment */
 class DetayFragment : Fragment(), ViewPager.OnPageChangeListener, View.OnClickListener  {
@@ -45,6 +50,13 @@ class DetayFragment : Fragment(), ViewPager.OnPageChangeListener, View.OnClickLi
         setInitialViews()
         clickListeners()
         viewPagerImageSlider()
+
+        val relativeclic1 = binding.relativeLayout
+        relativeclic1.setOnClickListener {
+            Toast.makeText(requireContext(),"adsdsasa",Toast.LENGTH_SHORT).show()
+        }
+
+
 
         return binding.root
     }
@@ -112,6 +124,7 @@ class DetayFragment : Fragment(), ViewPager.OnPageChangeListener, View.OnClickLi
             Navigation.findNavController(it).navigate(detay2ZiyaretEkleNavDir)
         }
 
+
     }
 
     /** Refreshing views in case of any visit being added */
@@ -133,8 +146,6 @@ class DetayFragment : Fragment(), ViewPager.OnPageChangeListener, View.OnClickLi
 
     var resimListe =ArrayList<ResimEntity>()
 
-
-
     var mViewPager: ViewPager? = null
     private var mAdapter: CustomPagerAdapter? = null
     private var pager_indicator: LinearLayout? = null
@@ -148,11 +159,12 @@ class DetayFragment : Fragment(), ViewPager.OnPageChangeListener, View.OnClickLi
         mViewPager = binding.viewpager
         pager_indicator = binding.viewPagerCountDots
 
-        mAdapter = CustomPagerAdapter(requireContext(), resimListe)
+        mAdapter = CustomPagerAdapter(requireContext(), resimListe,::resimClick)
 
         mViewPager!!.adapter = mAdapter
         mViewPager!!.currentItem = 0
         mViewPager!!.setOnPageChangeListener(this)
+
         setPageViewIndicator()
     }
 
@@ -190,11 +202,24 @@ class DetayFragment : Fragment(), ViewPager.OnPageChangeListener, View.OnClickLi
         } else { }
     }
 
+
     override fun onClick(v: View) {
-        //TODO resim tam ekran açılacak
+
     }
     override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
     override fun onPageScrollStateChanged(state: Int) {}
 
+    fun resimClick(position:Int){
+        val dialog =Dialog(requireContext())
+        dialog.setCancelable(true)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.tam_ekran_popup)
+        val image =dialog.findViewById<ImageView>(R.id.ivTam) as ImageView
+        image.setOnClickListener {
+            dialog.dismiss()
+        }
+        image.setImageBitmap(TripPlannerLogic.decodeBase64(resimListe[position].base64!!))
+        dialog.show()
+    }
 
 }

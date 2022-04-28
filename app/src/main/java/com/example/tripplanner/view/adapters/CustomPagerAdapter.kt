@@ -7,21 +7,26 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.viewpager.widget.PagerAdapter
 import com.example.tripplanner.Controller.bll.TripPlannerLogic
 import com.example.tripplanner.R
 import com.example.tripplanner.model.ResimEntity
 
 
-class CustomPagerAdapter(private val context: Context, fotograflar: ArrayList<ResimEntity>) :
+class CustomPagerAdapter(private val context: Context, fotograflar: ArrayList<ResimEntity>,resimClick:(position:Int)->Unit) :
     PagerAdapter() {
     var mLayoutInflater: LayoutInflater
     private val vpFotografListe: ArrayList<ResimEntity>
+    val resimaClick:(position:Int)->Unit
+
 
     init {
         mLayoutInflater =
             context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         vpFotografListe = fotograflar
+        resimaClick=resimClick
+
     }
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
@@ -31,6 +36,10 @@ class CustomPagerAdapter(private val context: Context, fotograflar: ArrayList<Re
 
         ivFotograf.setImageBitmap(TripPlannerLogic.decodeBase64(vpFotografListe[position].base64!!))
         tvTarih.setText(vpFotografListe[position].tarih)
+
+        itemView.setOnClickListener {
+            resimaClick(position)
+        }
 
 
         container.addView(itemView)
@@ -51,3 +60,4 @@ class CustomPagerAdapter(private val context: Context, fotograflar: ArrayList<Re
 
 
 }
+
