@@ -30,7 +30,5 @@ class ZiyaretViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
         aciklamaTV.text = ziyaretEntity.aciklama
 
 
-        // TODO bind entity fields to view elements
-
     }
 }

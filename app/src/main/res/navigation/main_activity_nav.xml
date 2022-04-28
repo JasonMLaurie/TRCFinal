@@ -33,9 +33,6 @@
             <argument
                 android:name="yerObject"
                 app:argType="com.example.tripplanner.model.YerEntity" />
-            <action
-                android:id="@+id/action_detayFragment_to_yerEkleFragment"
-                app:destination="@id/yerEkleFragment" />
         </fragment>
         <fragment
             android:id="@+id/ziyaretEkleFragment"
@@ -54,9 +51,6 @@
             android:label="fragment_gezdiklerim"
             tools:layout="@layout/fragment_gezdiklerim">
             <action
-                android:id="@+id/action_gezdiklerimFragment_to_yerEkleFragment"
-                app:destination="@id/yerEkleFragment" />
-            <action
                 android:id="@+id/action_gezdiklerimFragment_to_detayFragment"
                 app:destination="@id/detayFragment" />
         </fragment>
@@ -68,9 +62,6 @@
             android:name="com.example.tripplanner.view.fragments.GezilecekFragment"
             android:label="fragment_gezilecek"
             tools:layout="@layout/fragment_gezilecek">
-            <action
-                android:id="@+id/action_gezilecekFragment_to_yerEkleFragment"
-                app:destination="@id/yerEkleFragment" />
             <action
                 android:id="@+id/action_gezilecekFragment_to_detayFragment"
                 app:destination="@id/detayFragment" />

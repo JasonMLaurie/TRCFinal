@@ -41,7 +41,6 @@ class DetayFragment : Fragment(), ViewPager.OnPageChangeListener, View.OnClickLi
     val bundle : DetayFragmentArgs by navArgs()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
         binding = FragmentDetayBinding.inflate(inflater, container, false)
         yerObject = bundle.yerObject
 
@@ -55,8 +54,6 @@ class DetayFragment : Fragment(), ViewPager.OnPageChangeListener, View.OnClickLi
         relativeclic1.setOnClickListener {
             Toast.makeText(requireContext(),"adsdsasa",Toast.LENGTH_SHORT).show()
         }
-
-
 
         return binding.root
     }
@@ -84,7 +81,6 @@ class DetayFragment : Fragment(), ViewPager.OnPageChangeListener, View.OnClickLi
 
         }
 
-
         val ziyaretList = TripPlannerLogic.ziyaretleriGetir(yerEntity = yerObject, context = requireContext())
         ziyaretControl(ziyaretList)
         if(!ziyaretList.isNullOrEmpty()){
@@ -96,8 +92,6 @@ class DetayFragment : Fragment(), ViewPager.OnPageChangeListener, View.OnClickLi
 
         Log.e("Logcat", TripPlannerLogic.tumZiyaretleriGetir(requireContext()).size.toString())
         Log.e("Logcat",TripPlannerLogic.tumZiyaretleriGetir(requireContext()).toString())
-
-
 
     }
 
@@ -125,7 +119,6 @@ class DetayFragment : Fragment(), ViewPager.OnPageChangeListener, View.OnClickLi
             Navigation.findNavController(it).navigate(detay2ZiyaretEkleNavDir)
         }
 
-
     }
 
     /** Refreshing views in case of any visit being added */
@@ -135,12 +128,6 @@ class DetayFragment : Fragment(), ViewPager.OnPageChangeListener, View.OnClickLi
         super.onResume()
         setInitialViews()
     }
-
-    /*
-    val foodList2DetailNavDir = FoodListFragmentDirections.foodList2Detail(foodObject)
-    Navigation.findNavController(it).navigate(foodList2DetailNavDir)
-            */
-
 
     //viewPagerImplements
     //var yerFotograflari = intArrayOf(R.drawable.tempimage1, R.drawable.tempimage1, R.drawable.tempimage1)

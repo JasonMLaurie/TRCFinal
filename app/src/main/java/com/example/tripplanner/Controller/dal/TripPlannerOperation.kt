@@ -34,7 +34,7 @@ class TripPlannerOperation(context: Context) {
     }
 
     fun openDB() {
-        // Open DB to write, there is a readable version too.
+        // Open DB to write
         tripPlannerDatabase = dbOpenHelper.writableDatabase
     }
 
@@ -105,7 +105,6 @@ class TripPlannerOperation(context: Context) {
 
     @SuppressLint("Range")
     fun yerGetir(locationPair : Pair<Double, Double>): YerEntity {
-        //TODO konum + isim ile al.
         var yerEntity = YerEntity(0.0,0.0)
 
         openDB()
@@ -232,7 +231,6 @@ class TripPlannerOperation(context: Context) {
         cv.put(ziyaretAciklamaStr, ziyaretEntity.aciklama)
         cv.put(yerStr, ziyaretEntity.yerId)
 
-        // TODO any condition-ensurement
 
         openDB()
         val effectedRowCount = tripPlannerDatabase!!.insert(ziyaretTableStr, null, cv)
@@ -270,7 +268,6 @@ class TripPlannerOperation(context: Context) {
 
     }
 
-    // TODO Bileşik tablo işlemleri
     fun fotoEkle(resimEntity: ResimEntity) : Boolean {
 
         val cv = ContentValues()
@@ -278,7 +275,6 @@ class TripPlannerOperation(context: Context) {
         cv.put(yerStr, resimEntity.yerId)
         cv.put(ziyaretTarihStr,resimEntity.tarih)
 
-        // TODO any condition-ensurement
 
         openDB()
         val effectedRowCount = tripPlannerDatabase!!.insert(resimTableStr, null, cv)

@@ -7,6 +7,9 @@ import androidx.core.view.isVisible
 import androidx.navigation.NavDirections
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
+import com.example.tripplanner.Controller.bll.CamMediaAccessLogic
+import com.example.tripplanner.Controller.bll.UILogic
+import com.example.tripplanner.Controller.bll.UILogic.Companion.hideTabLayout
 import com.example.tripplanner.R
 import com.example.tripplanner.databinding.ActivityMainBinding
 import com.example.tripplanner.databinding.TabLayoutBinding
@@ -73,25 +76,10 @@ class MainActivity : PermissionActivity() {
         }
     }
 
-    fun fragmentDegistir(navDirObject : NavDirections){
-        binding.tabLayout.isVisible=true
-        binding.fabYerEkle.isVisible=true
-
-        val navController = navHostFragment.navController
-        navController.navigate(navDirObject)
-
-        /*supportFragmentManager.beginTransaction()
-            .replace(R.id.fragmentContainerView, fragment)
-            .setPrimaryNavigationFragment(fragment)
-            .commit()*/
-    }
-
     private fun clickListeners(){
-
         binding.fabYerEkle.setOnClickListener {
             Navigation.findNavController(this@MainActivity, R.id.fragmentContainerView).navigate(R.id.yerEkleFragment)
         }
-
     }
 
     private fun tabListener(){
@@ -100,41 +88,17 @@ class MainActivity : PermissionActivity() {
                 tabSec(tab!!.position)
             }
             override fun onTabUnselected(tab: TabLayout.Tab?) {
-                //Toast.makeText(this@MainActivity, fragmentManager.backStackEntryCount.toString(), Toast.LENGTH_SHORT).show()
-               // Toast.makeText(this@MainActivity, supportFragmentManager.backStackEntryCount.toString(), Toast.LENGTH_SHORT).show()
             }
             override fun onTabReselected(tab: TabLayout.Tab?) {
                 tabSec(tab!!.position)
             }
-
         })
     }
 
     override fun onBackPressed() {
-
-
-        binding.tabLayout.isVisible=true
-        binding.fabYerEkle.isVisible=true
-
-        // TODO Backstack shows 0 even though backpress still follows stack all the way back.
-
-        // TODO any page started from gezdiklerim leads back to gezilecekler with this sol.
-/*        when(binding.tabLayout.selectedTabPosition){
-            0 -> {
-                super.onBackPressed()
-            }
-            1 -> {
-                binding.tabLayout.selectTab(binding.tabLayout.getTabAt(0))
-                tabSec(0)
-            }
-        }*/
+        binding.hideTabLayout(false)
+        // Backstack shows 0 even though backpress still follows stack all the way back.
         super.onBackPressed()
-    }
-
-    override fun onResume() {
-        //binding.tabLayout.isVisible=true
-        //binding.fabYerEkle.isVisible=true
-        super.onResume()
     }
 
 }

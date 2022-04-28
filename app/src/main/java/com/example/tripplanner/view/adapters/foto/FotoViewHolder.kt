@@ -54,7 +54,6 @@ class FotoViewHolder(itemView: View,var cardClick : () -> Unit, var silClick : (
             silClick(encodedImage)
         }
 
-        // TODO bind entity fields to view elements
 
     }
 

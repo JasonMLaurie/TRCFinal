@@ -1,6 +1,5 @@
 package com.example.tripplanner.model
 
-import java.util.*
 import kotlin.properties.Delegates
 
 class ZiyaretEntity {
@@ -9,6 +8,5 @@ class ZiyaretEntity {
     var tarih: String? = null
     var aciklama: String? = null
     var yerId by Delegates.notNull<Int>()
-    // TODO Test
 
 }

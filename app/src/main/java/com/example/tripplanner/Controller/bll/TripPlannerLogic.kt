@@ -104,10 +104,7 @@ class TripPlannerLogic {
             return tripPlannerOperation.fotoSil(resimEntity)
         }
 
-        // TODO Base64 in DB or a local png and URI in DB as str.
-
         // May need additional libraries for pre API 8, v 2.2
-
         fun decodeBase64(encodedImage: String) : Bitmap{
             var base64img = Base64.decode(encodedImage, Base64.DEFAULT)
             return BitmapFactory.decodeByteArray(base64img!!,0,base64img.size)

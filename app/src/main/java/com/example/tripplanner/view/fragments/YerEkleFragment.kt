@@ -47,7 +47,6 @@ class YerEkleFragment : PermissionHandlingFragment() {
     private lateinit var locationIntent:Pair<Double,Double>
     var yer= YerEntity(0.0,0.0)
     var secilenOncelik=Oncelik(0,"")
-    private lateinit var resimUri : Uri
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -151,26 +150,13 @@ class YerEkleFragment : PermissionHandlingFragment() {
     /** Open Gallery Func*/
     private fun openGallery(){
         CamMediaAccessLogic.getPhotoFromGallery(this,-1)
-        resimUriListCheck()
     }
 
     /** Open Camera Func */
     private fun openCamera() {
 
         CamMediaAccessLogic.getPhotoFromCamera(this)
-        resimUriListCheck()
     }
-
-    /** Temp File to hold the Photo*/
-    fun createTempFile(): File {
-        val dir = (activity as MainActivity).getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-
-        return File.createTempFile("camPic", ".jpg", dir).apply {
-            resimUri = FileProvider.getUriForFile(requireContext(),(activity as MainActivity).packageName,this)
-        }
-    }
-
-
 
     /** Yer Ekleme function*/
     private fun yerEkle(){
@@ -227,65 +213,6 @@ class YerEkleFragment : PermissionHandlingFragment() {
             //Toast.makeText(requireContext(),"lat: ${locationIntent.first} lon: ${locationIntent.second}",Toast.LENGTH_SHORT).show()
         }
     }
-
-    // Gallery Selected PhotoResult
-    val galleryResultLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == AppCompatActivity.RESULT_OK) {
-                try {
-                    val imageUri: Uri = result.data!!.data!!
-                    /** Base64 Usage */
-                    val encodedImage = TripPlannerLogic.encodeBase64(imageUri, (activity as MainActivity).contentResolver)
-
-                    /////////////////
-
-                    if(!resimListe.contains(encodedImage)){
-                        resimListe.add(encodedImage)
-                        if (resimListe.size == 2) {
-                            // TODO a more suitable solution for empty Uri list.
-                            if(resimListe[0] == ""){
-                                resimListe.removeAt(0)
-                            }
-                        }
-                    }else{
-                        Toast.makeText(requireContext(),"Seçilen fotoğraf zaten görüntülerde bulunuyor.", Toast.LENGTH_SHORT).show()
-                    }
-                    (fotoAdapter).notifyDataSetChanged()
-                } catch (e: FileNotFoundException) {
-                    e.printStackTrace()
-                    Toast.makeText(requireContext(), "Dosya bulunamadı.", Toast.LENGTH_LONG).show()
-                }
-            }
-        }
-
-
-    // Camera Shot Result
-    val cameraResultLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == AppCompatActivity.RESULT_OK) {
-                try {
-                    val encodedImage = TripPlannerLogic.encodeBase64(resimUri, (activity as MainActivity).contentResolver)
-
-                    if(!resimListe.contains(encodedImage)){
-                        resimListe.add(encodedImage)
-                        if (resimListe.size == 2) {
-                            // TODO a more suitable solution for empty Uri list.
-                            if(resimListe[0] == ""){
-                                resimListe.removeAt(0)
-                            }
-                        }
-                    }else{
-                        Toast.makeText(requireContext(),"Seçilen fotoğraf zaten görüntülerde bulunuyor.", Toast.LENGTH_SHORT).show()
-                    }
-                    (fotoAdapter).notifyDataSetChanged()
-                } catch (e: FileNotFoundException) {
-                    e.printStackTrace()
-                    Toast.makeText(requireContext(), "Dosya bulunamadı.", Toast.LENGTH_LONG).show()
-                }
-
-            }
-        }
-
 
 
 }

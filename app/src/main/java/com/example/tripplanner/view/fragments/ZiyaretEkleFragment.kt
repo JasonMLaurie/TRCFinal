@@ -148,7 +148,6 @@ class ZiyaretEkleFragment : PermissionHandlingFragment() {
         if(resimBase64List.size<10){
             PermissionLogic.mediaPermissionControl(this,requireContext())
 
-
         }else{
             Toast.makeText(requireContext(),"10 adetten fazla fotoğraf eklenemez", Toast.LENGTH_SHORT).show()
         }

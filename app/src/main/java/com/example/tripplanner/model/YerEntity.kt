@@ -1,7 +1,6 @@
 package com.example.tripplanner.model
 
 import java.io.Serializable
-import kotlin.properties.Delegates
 
 class YerEntity(
     var latitude : Double,

@@ -143,14 +143,6 @@ class MapsActivity : PermissionActivity(), OnMapReadyCallback {
             locationManager!!.removeUpdates(this)
         }
 
-        override fun onProviderDisabled(provider: String) {
-            super.onProviderDisabled(provider)
-            //TODO konum kapalıyken crash
-        }
-
-        override fun onProviderEnabled(provider: String) {
-            super.onProviderEnabled(provider)
-        }
     }
 
     override fun onDestroy() {
