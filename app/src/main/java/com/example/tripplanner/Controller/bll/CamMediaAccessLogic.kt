@@ -44,7 +44,7 @@ class CamMediaAccessLogic {
                             }
                             else if (fragment is YerEkleFragment){
                                 (fragment as YerEkleFragment).resimListe.add(retString)
-                                (fragment as YerEkleFragment).fotoAdapter.notifyDataSetChanged()
+                                (fragment as YerEkleFragment).setAdapters()
                             }
                         }else{
                             Toast.makeText(fragment.requireContext(),"Sectiginiz fotograf zaten eklenmis.",Toast.LENGTH_SHORT).show()
