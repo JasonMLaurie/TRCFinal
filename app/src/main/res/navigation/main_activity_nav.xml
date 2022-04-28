@@ -3,47 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_activity_nav"
-    app:startDestination="@id/gezilecekFragment2">
+    app:startDestination="@id/gezileceklerNavigation">
 
-    <fragment
-        android:id="@+id/detayFragment"
-        android:name="com.example.tripplanner.view.fragments.DetayFragment"
-        android:label="fragment_detay"
-        tools:layout="@layout/fragment_detay" >
-        <action
-            android:id="@+id/action_detayFragment_to_ziyaretEkleFragment"
-            app:destination="@id/ziyaretEkleFragment" />
-        <action
-            android:id="@+id/action_detayFragment_to_haritaFragment"
-            app:destination="@id/haritaFragment" />
-        <argument
-            android:name="yerObject"
-            app:argType="com.example.tripplanner.model.YerEntity" />
-        <action
-            android:id="@+id/action_detayFragment_to_gezilecekFragment2"
-            app:destination="@id/gezilecekFragment2" />
-        <action
-            android:id="@+id/action_detayFragment_to_gezdiklerimFragment"
-            app:destination="@id/gezdiklerimFragment" />
-        <action
-            android:id="@+id/action_detayFragment_to_yerEkleFragment"
-            app:destination="@id/yerEkleFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/gezdiklerimFragment"
-        android:name="com.example.tripplanner.view.fragments.GezdiklerimFragment"
-        android:label="fragment_gezdiklerim"
-        tools:layout="@layout/fragment_gezdiklerim" >
-        <action
-            android:id="@+id/action_gezdiklerimFragment_to_yerEkleFragment"
-            app:destination="@id/yerEkleFragment" />
-        <action
-            android:id="@+id/action_gezdiklerimFragment_to_detayFragment"
-            app:destination="@id/detayFragment" />
-        <action
-            android:id="@+id/action_gezdiklerimFragment_to_gezilecekFragment2"
-            app:destination="@id/gezilecekFragment2" />
-    </fragment>
     <fragment
         android:id="@+id/haritaFragment"
         android:name="com.example.tripplanner.view.fragments.HaritaFragment"
@@ -58,28 +19,61 @@
             android:id="@+id/action_yerEkleFragment_to_haritaFragment"
             app:destination="@id/haritaFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/ziyaretEkleFragment"
-        android:name="com.example.tripplanner.view.fragments.ZiyaretEkleFragment"
-        android:label="fragment_ziyaret_ekle"
-        tools:layout="@layout/fragment_ziyaret_ekle" >
-        <argument
-            android:name="yerId"
-            app:argType="integer" />
-    </fragment>
-    <fragment
-        android:id="@+id/gezilecekFragment2"
-        android:name="com.example.tripplanner.view.fragments.GezilecekFragment"
-        android:label="fragment_gezilecek"
-        tools:layout="@layout/fragment_gezilecek" >
-        <action
-            android:id="@+id/action_gezilecekFragment2_to_yerEkleFragment"
-            app:destination="@id/yerEkleFragment" />
-        <action
-            android:id="@+id/action_gezilecekFragment2_to_detayFragment"
-            app:destination="@id/detayFragment" />
-        <action
-            android:id="@+id/action_gezilecekFragment2_to_gezdiklerimFragment"
-            app:destination="@id/gezdiklerimFragment" />
-    </fragment>
+        <fragment
+            android:id="@+id/detayFragment"
+            android:name="com.example.tripplanner.view.fragments.DetayFragment"
+            android:label="fragment_detay"
+            tools:layout="@layout/fragment_detay">
+            <action
+                android:id="@+id/action_detayFragment_to_ziyaretEkleFragment"
+                app:destination="@id/ziyaretEkleFragment" />
+            <action
+                android:id="@+id/action_detayFragment_to_haritaFragment"
+                app:destination="@id/haritaFragment" />
+            <argument
+                android:name="yerObject"
+                app:argType="com.example.tripplanner.model.YerEntity" />
+            <action
+                android:id="@+id/action_detayFragment_to_yerEkleFragment"
+                app:destination="@id/yerEkleFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/ziyaretEkleFragment"
+            android:name="com.example.tripplanner.view.fragments.ZiyaretEkleFragment"
+            android:label="fragment_ziyaret_ekle"
+            tools:layout="@layout/fragment_ziyaret_ekle">
+            <argument
+                android:name="yerId"
+                app:argType="integer" />
+        </fragment>
+    <navigation android:id="@+id/gezdiklerimNavigation"
+        app:startDestination="@id/gezdiklerimFragment">
+        <fragment
+            android:id="@+id/gezdiklerimFragment"
+            android:name="com.example.tripplanner.view.fragments.GezdiklerimFragment"
+            android:label="fragment_gezdiklerim"
+            tools:layout="@layout/fragment_gezdiklerim">
+            <action
+                android:id="@+id/action_gezdiklerimFragment_to_yerEkleFragment"
+                app:destination="@id/yerEkleFragment" />
+            <action
+                android:id="@+id/action_gezdiklerimFragment_to_detayFragment"
+                app:destination="@id/detayFragment" />
+        </fragment>
+    </navigation>
+    <navigation android:id="@+id/gezileceklerNavigation"
+        app:startDestination="@id/gezilecekFragment">
+        <fragment
+            android:id="@+id/gezilecekFragment"
+            android:name="com.example.tripplanner.view.fragments.GezilecekFragment"
+            android:label="fragment_gezilecek"
+            tools:layout="@layout/fragment_gezilecek">
+            <action
+                android:id="@+id/action_gezilecekFragment_to_yerEkleFragment"
+                app:destination="@id/yerEkleFragment" />
+            <action
+                android:id="@+id/action_gezilecekFragment_to_detayFragment"
+                app:destination="@id/detayFragment" />
+        </fragment>
+    </navigation>
 </navigation>
