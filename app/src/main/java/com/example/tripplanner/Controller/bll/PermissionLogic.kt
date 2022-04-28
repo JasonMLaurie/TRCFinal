@@ -28,6 +28,10 @@ class PermissionLogic {
             if (!permStatus){
                 requestList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
             }
+            permStatus=ContextCompat.checkSelfPermission(context,Manifest.permission.CAMERA)==PackageManager.PERMISSION_GRANTED
+            if (!permStatus){
+                requestList.add(Manifest.permission.CAMERA)
+            }
             if (requestList.size==0){
                 fragment.grantedFunc()
             }else{

@@ -41,13 +41,12 @@ class YerViewHolder(itemView: View, glist:ArrayList<YerEntity>, itemClick:(posit
         tvYerKisaTanim.text = item.kisaTanim
         tvYerKisaAciklama.text = item.kisaAciklama
 
-/*            val tempResimList = TripPlannerLogic.fotolarGetir(context, item.id)
-            if(tempResimList.isNullOrEmpty()){
-                ivYerFotograf.setImageResource(R.drawable.tempimage1)
-            }else{
-                ivYerFotograf.setImageURI(Uri.parse(TripPlannerLogic.fotolarGetir(context, item.id)[0].uri))
-            }
-        }*/
+        val tempResimList = TripPlannerLogic.fotolarGetir(context, item.id)
+        if(tempResimList.isNullOrEmpty()){
+            ivYerFotograf.setImageResource(R.drawable.tempimage1)
+        }else{
+            ivYerFotograf.setImageBitmap(TripPlannerLogic.decodeBase64(tempResimList[0].base64!!))
+        }
 
 
         //TODO setting image to ivYerFotograf

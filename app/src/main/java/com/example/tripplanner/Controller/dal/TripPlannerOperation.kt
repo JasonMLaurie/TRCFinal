@@ -68,6 +68,8 @@ class TripPlannerOperation(context: Context) {
                 yerList2Return.add(yerEntity)
             } while (dbObject.moveToNext())
         }
+        dbObject.close()
+        closeDB()
 
         return yerList2Return
     }
@@ -95,22 +97,24 @@ class TripPlannerOperation(context: Context) {
                 yerList2Return.add(yerEntity)
             } while (dbObject.moveToNext())
         }
+        dbObject.close()
+        closeDB()
 
         return yerList2Return
     }
 
     @SuppressLint("Range")
-    fun yerGetir(yerId: Int): YerEntity {
-
+    fun yerGetir(locationPair : Pair<Double, Double>): YerEntity {
+        //TODO konum + isim ile al.
         var yerEntity = YerEntity(0.0,0.0)
 
         openDB()
         val dbObject =
-            tripPlannerDatabase!!.rawQuery("SELECT * FROM $yerTableStr WHERE Id = ${yerId}", null)
+            tripPlannerDatabase!!.rawQuery("SELECT * FROM $yerTableStr WHERE Longitude = ? AND Latitude = ?", arrayOf(locationPair.second.toString(),locationPair.first.toString()))
 
         if (dbObject.moveToFirst()) {
             do {
-                yerEntity.id = yerId
+                yerEntity.id = dbObject.getInt(0)
                 yerEntity.yerAdi = dbObject.getString(dbObject.getColumnIndex(yerAdiStr))
                 yerEntity.kisaTanim = dbObject.getString(dbObject.getColumnIndex(yerTanimStr))
                 yerEntity.kisaAciklama = dbObject.getString(dbObject.getColumnIndex(yerAciklamaStr))
@@ -215,6 +219,8 @@ class TripPlannerOperation(context: Context) {
                 yerList2Return.add(yerEntity)
             } while (dbObject.moveToNext())
         }
+        dbObject.close()
+        closeDB()
 
         return yerList2Return
     }

@@ -18,7 +18,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.tripplanner.Controller.bll.PermissionLogic
@@ -27,7 +26,6 @@ import com.example.tripplanner.databinding.FragmentZiyaretEkleBinding
 import com.example.tripplanner.model.ResimEntity
 import com.example.tripplanner.model.ZiyaretEntity
 import com.example.tripplanner.view.activities.MainActivity
-import com.example.tripplanner.view.activities.PermissionActivity
 import com.example.tripplanner.view.adapters.foto.FotoAdapter
 import java.io.File
 import java.io.FileNotFoundException
@@ -54,22 +52,36 @@ class ZiyaretEkleFragment : PermissionHandlingFragment() {
         // Inflate the layout for this fragment
         binding = FragmentZiyaretEkleBinding.inflate(inflater, container, false)
 
-        addedBase64List = arrayListOf()
 
-
-        val bundle : ZiyaretEkleFragmentArgs by navArgs()
-        gelenYerId = bundle.yerId
 
 //        createTempList()
+        onceOnCreate()
         setInitialViews()
         clickListeners()
 
         return binding.root
     }
 
+    private fun onceOnCreate(){
+        addedBase64List = arrayListOf()
+
+
+        val bundle : ZiyaretEkleFragmentArgs by navArgs()
+        gelenYerId = bundle.yerId
+
+
+        // Set Date to current.
+        val dateList = TripPlannerLogic.calenderFunc()
+        binding.tvTarihEkle.text = "${dateList[0]}.${dateList[1] +1}.${dateList[2]}"
+
+
+        // Create line limiter for explanation
+        textWatchers()
+    }
+
     /** Fill views with default values */
     @SuppressLint("SetTextI18n")
-    fun setInitialViews(){
+    private fun setInitialViews(){
 
         fotolarıAl()
         resimUriListCheck()
@@ -79,12 +91,6 @@ class ZiyaretEkleFragment : PermissionHandlingFragment() {
             StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
         binding.rvZiyaretEkle.adapter = adapter
 
-        // Set Date to current.
-        val dateList = calenderFunc()
-        binding.tvTarihEkle.text = "${dateList[0]}.${dateList[1] +1}.${dateList[2]}"
-
-        // Create line limiter for explanation
-        textWatchers()
     }
 
     /** Getting all photos of current YerEntity.*/
@@ -130,26 +136,13 @@ class ZiyaretEkleFragment : PermissionHandlingFragment() {
         setInitialViews()
     }
 
-
-    /** Test Case */
-    fun createTempList() {
-
-        var i = 1
-        while (i <= 3) {
-            val uri: Uri =
-                Uri.parse("android.resource://" + requireActivity().packageName + "/drawable/tempimage1")
-                val encodedImage = TripPlannerLogic.encodeBase64(uri,(activity as MainActivity).contentResolver)
-            resimBase64List.add(encodedImage)
-            i++
-        }
-
-    }
-
     /** Click Event for Adapter */
     fun photoCardClickEvent(){
         if(resimBase64List.size<10){
             //openGallery()
             PermissionLogic.mediaPermissionControl(this,requireContext())
+
+
         }else{
             Toast.makeText(requireContext(),"10 adetten fazla fotoğraf eklenemez", Toast.LENGTH_SHORT).show()
         }
@@ -185,7 +178,7 @@ class ZiyaretEkleFragment : PermissionHandlingFragment() {
         }
 
         binding.clZiyaretEkleTarih.setOnClickListener {
-            customDatePicker(calenderFunc())
+            customDatePicker(TripPlannerLogic.calenderFunc())
         }
 
     }
@@ -208,6 +201,61 @@ class ZiyaretEkleFragment : PermissionHandlingFragment() {
         });
     }
 
+    /** Open Gallery Func */
+    override fun grantedFunc() {
+        TripPlannerLogic.alertBuilder(requireContext(),"Medya Seçimi",
+            "Lütfen fotoğrafı ekleme yöntemini seçiniz : ", "Kamera" ,
+            ::openCamera, "Galeri" , ::openGallery)
+    }
+
+    private fun openGallery(){
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.setType("image/*")
+        galleryResultLauncher.launch(intent)
+    }
+
+    /** Open Camera Func */
+    private fun openCamera() {
+
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        createTempFile()
+//        val tempFile = createTempFile()
+//        resimUri = FileProvider.getUriForFile(this, packageName, tempFile)
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, resimUri)
+        cameraResultLauncher.launch(intent)
+    }
+
+    /** Temp File to hold the Photo*/
+    fun createTempFile(): File {
+        val dir = (activity as MainActivity).getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+
+        return File.createTempFile("camPic", ".jpg", dir).apply {
+            resimUri = FileProvider.getUriForFile(requireContext(),(activity as MainActivity).packageName,this)
+        }
+    }
+
+    /** Date picker */
+    @SuppressLint("SetTextI18n")
+    private fun customDatePicker(dateList : ArrayList<Int>){
+
+        val dp = DatePickerDialog(requireContext(), DatePickerDialog.OnDateSetListener { _, year, month, dom ->
+            binding.tvTarihEkle.text = "$dom.${month+1}.$year"
+        }, dateList[2], dateList[1], dateList[0])
+
+        dp.datePicker.maxDate = System.currentTimeMillis()
+        dp.setButton(DialogInterface.BUTTON_POSITIVE, "Seç", dp)
+        dp.setButton(DialogInterface.BUTTON_NEGATIVE, "İptal", dp)
+        dp.show()
+    }
+
+    /** Refreshing the views and hiding tablayout just in case.*/
+    override fun onResume() {
+        super.onResume()
+        setInitialViews()
+        (activity as MainActivity).binding.tabLayout.isVisible=false
+        (activity as MainActivity).binding.fabYerEkle.isVisible=false
+    }
+
     /** Result Launchers */
     // Gallery Selected PhotoResult
     val galleryResultLauncher =
@@ -226,9 +274,9 @@ class ZiyaretEkleFragment : PermissionHandlingFragment() {
 
                     // Get resimList from DB to check if selected photo is already exits.
                     val tempResimUriList : ArrayList<String> = arrayListOf()
-                        TripPlannerLogic.fotolarGetir(requireContext(),gelenYerId).forEach {
-                            var base64 = it.base64!!
-                            tempResimUriList.add(base64)
+                    TripPlannerLogic.fotolarGetir(requireContext(),gelenYerId).forEach {
+                        var base64 = it.base64!!
+                        tempResimUriList.add(base64)
                     }
 
                     if(!tempResimUriList.contains(encodedImage) && !addedBase64List.contains(encodedImage)){
@@ -251,37 +299,7 @@ class ZiyaretEkleFragment : PermissionHandlingFragment() {
             }
         }
 
-    /** Open Gallery Func */
-
-    override fun grantedFunc() {
-        val intent = Intent(Intent.ACTION_PICK)
-                    intent.setType("image/*")
-                    galleryResultLauncher.launch(intent)
-    }
-
-    //fun openGallery() {
-    //
-    //            // TODO Permission problem here. Maybe about SDK.
-    //            /** Notes From ARAS: PermissionLogic requires an activity specifically derived from PermissionActivity. Since this is a fragment it will not work as intended.
-    //             * For now it might be better of with manual permission requests. After the project is done, Permission Activity should be changed into an interface */
-    //            // It asks for permission but opens gallery before it. If a photo is selected then it returns
-    //            // to the source page where the permission pop up still up, and if you permit it, it works as
-    //            // intended, but if you deny the permission it still adds the selected photo from gallery,
-    //            // and this process is doable indefinitely.
-    //            // Remove condition check to reproduce it.
-    //
-    //            // Made mediaPermissionControl return a boolean value for a temp. (or definite) solution
-    //            if(PermissionLogic.mediaPermissionControl((activity as PermissionActivity),requireContext())){
-    //                val intent = Intent(Intent.ACTION_PICK)
-    //                intent.setType("image/*")
-    //                galleryResultLauncher.launch(intent)
-    //            }else{
-    //                Toast.makeText(requireContext(),"This app needs specified permissions", Toast.LENGTH_SHORT).show()
-    //            }
-    //
-    //        }
-
-    /** Camera Shot Result */
+    // Camera Shot Result
     val cameraResultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == AppCompatActivity.RESULT_OK) {
@@ -317,55 +335,4 @@ class ZiyaretEkleFragment : PermissionHandlingFragment() {
         }
 
 
-    /** Open Camera Func */
-    fun openCamera() {
-
-        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        createTempFile()
-//        val tempFile = createTempFile()
-//        resimUri = FileProvider.getUriForFile(this, packageName, tempFile)
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, resimUri)
-        cameraResultLauncher.launch(intent)
-    }
-
-    /** Temp File to hold the Photo*/
-    fun createTempFile(): File {
-        val dir = (activity as MainActivity).getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-
-        return File.createTempFile("camPic", ".jpg", dir).apply {
-            resimUri = FileProvider.getUriForFile(requireContext(),(activity as MainActivity).packageName,this)
-//            resimYolu = absolutePath
-        }
-    }
-
-    /** Get Current Date from Calender */
-    private fun calenderFunc() : ArrayList<Int> {
-        val calendar = Calendar.getInstance()
-        val year = calendar.get(Calendar.YEAR)
-        val month = calendar.get(Calendar.MONTH)
-        val dom = calendar.get(Calendar.DAY_OF_MONTH)
-        return arrayListOf(dom,month,year)
-    }
-
-    /** Date picker */
-    @SuppressLint("SetTextI18n")
-    private fun customDatePicker(dateList : ArrayList<Int>){
-
-        val dp = DatePickerDialog(requireContext(), DatePickerDialog.OnDateSetListener { _, year, month, dom ->
-            binding.tvTarihEkle.text = "$dom.${month+1}.$year"
-        }, dateList[2], dateList[1], dateList[0])
-
-        dp.datePicker.maxDate = System.currentTimeMillis()
-        dp.setButton(DialogInterface.BUTTON_POSITIVE, "Seç", dp)
-        dp.setButton(DialogInterface.BUTTON_NEGATIVE, "İptal", dp)
-        dp.show()
-    }
-
-    /** Refreshing the views and hiding tablayout just in case.*/
-    override fun onResume() {
-        super.onResume()
-        setInitialViews()
-        (activity as MainActivity).binding.tabLayout.isVisible=false
-        (activity as MainActivity).binding.fabYerEkle.isVisible=false
-    }
 }

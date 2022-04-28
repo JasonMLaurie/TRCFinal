@@ -27,14 +27,12 @@ import com.example.tripplanner.view.adapters.ziyaret.ZiyaretAdapter
 /** Gezilecek Yer Detay Fragment */
 class DetayFragment : Fragment(), ViewPager.OnPageChangeListener, View.OnClickListener  {
 
+    // TODO ScrollView and a NestedScrollView
 
     private lateinit var binding : FragmentDetayBinding
     private lateinit var yerObject : YerEntity
-    private var yerResimListe=ArrayList<ResimEntity>()
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
         binding = FragmentDetayBinding.inflate(inflater, container, false)
 
         setInitialViews()
@@ -50,6 +48,7 @@ class DetayFragment : Fragment(), ViewPager.OnPageChangeListener, View.OnClickLi
     fun setInitialViews(){
         val bundle : DetayFragmentArgs by navArgs()
         yerObject = bundle.yerObject
+
         resimListe=TripPlannerLogic.fotolarGetir(requireContext(),yerObject.id)
 
         binding.apply {
@@ -63,9 +62,6 @@ class DetayFragment : Fragment(), ViewPager.OnPageChangeListener, View.OnClickLi
             { ivOncelikD.setImageResource(R.drawable.oncelik2_sekil) }
             else if (yerObject.oncelik.equals("oncelik3"))//gri
             { ivOncelikD.setImageResource(R.drawable.oncelik3_sekil)}
-
-            //TODO yer fotoğrafna göre tarih
-
 
         }
 
@@ -115,12 +111,6 @@ class DetayFragment : Fragment(), ViewPager.OnPageChangeListener, View.OnClickLi
         super.onResume()
         setInitialViews()
     }
-
-    /*
-    val foodList2DetailNavDir = FoodListFragmentDirections.foodList2Detail(foodObject)
-    Navigation.findNavController(it).navigate(foodList2DetailNavDir)
-            */
-
 
     //viewPagerImplements
     //var yerFotograflari = intArrayOf(R.drawable.tempimage1, R.drawable.tempimage1, R.drawable.tempimage1)

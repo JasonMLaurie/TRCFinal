@@ -25,16 +25,11 @@ class FotoViewHolder(itemView: View,var cardClick : () -> Unit, var silClick : (
     val fotoSilBtn : ImageButton
 
     init {
-        // TODO views and click event
         imageView = itemView.findViewById(R.id.ivEklenenFotografZC)
         fotoEkleConstraintLayout = itemView.findViewById(R.id.cl_foto_ekle)
         ekliFotoConstraintLayout = itemView.findViewById(R.id.cl_ekli_foto)
         fotoEkleBtn = itemView.findViewById(R.id.btnFotografEkleZC)
         fotoSilBtn = itemView.findViewById(R.id.btnSilZC)
-
-        itemView.setOnClickListener {
-            //TODO nav to detail page
-        }
     }
 
     fun bindDataToViews(encodedImage: String, isLastItem: Boolean){
