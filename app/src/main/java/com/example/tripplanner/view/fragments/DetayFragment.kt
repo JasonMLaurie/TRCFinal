@@ -18,8 +18,8 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.ViewPager
-import com.example.tripplanner.Controller.bll.TripPlannerLogic
 import com.example.tripplanner.R
+import com.example.tripplanner.controller.bll.TripPlannerLogic
 import com.example.tripplanner.databinding.FragmentDetayBinding
 import com.example.tripplanner.model.ResimEntity
 import com.example.tripplanner.model.YerEntity
