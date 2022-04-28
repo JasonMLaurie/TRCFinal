@@ -23,4 +23,9 @@ class FotoAdapter(var mContext : Context, var resimUriList : ArrayList<String>,v
     override fun getItemCount(): Int {
         return resimUriList.size
     }
+
+    fun updateResimUri(newResimUriList:ArrayList<String>){
+        resimUriList=newResimUriList
+        notifyDataSetChanged()
+    }
 }

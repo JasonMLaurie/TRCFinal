@@ -30,7 +30,6 @@ abstract class PermissionActivity:AppCompatActivity() {
             grantedFunc()
         }else{
             Toast.makeText(this,"Permissions Not Granted", Toast.LENGTH_SHORT).show()
-
         }
     }
 }

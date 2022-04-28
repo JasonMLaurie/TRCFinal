@@ -13,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import com.example.tripplanner.view.activities.MainActivity
+import com.example.tripplanner.view.fragments.YerEkleFragment
+import com.example.tripplanner.view.fragments.ZiyaretEkleFragment
 import java.io.File
 import java.io.FileNotFoundException
 import java.util.ArrayList
@@ -25,19 +27,34 @@ class CamMediaAccessLogic {
         var retString=""
         lateinit var resimUri:Uri
 
-        private fun initializeGalleryResultLauncher(fragment: Fragment){
+
+
+        fun initializeGalleryResultLauncher(fragment: Fragment,yerId: Int){
             galleryResultLauncher=fragment.registerForActivityResult(ActivityResultContracts.StartActivityForResult()){result->
                 if (result.resultCode==AppCompatActivity.RESULT_OK){
                     try {
-                        val imageUri: Uri =result!!.data!!.data!!
+                        resimUri=result!!.data!!.data!!
+                        retString=TripPlannerLogic.encodeBase64(resimUri,(fragment.requireActivity() as MainActivity).contentResolver)
 
-                        retString=TripPlannerLogic.encodeBase64(imageUri,(fragment.requireActivity() as MainActivity).contentResolver)
-
+                        if (!checkIfDuplicate(fragment,yerId)){
+                            if (fragment is ZiyaretEkleFragment){
+                                (fragment as ZiyaretEkleFragment).addedBase64List.add(retString)
+                                (fragment as ZiyaretEkleFragment).resimBase64List.add(retString)
+                                (fragment as ZiyaretEkleFragment).adapter.notifyDataSetChanged()
+                            }
+                            else if (fragment is YerEkleFragment){
+                                (fragment as YerEkleFragment).resimListe.add(retString)
+                                (fragment as YerEkleFragment).fotoAdapter.notifyDataSetChanged()
+                            }
+                        }else{
+                            Toast.makeText(fragment.requireContext(),"Sectiginiz fotograf zaten eklenmis.",Toast.LENGTH_SHORT).show()
+                        }
 
                     }catch (e: FileNotFoundException){
                         e.printStackTrace()
                         Toast.makeText(fragment.requireContext(),"Dosya Bulunamadi",Toast.LENGTH_SHORT).show()
                     }
+
                 }
             }
         }
@@ -51,13 +68,22 @@ class CamMediaAccessLogic {
             }
             if (tempResimUriList.contains(retString)){
                 return true
+                }
+            if (fragment is ZiyaretEkleFragment){
+                if ((fragment as ZiyaretEkleFragment).addedBase64List.contains(retString)){
+                    return true
+                }
+            }else if ((fragment is YerEkleFragment)){
+                if ((fragment as YerEkleFragment).resimListe.contains(retString)){
+                    return true
+                }
             }
             return false
         }
 
         /**A function to standardize fragment access to gallery. Checks for duplicates.**/
         fun getPhotoFromGallery(fragment: Fragment,yerId:Int):Pair<Boolean,String?>{
-            initializeGalleryResultLauncher(fragment)//TODO: Check if it works when this line is here-->If not, call initializeGalleryResultLauncher First
+            //initializeGalleryResultLauncher(fragment)//TODO: Check if it works when this line is here-->If not, call initializeGalleryResultLauncher First
             val intent= Intent(Intent.ACTION_PICK)
             intent.setType("image/*")
             galleryResultLauncher?.launch(intent) ?: Log.e("getPhotoFromGallery","Initialize Gallery Result Launcher First")
@@ -68,12 +94,21 @@ class CamMediaAccessLogic {
             }
         }
         /**Inititalizes cameraResutLauncher for given fragment.**/
-        private fun initializeCameraResultLauncher(fragment: Fragment){
+        fun initializeCameraResultLauncher(fragment: Fragment){
             cameraResultLauncher=fragment.registerForActivityResult(ActivityResultContracts.StartActivityForResult()){result->
                 if (result.resultCode==AppCompatActivity.RESULT_OK){
                     try {
                         retString=TripPlannerLogic.encodeBase64(resimUri,(fragment.requireActivity() as MainActivity).contentResolver)
-
+                        if (fragment is ZiyaretEkleFragment){
+                            (fragment as ZiyaretEkleFragment).addedBase64List.add(retString)
+                            (fragment as ZiyaretEkleFragment).resimBase64List.add(retString)
+                            (fragment as ZiyaretEkleFragment).adapter.notifyDataSetChanged()
+                        }
+                        else if (fragment is YerEkleFragment){
+                            (fragment as YerEkleFragment).resimListe.add(retString)
+                            //(fragment as YerEkleFragment).fotoAdapter.notifyDataSetChanged()
+                            (fragment as YerEkleFragment).setAdapters()
+                        }
                     }catch (e: FileNotFoundException){
                         e.printStackTrace()
                         Toast.makeText(fragment.requireContext(), "Dosya bulunamadı.", Toast.LENGTH_LONG).show()
@@ -90,15 +125,14 @@ class CamMediaAccessLogic {
         }
 
         /**A function to standardize fragment access to camera. **/
-        fun getPhotoFromCamera(fragment: Fragment):String?{
+        fun getPhotoFromCamera(fragment: Fragment):String{
             val intent= Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             createTempFile(fragment)
 
-            initializeCameraResultLauncher(fragment)//TODO: Check if it works when this line is here-->If not, call initializeCameraResultLauncher First
-
             intent.putExtra(MediaStore.EXTRA_OUTPUT, resimUri)
-            cameraResultLauncher?.launch(intent) ?: Log.e("getPhotoFromGallery","Initialize Gallery Result Launcher First")
+            cameraResultLauncher?.launch(intent)// ?: Log.e("getPhotoFromGallery","Initialize Gallery Result Launcher First")
             return retString
+
         }
 
     }

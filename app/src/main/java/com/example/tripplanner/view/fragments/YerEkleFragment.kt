@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.tripplanner.Controller.bll.CamMediaAccessLogic
 import com.example.tripplanner.Controller.bll.PermissionLogic
 import com.example.tripplanner.Controller.bll.TripPlannerLogic
 import com.example.tripplanner.R
@@ -41,12 +42,19 @@ class YerEkleFragment : PermissionHandlingFragment() {
     private lateinit var binding: FragmentYerEkleBinding
 
     /** Variables */
-    private var resimListe: ArrayList<String> = arrayListOf("")
+    var resimListe: ArrayList<String> = arrayListOf("")
     lateinit var fotoAdapter: FotoAdapter
     private lateinit var locationIntent:Pair<Double,Double>
     var yer= YerEntity(0.0,0.0)
     var secilenOncelik=Oncelik(0,"")
     private lateinit var resimUri : Uri
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        CamMediaAccessLogic.initializeCameraResultLauncher(this)
+        CamMediaAccessLogic.initializeGalleryResultLauncher(this,-1)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentYerEkleBinding.inflate(inflater, container, false)
@@ -64,7 +72,7 @@ class YerEkleFragment : PermissionHandlingFragment() {
     }
 
     /** FotoAdapter set */
-    private fun setAdapters() {
+    fun setAdapters() {
 
         resimUriListCheck()
 
@@ -142,20 +150,15 @@ class YerEkleFragment : PermissionHandlingFragment() {
 
     /** Open Gallery Func*/
     private fun openGallery(){
-        val intent = Intent(Intent.ACTION_PICK)
-        intent.setType("image/*")
-        galleryResultLauncher.launch(intent)
+        CamMediaAccessLogic.getPhotoFromGallery(this,-1)
+        resimUriListCheck()
     }
 
     /** Open Camera Func */
     private fun openCamera() {
 
-        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        createTempFile()
-//        val tempFile = createTempFile()
-//        resimUri = FileProvider.getUriForFile(this, packageName, tempFile)
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, resimUri)
-        cameraResultLauncher.launch(intent)
+        CamMediaAccessLogic.getPhotoFromCamera(this)
+        resimUriListCheck()
     }
 
     /** Temp File to hold the Photo*/
@@ -193,6 +196,7 @@ class YerEkleFragment : PermissionHandlingFragment() {
                 base64 = it
                 yerId = tempYerEntity.id
             }
+            resimUriListCheck()
             TripPlannerLogic.fotoEkle(requireContext(), resimObject)
         }
 

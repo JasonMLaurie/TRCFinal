@@ -10,6 +10,7 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,6 +21,7 @@ import androidx.core.content.FileProvider
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.tripplanner.Controller.bll.CamMediaAccessLogic
 import com.example.tripplanner.Controller.bll.PermissionLogic
 import com.example.tripplanner.Controller.bll.TripPlannerLogic
 import com.example.tripplanner.R
@@ -28,6 +30,7 @@ import com.example.tripplanner.model.ResimEntity
 import com.example.tripplanner.model.ZiyaretEntity
 import com.example.tripplanner.view.activities.MainActivity
 import com.example.tripplanner.view.adapters.foto.FotoAdapter
+import kotlinx.coroutines.*
 import java.io.File
 import java.io.FileNotFoundException
 import java.util.*
@@ -38,16 +41,26 @@ import java.util.*
 class ZiyaretEkleFragment : PermissionHandlingFragment() {
 
 
+    val bundle : ZiyaretEkleFragmentArgs by navArgs()
     private lateinit var binding : FragmentZiyaretEkleBinding
-    private lateinit var adapter: FotoAdapter
+    lateinit var adapter: FotoAdapter
 
     /** Variables */
-    private var resimBase64List: ArrayList<String> = arrayListOf("")
-    private var addedBase64List : ArrayList<String> = arrayListOf()
+    var resimBase64List: ArrayList<String> = arrayListOf("")
+    var addedBase64List : ArrayList<String> = arrayListOf()
     private var gelenYerId : Int = 0
-
+    var tempImage : String = ""
 
     private lateinit var resimUri : Uri
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+
+        gelenYerId = bundle.yerId
+
+        CamMediaAccessLogic.initializeGalleryResultLauncher(this,gelenYerId)
+        CamMediaAccessLogic.initializeCameraResultLauncher(this)
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -62,10 +75,6 @@ class ZiyaretEkleFragment : PermissionHandlingFragment() {
 
     private fun onceOnCreate(){
         addedBase64List = arrayListOf()
-
-
-        val bundle : ZiyaretEkleFragmentArgs by navArgs()
-        gelenYerId = bundle.yerId
 
 
         // Set Date to current.
@@ -157,7 +166,6 @@ class ZiyaretEkleFragment : PermissionHandlingFragment() {
 
             }
 
-            // TODO restriction to make Ziyaret Yer field non-null-0
             TripPlannerLogic.ziyaretEkle(requireContext(),ziyaretEntity)
 
             addedBase64List.forEach {
@@ -206,29 +214,13 @@ class ZiyaretEkleFragment : PermissionHandlingFragment() {
     }
 
     private fun openGallery(){
-        val intent = Intent(Intent.ACTION_PICK)
-        intent.setType("image/*")
-        galleryResultLauncher.launch(intent)
+        CamMediaAccessLogic.getPhotoFromGallery(this, gelenYerId)
+
     }
 
     /** Open Camera Func */
     private fun openCamera() {
-
-        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        createTempFile()
-//        val tempFile = createTempFile()
-//        resimUri = FileProvider.getUriForFile(this, packageName, tempFile)
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, resimUri)
-        cameraResultLauncher.launch(intent)
-    }
-
-    /** Temp File to hold the Photo*/
-    fun createTempFile(): File {
-        val dir = (activity as MainActivity).getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-
-        return File.createTempFile("camPic", ".jpg", dir).apply {
-            resimUri = FileProvider.getUriForFile(requireContext(),(activity as MainActivity).packageName,this)
-        }
+        CamMediaAccessLogic.getPhotoFromCamera(this)
     }
 
     /** Date picker */
@@ -253,83 +245,6 @@ class ZiyaretEkleFragment : PermissionHandlingFragment() {
         (activity as MainActivity).binding.fabYerEkle.isVisible=false
     }
 
-    /** Result Launchers */
-    // Gallery Selected PhotoResult
-    val galleryResultLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-
-            if (result.resultCode == AppCompatActivity.RESULT_OK) {
-
-                try {
-
-                    val imageUri: Uri = result.data!!.data!!
-
-                    /** Base64 Usage */
-                    val encodedImage = TripPlannerLogic.encodeBase64(imageUri, (activity as MainActivity).contentResolver)
-
-                    /////////////////
-
-                    // Get resimList from DB to check if selected photo is already exits.
-                    val tempResimUriList : ArrayList<String> = arrayListOf()
-                    TripPlannerLogic.fotolarGetir(requireContext(),gelenYerId).forEach {
-                        var base64 = it.base64!!
-                        tempResimUriList.add(base64)
-                    }
-
-                    if(!tempResimUriList.contains(encodedImage) && !addedBase64List.contains(encodedImage)){
-                        resimBase64List.add(encodedImage)
-                        addedBase64List.add(encodedImage)
-                        if (resimBase64List.size == 2) {
-                            // TODO a more suitable solution for empty Uri list.
-                            if(resimBase64List[0].equals("")){
-                                resimBase64List.removeAt(0)
-                            }
-                        }
-                    }else{
-                        Toast.makeText(requireContext(),"Seçilen fotoğraf zaten görüntülerde bulunuyor.", Toast.LENGTH_SHORT).show()
-                    }
-                    (adapter).notifyDataSetChanged()
-                } catch (e: FileNotFoundException) {
-                    e.printStackTrace()
-                    Toast.makeText(requireContext(), "Dosya bulunamadı.", Toast.LENGTH_LONG).show()
-                }
-            }
-        }
-
-    // Camera Shot Result
-    val cameraResultLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == AppCompatActivity.RESULT_OK) {
-                try {
-                    val encodedImage = TripPlannerLogic.encodeBase64(resimUri, (activity as MainActivity).contentResolver)
-
-                    // Get resimList from DB to check if selected photo is already exits.
-                    val tempResimUriList : ArrayList<String> = arrayListOf()
-                    TripPlannerLogic.fotolarGetir(requireContext(),gelenYerId).forEach {
-                        var base64 = it.base64!!
-                        tempResimUriList.add(base64)
-                    }
-
-                    if(!tempResimUriList.contains(encodedImage) && !addedBase64List.contains(encodedImage)){
-                        resimBase64List.add(encodedImage)
-                        addedBase64List.add(encodedImage)
-                        if (resimBase64List.size == 2) {
-                            // TODO a more suitable solution for empty Uri list.
-                            if(resimBase64List[0].equals("")){
-                                resimBase64List.removeAt(0)
-                            }
-                        }
-                    }else{
-                        Toast.makeText(requireContext(),"Seçilen fotoğraf zaten görüntülerde bulunuyor.", Toast.LENGTH_SHORT).show()
-                    }
-                    (adapter).notifyDataSetChanged()
-                } catch (e: FileNotFoundException) {
-                    e.printStackTrace()
-                    Toast.makeText(requireContext(), "Dosya bulunamadı.", Toast.LENGTH_LONG).show()
-                }
-
-            }
-        }
 
 
 }
