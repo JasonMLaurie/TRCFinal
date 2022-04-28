@@ -26,10 +26,11 @@ class MapsActivity : PermissionActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsBinding
-    private var mode=false  //Ekleden gelirsen->false-> Konum secimi, Detaydan gelirsen->true->Konuma git
-    val reqCodeLocations=0
-    var locationPair:Pair<String,LatLng>?=null
-    var locationManager:LocationManager?=null
+    private var mode =
+        false  //Ekleden gelirsen->false-> Konum secimi, Detaydan gelirsen->true->Konuma git
+    val reqCodeLocations = 0
+    var locationPair: Pair<String, LatLng>? = null
+    var locationManager: LocationManager? = null
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,7 +38,6 @@ class MapsActivity : PermissionActivity(), OnMapReadyCallback {
         binding = ActivityMapsBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initializeMode()
-
 
         binding.btnBackM.setOnClickListener {
             onBackPressed()
@@ -47,82 +47,88 @@ class MapsActivity : PermissionActivity(), OnMapReadyCallback {
             .findFragmentById(R.id.MapsActivity_map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-
         configureButton()
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-        if (!mode){ // Yer Ekle kismindan gelirsen
-            PermissionLogic.locationPermissionControl(this,this)
+        if (!mode) { // Yer Ekle kismindan gelirsen
+            PermissionLogic.locationPermissionControl(this, this)
             mMap.setOnMapLongClickListener {
                 mMap.clear()
-                locationPair= Pair("Konum",it)
-                mMap.addMarker(MarkerOptions().position(locationPair!!.second).title(locationPair!!.first))
+                locationPair = Pair("Konum", it)
+                mMap.addMarker(
+                    MarkerOptions().position(locationPair!!.second).title(locationPair!!.first)
+                )
             }
         }
-        if (mode){// Detaydan gelirsen
+        if (mode) {// Detaydan gelirsen
             mMap.addMarker(MarkerOptions().position(locationPair!!.second))
             mMap.moveCamera(CameraUpdateFactory.newLatLng(locationPair!!.second))
-
         }
 
     }
 
-    private fun initializeMode(){
-        mode= intent.getBooleanExtra("mode",false)
-        if (!mode){//Yer Ekle kismindan gelirsen
-        }else{//Detay kismindan gelirsen
-            locationPair= Pair("Konum", LatLng(intent.getDoubleExtra("Latitude",40.0),intent.getDoubleExtra("Longitude",40.0)))
+    private fun initializeMode() {
+        mode = intent.getBooleanExtra("mode", false)
+        if (!mode) {//Yer Ekle kismindan gelirsen
+        } else {//Detay kismindan gelirsen
+            locationPair = Pair(
+                "Konum",
+                LatLng(
+                    intent.getDoubleExtra("Latitude", 40.0),
+                    intent.getDoubleExtra("Longitude", 40.0)
+                )
+            )
         }
     }
 
-    private fun configureButton(){
-        if(mode){//Detay kismindan gelirsen
+    private fun configureButton() {
+        if (mode) {//Detay kismindan gelirsen
             //Konuma gidis
-            binding.btnKonumKaydet.text="Git"
+            binding.btnKonumKaydet.text = "Git"
             binding.btnKonumKaydet.setOnClickListener {
-                var gmmIntentUri=Uri.parse("google.navigation:q=${locationPair!!.second.latitude.toString().dropLast(locationPair!!.second.latitude.toString().length-5)},${locationPair!!.second.longitude.toString().dropLast(locationPair!!.second.latitude.toString().length-5)}")
-                var mapIntent=Intent(Intent.ACTION_VIEW,gmmIntentUri)
+                var gmmIntentUri = Uri.parse(
+                    "google.navigation:q=${
+                        locationPair!!.second.latitude.toString()
+                            .dropLast(locationPair!!.second.latitude.toString().length - 5)
+                    },${
+                        locationPair!!.second.longitude.toString()
+                            .dropLast(locationPair!!.second.latitude.toString().length - 5)
+                    }"
+                )
+                var mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
                 mapIntent.setPackage("com.google.android.apps.maps")
                 startActivity(mapIntent)
             }
-            //val gmmIntentUri =
-            //  Uri.parse("google.navigation:q=Taronga+Zoo,+Sydney+Australia")
-            //val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
-            //mapIntent.setPackage("com.google.android.apps.maps")
-            //startActivity(mapIntent)
-            //Toast.makeText(this,"${locationPair!!.second.latitude},${locationPair!!.second.longitude}",Toast.LENGTH_SHORT).show()
-            //                var gmmIntentUri= Uri.parse("geo:${locationPair!!.second.latitude.toString().dropLast(locationPair!!.second.latitude.toString().length-5)},${locationPair!!.second.longitude.toString().dropLast(locationPair!!.second.latitude.toString().length-5)}")
-            //                var mapIntent=Intent(Intent.ACTION_VIEW, gmmIntentUri)
-            //                mapIntent.setPackage("com.google.android.apps.maps")
-            //                startActivity(mapIntent)
 
-
-        }else{//Yer ekle kismindan gelirsen
+        } else {//Yer ekle kismindan gelirsen
             binding.btnKonumKaydet.setOnClickListener {
-                val intent=Intent()
-                val bundle=Bundle()
-                bundle.putDouble("Latitude",locationPair!!.second.latitude)
-                bundle.putDouble("Longitude",locationPair!!.second.longitude)
+                val intent = Intent()
+                val bundle = Bundle()
+                bundle.putDouble("Latitude", locationPair!!.second.latitude)
+                bundle.putDouble("Longitude", locationPair!!.second.longitude)
                 intent.putExtras(bundle)
-                setResult(RESULT_OK,intent)
+                setResult(RESULT_OK, intent)
                 finish()
             }
         }
     }
 
-
     @SuppressLint("MissingPermission")
     override fun grantedFunc() {
-        if (!mode){
-            locationManager=getSystemService(LOCATION_SERVICE) as LocationManager
-            locationManager!!.requestLocationUpdates(LocationManager.GPS_PROVIDER,1000, 0.1f,locationListener)
+        if (!mode) {
+            locationManager = getSystemService(LOCATION_SERVICE) as LocationManager
+            locationManager!!.requestLocationUpdates(
+                LocationManager.GPS_PROVIDER,
+                1000,
+                0.1f,
+                locationListener
+            )
         }
     }
 
-
-    var locationListener = object : LocationListener{
+    var locationListener = object : LocationListener {
 
         override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
             super.onStatusChanged(provider, status, extras)
@@ -130,7 +136,7 @@ class MapsActivity : PermissionActivity(), OnMapReadyCallback {
 
         override fun onLocationChanged(p0: Location) {
             mMap.clear()
-            locationPair= Pair("Konum", LatLng(p0.latitude,p0.longitude))
+            locationPair = Pair("Konum", LatLng(p0.latitude, p0.longitude))
             mMap.addMarker(MarkerOptions().position(locationPair!!.second))
             mMap.moveCamera(CameraUpdateFactory.newLatLng(locationPair!!.second))
             locationManager!!.removeUpdates(this)
@@ -144,13 +150,10 @@ class MapsActivity : PermissionActivity(), OnMapReadyCallback {
         override fun onProviderEnabled(provider: String) {
             super.onProviderEnabled(provider)
         }
-
     }
 
     override fun onDestroy() {
         super.onDestroy()
         locationManager?.removeUpdates(locationListener)
     }
-
-
 }

@@ -137,7 +137,6 @@ class ZiyaretEkleFragment : PermissionHandlingFragment() {
     /** Click Event for Adapter */
     fun photoCardClickEvent(){
         if(resimBase64List.size<10){
-            //openGallery()
             PermissionLogic.mediaPermissionControl(this,requireContext())
 
 

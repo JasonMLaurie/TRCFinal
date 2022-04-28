@@ -65,29 +65,5 @@ class PermissionLogic {
                 activity.requestPermissions(requestList.toTypedArray(), reqCodeLocations)
             }
         }
-
-        @RequiresApi(Build.VERSION_CODES.M)
-                fun mediaPermissionControl(
-                    activity: PermissionActivity,
-                    context: Context) : Boolean{
-                    val requestList= ArrayList<String>()
-                    var permStatus=
-                        ContextCompat.checkSelfPermission(context,Manifest.permission.READ_EXTERNAL_STORAGE)==PackageManager.PERMISSION_GRANTED
-                    if (!permStatus){
-                        requestList.add(Manifest.permission.READ_EXTERNAL_STORAGE)
-                    }
-                    permStatus=ContextCompat.checkSelfPermission(context,Manifest.permission.WRITE_EXTERNAL_STORAGE)==PackageManager.PERMISSION_GRANTED
-
-                    if (!permStatus){
-                        requestList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    }
-                    if (requestList.size==0){
-                        activity.grantedFunc()
-                        return true
-                    }else{
-                        activity.requestPermissions(requestList.toTypedArray(), reqCodeLocations)
-                        return false
-                    }
-                }
     }
 }
