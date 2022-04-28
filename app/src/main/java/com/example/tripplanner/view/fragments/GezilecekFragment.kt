@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,7 +13,6 @@ import com.example.tripplanner.Controller.bll.TripPlannerLogic
 import com.example.tripplanner.R
 import com.example.tripplanner.databinding.FragmentGezilecekBinding
 import com.example.tripplanner.model.YerEntity
-import com.example.tripplanner.view.activities.MainActivity
 import com.example.tripplanner.view.adapters.yer.YerAdapter
 
 
@@ -48,8 +48,8 @@ class GezilecekFragment : Fragment() {
     }
 
     fun itemClick(position:Int,itemView: View){
-        val gezilecek2DetayNavDir = GezilecekFragmentDirections.actionGezilecekFragment2ToDetayFragment(yerlerListe[position])
-        (activity as MainActivity).fragmentDegistir(gezilecek2DetayNavDir)
+        val gezilecek2DetayNavDir = GezilecekFragmentDirections.actionGezilecekFragmentToDetayFragment(yerlerListe[position])
+        findNavController().navigate(gezilecek2DetayNavDir)
     }
 
 }

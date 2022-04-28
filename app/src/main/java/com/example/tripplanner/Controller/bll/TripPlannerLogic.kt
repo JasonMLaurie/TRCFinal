@@ -1,7 +1,9 @@
 package com.example.tripplanner.Controller.bll
 
+import android.app.AlertDialog
 import android.content.ContentResolver
 import android.content.Context
+import android.content.DialogInterface
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -18,6 +20,8 @@ import java.io.ByteArrayOutputStream
 import java.io.FileOutputStream
 import java.io.InputStream
 import java.lang.Exception
+import java.util.*
+import kotlin.collections.ArrayList
 
 class TripPlannerLogic {
 
@@ -37,6 +41,11 @@ class TripPlannerLogic {
                 if(it)
                     Toast.makeText(context,"Yer başarıyla güncellenmiştir.", Toast.LENGTH_SHORT).show()
             }
+        }
+
+        fun yerGetir(context: Context, locationPair : Pair<Double, Double>) : YerEntity{
+            val tripPlannerOperation = TripPlannerOperation(context)
+            return tripPlannerOperation.yerGetir(locationPair)
         }
 
         fun gezilecekleriGetir(context: Context) : ArrayList<YerEntity> {
@@ -113,10 +122,42 @@ class TripPlannerLogic {
                 var encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
                 return encodedImage
             }
-
             return ""
-
         }
+
+        fun alertBuilder(
+            context: Context,
+            title: String,
+            message: String,
+            positiveString: String,
+            positiveFunc : () -> Unit,
+            negativeString: String,
+            negativeFunc : () -> Unit,
+            ){
+            val adb = AlertDialog.Builder(context)
+            adb.setTitle(title)
+            adb.setMessage(message)
+
+            adb.setPositiveButton(positiveString, DialogInterface.OnClickListener { dialogInterface, i ->
+                positiveFunc()
+            })
+            adb.setNegativeButton(negativeString, DialogInterface.OnClickListener { dialogInterface, i ->
+                negativeFunc()
+            })
+
+            adb.show()
+        }
+
+
+        /** Get Current Date from Calender */
+        fun calenderFunc() : java.util.ArrayList<Int> {
+            val calendar = Calendar.getInstance()
+            val year = calendar.get(Calendar.YEAR)
+            val month = calendar.get(Calendar.MONTH)
+            val dom = calendar.get(Calendar.DAY_OF_MONTH)
+            return arrayListOf(dom,month,year)
+        }
+
     }
 
 

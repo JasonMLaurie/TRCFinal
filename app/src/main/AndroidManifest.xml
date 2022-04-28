@@ -40,6 +40,19 @@
             android:exported="false"
             android:windowSoftInputMode="adjustPan"
             android:label="MainActivity" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.tripplanner"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths">
+
+            </meta-data>
+
+        </provider>
+
         <activity
             android:name=".view.activities.SplashScreen"
             android:exported="true">
