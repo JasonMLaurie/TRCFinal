@@ -43,6 +43,7 @@
         <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/drawable/tab_select.xml" value="0.1" />
         <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/drawable/tab_select2.xml" value="0.1" />
         <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/drawable/tab_select_gediklerim.xml" value="0.1" />
+        <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/drawable/tab_select_gezilecek.xml" value="0.1" />
         <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/drawable/tab_select_gezilecek_text.xml" value="0.1" />
         <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/drawable/tab_selector.xml" value="0.1" />
         <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/drawable/unselected_dot.xml" value="0.1" />
@@ -68,7 +69,7 @@
         <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/layout/oncelik_spinner_item.xml" value="0.6" />
         <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/layout/pager_item.xml" value="0.264" />
         <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/layout/spinner_bg.xml" value="0.1" />
-        <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/layout/tab_layout.xml" value="0.536" />
+        <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/layout/tab_layout.xml" value="0.4" />
         <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/layout/tam_ekran_popup.xml" value="0.16" />
         <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/layout/view_pager_item.xml" value="0.4" />
         <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/layout/viewpager_item.xml" value="0.264" />

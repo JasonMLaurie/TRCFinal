@@ -11,7 +11,6 @@ import android.view.ViewGroup
 import android.view.Window
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -27,7 +26,7 @@ import com.example.tripplanner.model.YerEntity
 import com.example.tripplanner.model.ZiyaretEntity
 import com.example.tripplanner.view.activities.MainActivity
 import com.example.tripplanner.view.activities.MapsActivity
-import com.example.tripplanner.view.adapters.CustomPagerAdapter
+import com.example.tripplanner.view.adapters.custom.CustomPagerAdapter
 import com.example.tripplanner.view.adapters.ziyaret.ZiyaretAdapter
 
 
@@ -129,9 +128,9 @@ class DetayFragment : Fragment(), ViewPager.OnPageChangeListener, View.OnClickLi
         setInitialViews()
     }
 
-    //viewPagerImplements
-    //var yerFotograflari = intArrayOf(R.drawable.tempimage1, R.drawable.tempimage1, R.drawable.tempimage1)
 
+
+    //viewPagerImplements
     var resimListe =ArrayList<ResimEntity>()
 
     var mViewPager: ViewPager? = null
@@ -139,7 +138,6 @@ class DetayFragment : Fragment(), ViewPager.OnPageChangeListener, View.OnClickLi
     private var pager_indicator: LinearLayout? = null
     private var dotsCount = 0
     private lateinit var dots: Array<ImageView?>
-
 
     /** ViewPagerSlide operations */
     fun viewPagerImageSlider(){
@@ -186,16 +184,8 @@ class DetayFragment : Fragment(), ViewPager.OnPageChangeListener, View.OnClickLi
             dots[i]!!.setImageResource(R.drawable.unselected_dot_slider)
         }
         dots[position]!!.setImageResource(R.drawable.selected_dot_slider)
-        if (position + 1 == dotsCount) {
-        } else { }
     }
 
-
-    override fun onClick(v: View) {
-
-    }
-    override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
-    override fun onPageScrollStateChanged(state: Int) {}
 
     fun resimClick(position:Int){
         val dialog =Dialog(requireContext())
@@ -209,5 +199,13 @@ class DetayFragment : Fragment(), ViewPager.OnPageChangeListener, View.OnClickLi
         image.setImageBitmap(TripPlannerLogic.decodeBase64(resimListe[position].base64!!))
         dialog.show()
     }
+
+
+
+    override fun onClick(v: View) {}
+    override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
+    override fun onPageScrollStateChanged(state: Int) {}
+
+
 
 }

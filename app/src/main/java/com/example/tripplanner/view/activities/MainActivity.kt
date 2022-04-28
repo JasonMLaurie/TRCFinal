@@ -20,7 +20,7 @@ class MainActivity : PermissionActivity() {
     lateinit var binding : ActivityMainBinding
     lateinit var navHostFragment : NavHostFragment
 
-    lateinit var tab:TabLayoutBinding
+    private lateinit var tab:TabLayoutBinding
 
     override fun grantedFunc() {
     }
@@ -45,9 +45,6 @@ class MainActivity : PermissionActivity() {
         clickListeners()
 
         tabListener()
-
-//        tabSec(0) //tekrar aynı fragment oluşmasını engelliyoruz
-
     }
 
     @SuppressLint("SetTextI18n")

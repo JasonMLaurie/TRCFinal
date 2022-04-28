@@ -23,7 +23,7 @@ import com.example.tripplanner.model.ResimEntity
 import com.example.tripplanner.model.YerEntity
 import com.example.tripplanner.view.activities.MainActivity
 import com.example.tripplanner.view.activities.MapsActivity
-import com.example.tripplanner.view.adapters.SpinnerAdapter
+import com.example.tripplanner.view.adapters.custom.SpinnerAdapter
 import com.example.tripplanner.view.adapters.foto.FotoAdapter
 
 /** Gezilecek Yer Ekleme Fragment*/
@@ -100,7 +100,7 @@ class YerEkleFragment : PermissionHandlingFragment() {
 
     /** Spinner Creation Function */
     fun setupSpinner(){
-        val adapter =SpinnerAdapter(requireContext(),Oncelikler.list!!)
+        val adapter = SpinnerAdapter(requireContext(),Oncelikler.list!!)
         binding.apply {
             spinner.adapter=adapter
             spinner.onItemSelectedListener = object :AdapterView.OnItemSelectedListener{
