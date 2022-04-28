@@ -4,17 +4,12 @@ import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
-import android.provider.MediaStore
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.FileProvider
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.tripplanner.Controller.bll.CamMediaAccessLogic
@@ -30,8 +25,6 @@ import com.example.tripplanner.view.activities.MainActivity
 import com.example.tripplanner.view.activities.MapsActivity
 import com.example.tripplanner.view.adapters.SpinnerAdapter
 import com.example.tripplanner.view.adapters.foto.FotoAdapter
-import java.io.File
-import java.io.FileNotFoundException
 
 /** Gezilecek Yer Ekleme Fragment*/
 class YerEkleFragment : PermissionHandlingFragment() {
@@ -176,16 +169,29 @@ class YerEkleFragment : PermissionHandlingFragment() {
         val year = TripPlannerLogic.calenderFunc()[2]
 
         val tempYerEntity = TripPlannerLogic.yerGetir(requireContext(), Pair(locationIntent.first, locationIntent.second))
-        resimListe.forEach {
+        if(resimListe.isNullOrEmpty() || (resimListe.size == 1 && resimListe.contains(""))){
+
+            val defaultImageUri = Uri.parse("android.resource://" + requireActivity().packageName +"/drawable/tempimage1")
+
             val resimObject = ResimEntity().apply {
                 tarih = "$dom.${month+1}.$year"
-                base64 = it
+                base64 = TripPlannerLogic.encodeBase64(defaultImageUri,requireActivity().contentResolver)
                 yerId = tempYerEntity.id
             }
             resimUriListCheck()
             TripPlannerLogic.fotoEkle(requireContext(), resimObject)
-        }
 
+        }else{
+            resimListe.forEach {
+                val resimObject = ResimEntity().apply {
+                    tarih = "$dom.${month+1}.$year"
+                    base64 = it
+                    yerId = tempYerEntity.id
+                }
+                resimUriListCheck()
+                TripPlannerLogic.fotoEkle(requireContext(), resimObject)
+            }
+        }
     }
 
 
@@ -210,7 +216,6 @@ class YerEkleFragment : PermissionHandlingFragment() {
     val resLauncher=registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode == RESULT_OK) {
             locationIntent=Pair(it.data?.getDoubleExtra("Latitude",0.5)!!,it.data?.getDoubleExtra("Longitude",0.5)!!)
-            //Toast.makeText(requireContext(),"lat: ${locationIntent.first} lon: ${locationIntent.second}",Toast.LENGTH_SHORT).show()
         }
     }
 
