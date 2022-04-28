@@ -55,7 +55,7 @@
         <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/layout/box.xml" value="0.1" />
         <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/layout/custom_viewpager_layout.xml" value="0.264" />
         <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/layout/fragment_blank.xml" value="0.1287037037037037" />
-        <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/layout/fragment_detay.xml" value="0.2" />
+        <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/layout/fragment_detay.xml" value="0.264" />
         <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/layout/fragment_detay_view_pager.xml" value="0.264" />
         <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/layout/fragment_gezdiklerim.xml" value="0.264" />
         <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/layout/fragment_gezilecek.xml" value="0.25416666666666665" />
@@ -69,6 +69,7 @@
         <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/layout/pager_item.xml" value="0.264" />
         <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/layout/spinner_bg.xml" value="0.1" />
         <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/layout/tab_layout.xml" value="0.536" />
+        <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/layout/tam_ekran_popup.xml" value="0.16" />
         <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/layout/view_pager_item.xml" value="0.4" />
         <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/layout/viewpager_item.xml" value="0.264" />
         <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/TRCFinal/app/src/main/res/layout/ziyaret_fotograf_card.xml" value="0.25416666666666665" />

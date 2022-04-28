@@ -42,6 +42,7 @@ class MapsActivity : PermissionActivity(), OnMapReadyCallback {
         binding.btnBackM.setOnClickListener {
             onBackPressed()
         }
+        binding.tvToolText2.setText(intent.getStringExtra("yer_adi"))
 
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.MapsActivity_map) as SupportMapFragment
