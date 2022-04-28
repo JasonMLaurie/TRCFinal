@@ -42,7 +42,7 @@ class PermissionLogic {
         @RequiresApi(Build.VERSION_CODES.M)
         fun locationPermissionControl(
             activity:PermissionActivity,
-            context: Context) {//TODO:
+            context: Context) {
             val requestList = ArrayList<String>()
             var permStatus =
                 ContextCompat.checkSelfPermission(
